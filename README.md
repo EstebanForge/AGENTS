@@ -7,22 +7,17 @@ The core `AGENTS.md` instructions follow the [TOON](https://toonformat.dev) docu
 ## Overview
 - Purpose: Provide a concise, senior-engineer-friendly protocol and standards for building and operating coding agents.
 - Scope: Documentation and standards that guide agent behavior across planning, execution, and verification.
-
-## Features
 - Clear workflow protocol: Search → Plan → Execute → Verify.
 - Todo tracking with explicit states: `[ ]` not-started, `[x]` completed, `[-]` removed.
 - Tool protocol for efficient, transparent usage.
 - Technical standards emphasizing DRY, KISS, YAGNI, and performance.
 - Security baseline: sanitize inputs, CSRF protection, capability checks.
-- Documentation style: `AGENTS.md` uses TOON for clear, consistent structure.
 
-## Workspace Structure
-- `AGENTS.md`: Core standards and protocols for agents.
-- `LICENSE`: Project license.
+## AGENTS.md
 
-## Usage
+View [AGENTS.md](AGENTS.md) for the full rulebook.
 
-### Bulk-update your agent prompts
+## Bulk-update your agent prompts
 
 Use the following snippet to open common agent prompt files; swap `subl` with your editor if needed:
 
