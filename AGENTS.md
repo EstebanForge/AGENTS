@@ -51,17 +51,17 @@ communication[4]:
   - "No markdown code blocks for explanations"
 technical_standards:
   principles[4]: DRY,KISS,YAGNI,"Law of Demeter (LOB). NO SOLID"
-  preferences: "Early exit/returns; prefer switch/case over if/else chains; code comment 'why', not 'what'"
+  code_preferences: "Early exit/returns; prefer switch/case over if/else chains; code comment 'why', not 'what'"
   compatibility: "Strict backwards compatibility. Breaking changes require explicit override or confirmed unreleased status"
   php[3]: "8.2+",strict_types=1,PSR-12
   js: "ES6; no constant functions; no JSX"
-  bash: "Portable (Linux/WSL/macOS); Bash 5.x+; Zsh 5.x+"
+  bash: "Portable (Linux/WSL/macOS); Bash 5.x+; Zsh 5.x+; lint with shellcheck; shebang: `#!/usr/bin/env bash`"
   naming:
     methods: "verbs (e.g., getUserData)"
     variables: "nouns (e.g., userData)"
-  sql: "Use lang or framwork specific PDO; no raw SQL unless asked"
+  sql: "Use lang or framework specific PDO; no raw SQL unless asked"
   html: "Responsive, mobile-first; semantic HTML5 + ARIA accessibility"
   css: "Modern CSS; use CSS variables; prefer Flexbox over Grid unless complex layout;Use native CSS nesting; Follow BEM"
   hypermedia: "Return HTML with correct status codes (Datastar/HTMX)"
-security[3]: "Sanitize *all* inputs","Use CSRF protection","Implement capability checks"
+security[3]: "Sanitize & validate *all* inputs","Use CSRF protection","Implement capability checks"
 wordpress_specifics[5]: "Target: Latest WP","Funcs: Prioritize WP (e.g., wp_sprintf)","DB: Use wpdb for *all* access","Hooks: Actions/filters extensively","Security: Use nonces, sanitize, validate, escape"
