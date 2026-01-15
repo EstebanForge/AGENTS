@@ -68,11 +68,12 @@ cli_tools[23]{name,desc,example}:
   sshpass,Non-interact SSH password,sshpass -p pass ssh u@h
   socat,Netcat on steroids,socat -v TCP-L:8080 TCP:l:80
   direnv,Load/unload env vars,direnv allow
-  mcp-cli-ent,MCP client,mcp-cli-ent
+  mcp-cli-ent,MCP client for the CLI,mcp-cli-ent
   md-over-here,URL to Markdown,md-over-here https://wp.org
   agent-browser,Headless browser control (Refs/Selectors),agent-browser open example.com; snapshot; click @e1
 
-mcp_servers[3]{name,desc}:
+mcp_client: "When asked to use MCP/MCP server/MCP tools, use 'mcp-cli-ent' in the CLI to find available servers and their tools"
+
+mcp_servers[2]{name,desc}:
   deepwiki,Fetch framework docs. Use if user asks 'check docs' or 'ask docs'
   context7,Fetch code snippets. Use if user asks 'check docs/examples'
-  chrome-devtools,Access/navigate user browser for Console/Network/DOM
