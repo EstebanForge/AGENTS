@@ -1,0 +1,3 @@
+# Ignore all skills content except .gitkeep
+skills/*
+!skills/.gitkeep
