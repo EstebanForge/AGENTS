@@ -25,6 +25,32 @@ declare -A AGENTS=(
     ["Kilocode"]="${HOME}/.kilocode/skills"
 )
 
+# Append construct-cli agent paths when config.toml is present
+detect_construct_agents() {
+    local construct_config="${HOME}/.config/construct-cli/config.toml"
+
+    if [[ ! -f "${construct_config}" ]]; then
+        return 0
+    fi
+
+    local construct_home="${HOME}/.config/construct-cli/home"
+
+    AGENTS["construct_Gemini"]="${construct_home}/.gemini/skills"
+    AGENTS["construct_Claude"]="${construct_home}/.claude/skills"
+    AGENTS["construct_Amp"]="${construct_home}/.config/amp/skills"
+    AGENTS["construct_Qwen"]="${construct_home}/.qwen/skills"
+    AGENTS["construct_Copilot"]="${construct_home}/.copilot/skills"
+    AGENTS["construct_Opencode"]="${construct_home}/.config/opencode/skills"
+    AGENTS["construct_Cline"]="${construct_home}/.cline/skills"
+    AGENTS["construct_Codex"]="${construct_home}/.codex/skills"
+    AGENTS["construct_Droid"]="${construct_home}/.factory/skills"
+    AGENTS["construct_Goose"]="${construct_home}/.config/goose/skills"
+    AGENTS["construct_Kilocode"]="${construct_home}/.kilocode/skills"
+    AGENTS["construct_Pi"]="${construct_home}/.pi/agent/skills"
+
+    echo "  construct-cli detected: added 12 agent paths from ${construct_home}"
+}
+
 # Create central skills directory if missing
 ensure_central_skills() {
     if [[ ! -d "${CENTRAL_SKILLS}" ]]; then
@@ -189,6 +215,8 @@ EOF
 # Entry point
 main() {
     local cmd=${1:-help}
+
+    detect_construct_agents
 
     case "${cmd}" in
         link)    cmd_link ;;

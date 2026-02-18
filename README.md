@@ -5,6 +5,7 @@ Minimal, robust, and secure agent workflows for AGENTS.
 The core `AGENTS.md` instructions follow the [TOON](https://toonformat.dev) documentation format; this README summarizes how to use that rulebook inside any agent workspace.
 
 ## Overview
+
 - Purpose: Provide a concise, senior-engineer-friendly protocol and standards for building and operating coding agents.
 - Scope: Documentation and standards that guide agent behavior across planning, execution, and verification.
 - Clear workflow protocol: Search → Plan → Execute → Verify.
@@ -17,137 +18,195 @@ The core `AGENTS.md` instructions follow the [TOON](https://toonformat.dev) docu
 
 View [AGENTS.md](AGENTS.md) for the full rulebook.
 
+---
+
 # Centralization Manager
 
-Centralize agent configuration management across all AI coding agents in the Projects-ActitudStudio workspace.
+Centralize agent configuration management across all AI coding agents. Maintains a single source of truth for agent rules and shared skills via symlinks.
 
-## Overview
+- **Central AGENTS.md:** `./AGENTS.md`
+- **Central Skills:** `./skills/`
 
-This setup maintains a single source of truth for:
-- **AGENTS.md files** - Agent behavior rules and protocols
-- **Skills directories** - Shared agent capabilities
+---
 
-Both managed via symlinks from a central repository location.
-
-- **Workspace:** Current folder
-- **Central AGENTS.md:** ./AGENTS.md
-- **Central Skills:** ./skills
-
-## Usage
-
-### Quick Start
-
-Link both AGENTS.md and skills for all agents:
+## Quick Start
 
 ```bash
 # Link everything
-./setup-agents.sh link
-./setup-skills.sh link
+./manage-agents.sh link
+./manage-skills.sh link
 
 # Verify status
-./setup-agents.sh status
-./setup-skills.sh status
+./manage-agents.sh status
+./manage-skills.sh status
+
+# Remove all symlinks and restore originals
+./manage-agents.sh unlink
+./manage-skills.sh unlink
 ```
 
-### AGENTS.md Symlinks (setup-agents.sh)
+---
 
-Manages symlinks from agent-specific AGENTS.md files to the central rulebook.
+## manage-agents.sh
+
+Manages symlinks from each agent's config file to the central `AGENTS.md`.
 
 ```bash
-# Show all available commands
-./setup-agents.sh help
-
-# Link all agent AGENTS.md files to central ./AGENTS.md
-# - Creates parent directories if missing
-# - Backs up existing files with timestamp
-# - Detects VSCode and Windsurf automatically
-./setup-agents.sh link
-
-# Check current symlink status for all agents
-# Shows: linked, not linked, or points elsewhere
-./setup-agents.sh status
-
-# Remove symlinks and restore original files
-# - Removes symlinks pointing to central AGENTS.md
-# - Restores most recent .backup files automatically
-./setup-agents.sh unlink
+./manage-agents.sh link       # Symlink all agents to ./AGENTS.md
+./manage-agents.sh status     # Show symlink status for all agents
+./manage-agents.sh unlink     # Remove symlinks, restore backups
+./manage-agents.sh help       # Show help
 ```
 
-### Skills Symlinks (setup-skills.sh)
+**Behavior:**
+- Creates parent directories if missing.
+- Backs up any existing file with a timestamp before linking.
+- Only links if the target file already exists (skips missing configs).
+- `unlink` restores the most recent backup automatically.
+- VSCode and Windsurf paths are auto-detected at runtime.
+- construct-cli paths are auto-detected when `~/.config/construct-cli/config.toml` is present.
 
-Manages symlinks from agent-specific skills directories to the central skills folder.
+---
+
+## manage-skills.sh
+
+Manages symlinks from each agent's skills directory to the central `./skills/` folder.
 
 ```bash
-# Show all available commands
-./setup-skills.sh help
+./manage-skills.sh link       # Symlink all agents to ./skills/
+./manage-skills.sh status     # Show symlink status for all agents
+./manage-skills.sh unlink     # Remove symlinks, restore backups
 
-# Link all agent skills/ directories to central ./skills
-# - Creates parent directories if missing
-# - Backs up existing directories with timestamp
-./setup-skills.sh link
-
-# Check current symlink status for all agents
-# Shows: linked, directory (not linked), or not present
-./setup-skills.sh status
-
-# Remove symlinks and restore original directories
-# - Removes symlinks pointing to central skills
-# - Restores most recent .backup directories automatically
-./setup-skills.sh unlink
+./manage-skills.sh help       # Show help (includes dynamic agent count)
 ```
+
+**Behavior:**
+- Creates parent directories if missing.
+- Backs up any existing directory with a timestamp before linking.
+- `unlink` restores the most recent backup automatically.
+- construct-cli paths are auto-detected when `~/.config/construct-cli/config.toml` is present.
+
+---
 
 ## Supported Agents
 
-### AGENTS.md Paths (14 total)
+### AGENTS.md — Core (12, always active)
 
-Core agents (12):
+| Agent | Path | Notes |
+|-------|------|-------|
+| Gemini | `~/.gemini/GEMINI.md` | Custom filename |
+| Claude | `~/.claude/CLAUDE.md` | Custom filename |
+| Amp | `~/.config/amp/AGENTS.md` | |
+| Qwen | `~/.qwen/AGENTS.md` | |
+| Copilot | `~/.copilot/AGENTS.md` | |
+| OpenCode | `~/.config/opencode/AGENTS.md` | |
+| Cline | `~/Documents/Cline/Rules/AGENTS.md` | Primary path |
+| Cline Alt | `~/Cline/Rules/AGENTS.md` | Alternate path |
+| Codex | `~/.codex/AGENTS.md` | |
+| Factory (Droid) | `~/.factory/AGENTS.md` | |
+| Goose | `~/.config/goose/AGENTS.md` | |
+| Kilo Code | `~/.kilocode/rules/AGENTS.md` | |
 
-| Agent | Target Path | Notes |
-|--------|-------------|-------|
-| Gemini | ~/.gemini/GEMINI.md | Custom filename |
-| Qwen | ~/.qwen/AGENTS.md | |
-| Opencode | ~/.config/opencode/AGENTS.md | |
-| Claude | ~/.claude/CLAUDE.md | Custom filename |
-| Amp | ~/.config/amp/AGENTS.md | |
-| Codex | ~/.codex/AGENTS.md | |
-| Copilot | ~/.copilot/AGENTS.md | |
-| Factory | ~/.factory/AGENTS.md | Droid code |
-| Goose | ~/.config/goose/AGENTS.md | |
-| Kilocode | ~/.kilocode/rules/AGENTS.md | Custom location |
-| Cline | ~/Documents/Cline/Rules/AGENTS.md | Primary path |
-| Cline Alt | ~/Cline/Rules/AGENTS.md | Alternate path |
+### AGENTS.md — Auto-detected
 
-Auto-detected agents (2):
+| Agent | Path | Condition |
+|-------|------|-----------|
+| VSCode | `~/Library/Application Support/Code/User/prompts/AGENTS.md.instructions.md` | macOS, if file exists |
+| VSCode | `~/.config/Code/User/prompts/AGENTS.md.instructions.md` | Linux, if file exists |
+| Windsurf | `~/.codeium/windsurf/memories/global_rules.md` | If file exists |
 
-| Agent | Target Path | Platform |
-|--------|-------------|----------|
-| VSCode | ~/Library/Application Support/Code/User/prompts/AGENTS.md.instructions.md | macOS |
-| VSCode | ~/.config/Code/User/prompts/AGENTS.md.instructions.md | Linux |
-| Windsurf | ~/.codeium/windsurf/memories/global_rules.md | Cross-platform |
+### AGENTS.md — construct-cli (detected if `~/.config/construct-cli/config.toml` exists)
 
-### Skills Paths (12 total)
+| Agent | Path |
+|-------|------|
+| Gemini | `~/.config/construct-cli/home/.gemini/GEMINI.md` |
+| Claude | `~/.config/construct-cli/home/.claude/CLAUDE.md` |
+| Amp | `~/.config/construct-cli/home/.config/amp/AGENTS.md` |
+| Qwen | `~/.config/construct-cli/home/.qwen/AGENTS.md` |
+| Copilot | `~/.config/construct-cli/home/.copilot/AGENTS.md` |
+| OpenCode | `~/.config/construct-cli/home/.config/opencode/AGENTS.md` |
+| Cline | `~/.config/construct-cli/home/.cline/AGENTS.md` |
+| Codex | `~/.config/construct-cli/home/.codex/AGENTS.md` |
+| Droid | `~/.config/construct-cli/home/.factory/AGENTS.md` |
+| Goose | `~/.config/construct-cli/home/.config/goose/AGENTS.md` |
+| Kilo Code | `~/.config/construct-cli/home/.kilocode/rules/AGENTS.md` |
+| Pi | `~/.config/construct-cli/home/.pi/agent/AGENTS.md` |
 
-| Agent | Target Path | Notes |
-|--------|-------------|-------|
-| Gemini | ~/.gemini/skills/ | |
-| Codex | ~/.codex/skills/ | |
-| Claude | ~/.claude/skills/ | |
-| Opencode | ~/.config/opencode/skills/ | |
-| Pi | ~/.pi/agent/skills/ | |
-| Amp | ~/.config/agents/skills/ | |
-| Qwen | ~/.qwen/skills/ | |
-| Copilot | ~/.copilot/skills/ | |
-| Cline | ~/.cline/skills/ | |
-| Droid | ~/.factory/skills/ | Factory code |
-| Goose | ~/.config/goose/skills/ | |
-| Kilocode | ~/.kilocode/skills/ | |
+### Skills — Core (13, always active)
 
-**Notes:**
-- AGENTS.md files define agent behavior, protocols, and standards
-- Skills directories contain executable agent capabilities
-- All paths resolved dynamically (no hardcoded locations)
-- Backups created automatically before linking
-- Unlink restores most recent backups
+| Agent | Path |
+|-------|------|
+| Standard | `~/.agents/skills/` |
+| Gemini | `~/.gemini/skills/` |
+| Claude | `~/.claude/skills/` |
+| Amp | `~/.config/agents/skills/` |
+| Qwen | `~/.qwen/skills/` |
+| Copilot | `~/.copilot/skills/` |
+| OpenCode | `~/.config/opencode/skills/` |
+| Cline | `~/.cline/skills/` |
+| Codex | `~/.codex/skills/` |
+| Droid | `~/.factory/skills/` |
+| Goose | `~/.config/goose/skills/` |
+| Kilo Code | `~/.kilocode/skills/` |
+| Pi | `~/.pi/agent/skills/` |
+
+### Skills — construct-cli (detected if `~/.config/construct-cli/config.toml` exists)
+
+| Agent | Path |
+|-------|------|
+| Gemini | `~/.config/construct-cli/home/.gemini/skills/` |
+| Claude | `~/.config/construct-cli/home/.claude/skills/` |
+| Amp | `~/.config/construct-cli/home/.config/amp/skills/` |
+| Qwen | `~/.config/construct-cli/home/.qwen/skills/` |
+| Copilot | `~/.config/construct-cli/home/.copilot/skills/` |
+| OpenCode | `~/.config/construct-cli/home/.config/opencode/skills/` |
+| Cline | `~/.config/construct-cli/home/.cline/skills/` |
+| Codex | `~/.config/construct-cli/home/.codex/skills/` |
+| Droid | `~/.config/construct-cli/home/.factory/skills/` |
+| Goose | `~/.config/construct-cli/home/.config/goose/skills/` |
+| Kilo Code | `~/.config/construct-cli/home/.kilocode/skills/` |
+| Pi | `~/.config/construct-cli/home/.pi/agent/skills/` |
+
+---
+
+## Skills
+
+Skills are shared agent capabilities stored in `./skills/`. Each skill is a subdirectory containing a `SKILL.md` file with a YAML frontmatter block (`name`, `description`) followed by the skill's instructions.
+
+All skills must follow the Agent Skills specification: https://agentskills.io/specification
+
+### Available Skills
+
+| Skill | Description |
+|-------|-------------|
+| `refactor-pass` | Perform a refactor pass focused on simplicity after recent changes. Removes dead code, straightens logic flows, removes excessive parameters and premature optimization. Runs build/tests to verify. |
+| `codex-delegate` | Use OpenAI Codex CLI for complex debugging and code analysis via a file-based question/answer pattern (`/tmp/question.txt` → `/tmp/reply.txt`). |
+| `orchestrate` | Structured workflow orchestration: plan-first execution, subagent delegation, self-improvement loops, verification gates, elegance checks, and autonomous bug fixing. |
+| `plan` | Thorough plan review across architecture, code quality, tests, and performance. Presents numbered issues with lettered options, concrete tradeoffs, and opinionated recommendations. Asks for user input before proceeding. |
+
+### Adding a Skill
+
+```
+skills/
+└── my-skill/
+    └── SKILL.md
+```
+
+`SKILL.md` structure:
+
+```markdown
+---
+name: my-skill
+description: One-line description used by agents to decide when to invoke this skill.
+---
+
+# My Skill
+
+...instructions...
+```
+
+---
 
 ## License
+
 This project is licensed. See `LICENSE` for details.

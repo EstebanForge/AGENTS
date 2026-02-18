@@ -54,9 +54,36 @@ detect_extra_agents() {
     log_info "Detected $paths_found extra agent paths"
 }
 
+# Path detection for construct-cli agents
+detect_construct_agents() {
+    local construct_config="$HOME/.config/construct-cli/config.toml"
+
+    if [[ ! -f "$construct_config" ]]; then
+        return 0
+    fi
+
+    local construct_home="$HOME/.config/construct-cli/home"
+
+    AGENTS_PATHS["construct_gemini"]="$construct_home/.gemini/GEMINI.md"
+    AGENTS_PATHS["construct_claude"]="$construct_home/.claude/CLAUDE.md"
+    AGENTS_PATHS["construct_amp"]="$construct_home/.config/amp/AGENTS.md"
+    AGENTS_PATHS["construct_qwen"]="$construct_home/.qwen/AGENTS.md"
+    AGENTS_PATHS["construct_copilot"]="$construct_home/.copilot/AGENTS.md"
+    AGENTS_PATHS["construct_opencode"]="$construct_home/.config/opencode/AGENTS.md"
+    AGENTS_PATHS["construct_cline"]="$construct_home/.cline/AGENTS.md"
+    AGENTS_PATHS["construct_codex"]="$construct_home/.codex/AGENTS.md"
+    AGENTS_PATHS["construct_droid"]="$construct_home/.factory/AGENTS.md"
+    AGENTS_PATHS["construct_goose"]="$construct_home/.config/goose/AGENTS.md"
+    AGENTS_PATHS["construct_kilocode"]="$construct_home/.kilocode/rules/AGENTS.md"
+    AGENTS_PATHS["construct_pi"]="$construct_home/.pi/agent/AGENTS.md"
+
+    log_info "Detected construct-cli: added 12 agent paths from $construct_home"
+}
+
 # Detect all agent paths (core + extra)
 detect_agent_paths() {
     detect_extra_agents
+    detect_construct_agents
 }
 
 log_info() {
@@ -228,10 +255,25 @@ Supported Agents (14 total):
     VSCode    ~/.config/Code/User/prompts/AGENTS.md.instructions.md (Linux)
     Windsurf  ~/.codeium/windsurf/memories/global_rules.md
 
+  construct-cli agents (detected if ~/.config/construct-cli/config.toml exists):
+    Gemini    ~/.config/construct-cli/home/.gemini/GEMINI.md
+    Claude    ~/.config/construct-cli/home/.claude/CLAUDE.md
+    Amp       ~/.config/construct-cli/home/.config/amp/AGENTS.md
+    Qwen      ~/.config/construct-cli/home/.qwen/AGENTS.md
+    Copilot   ~/.config/construct-cli/home/.copilot/AGENTS.md
+    OpenCode  ~/.config/construct-cli/home/.config/opencode/AGENTS.md
+    Cline     ~/.config/construct-cli/home/.cline/AGENTS.md
+    Codex     ~/.config/construct-cli/home/.codex/AGENTS.md
+    Droid     ~/.config/construct-cli/home/.factory/AGENTS.md
+    Goose     ~/.config/construct-cli/home/.config/goose/AGENTS.md
+    Kilo Code ~/.config/construct-cli/home/.kilocode/rules/AGENTS.md
+    Pi        ~/.config/construct-cli/home/.pi/agent/AGENTS.md
+
 Notes:
   - Claude uses CLAUDE.md (not AGENTS.md)
   - Cline has two possible locations; both checked
   - Extra agents (VSCode, Windsurf) detected automatically at runtime
+  - construct-cli agents detected automatically when config.toml is present
   - Script creates parent directories if they do not exist
   - Backs up existing files before creating symlinks
   - Unlinking restores backups automatically
@@ -254,7 +296,7 @@ main() {
             show_help
             ;;
         *)
-            log_error "Unknown command: $1"
+            log_error "Unknown command: ${1:-}"
             show_help
             exit 1
             ;;

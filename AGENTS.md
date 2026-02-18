@@ -24,21 +24,23 @@ workflow_protocol:
 problem_resolution: "Solve the right problem. Build for now; leave complexity for 'future us'. Avoid over-engineering. Action *only* specific task. Solution must be concise, elegant, minimal code change"
 
 technical_standards:
-  principles: "DRY, KISS, YAGNI, Law of Demeter (LOB). NO SOLID"
+  principles: "DRY, KISS, YAGNI, LoD (Law of Demeter), LOB (Locality of Behaviour). NO SOLID"
   code_preferences: "Early returns; switch > if/else; comment 'why', not 'what'"
   compatibility: "Strict backwards compatibility. Breaking changes require explicit override"
-  php: "8.2+, strict_types=1, PSR-12"
-  js: "ES6; no constant functions; no JSX"
-  bash: "Portable; Bash 5.x+; Zsh 5.x+; lint with shellcheck; shebang: `#!/usr/bin/env bash`"
+  php: "8.2+, strict_types=1, PSR-12; lint with php -l"
+  js: "ES6; no constant functions; no JSX; const/let only—no var; named exports only; === always; async/await over promise chains; lint with biome"
+  bash: "Portable; Bash 5.x+; Zsh 5.x+; set -euo pipefail; local all function vars; quote all expansions; [[ ]] over [ ]; lint with shellcheck; shebang: `#!/usr/bin/env bash`"
+  go: "Errors are values—handle explicitly, never ignore; context.Context as first param; table-driven tests; interfaces at consumer not producer; avoid init(); lint with gofmt/goimports/golangci-lint"
+  lua: "local by default—never pollute globals; ipairs for arrays, pairs for maps; pcall/xpcall for errors; LuaJIT-compatible unless targeting vanilla; lint with luacheck"
+  ruby: "frozen_string_literal: true on every file; symbols over strings for hash keys; Enumerable over manual loops; no monkey-patching core classes; lint with RuboCop"
   naming: "methods: verbs (getUserData); variables: nouns (userData)"
-  sql: "Use PDO; no raw SQL unless asked"
+  sql: "Use PDO; no raw SQL unless asked; always use prepared statements; never trust user input—escape and sanitize everything; treat all input as hostile"
   html: "Responsive, mobile-first; semantic HTML5 + ARIA"
-  css: "Modern CSS; variables; Flexbox > Grid; native nesting; BEM"
+  css: "Modern CSS; variables; Flexbox > Grid; native nesting; BEM; rem for font sizes; no !important; clamp() for fluid sizing; lint with biome"
   hypermedia: "Return HTML with correct status codes (Datastar/HTMX)"
+  wordpress: "Target: Latest WP. Prioritize WP functions. DB: Use wpdb for all access. Hooks: Actions/filters extensively. Security: Nonces, sanitize, validate, escape"
 
-security: "Sanitize & validate all inputs. Use CSRF protection. Implement capability checks"
-
-wordpress_specifics: "Target: Latest WP. Prioritize WP functions. DB: Use wpdb for all access. Hooks: Actions/filters extensively. Security: Nonces, sanitize, validate, escape"
+security: "Sanitize & validate all inputs—never trust them. Escape all output (prevent XSS). CSRF protection on state-changing requests. Capability checks on every action. Principle of least privilege. No hardcoded secrets—use env vars. Never expose stack traces or internal errors to users. Fail closed by default"
 
 context: "Context compacts automatically; ignore token limits. Save state to memory before refresh. Persist autonomously and complete tasks fully; never stop early"
 
@@ -46,14 +48,14 @@ tool_protocol[2]:
   - "Announce tool use (1 sentence). No redundant re-reads"
   - "Explain re-work if it becomes necessary"
 
-cli_tools[23]{name,desc,example}:
+cli_tools[25]{name,desc,example}:
   fd,Fast file finder (ignores .gitignore),fd src
   rg,ripgrep recursive code search,rg "TODO"
   sg,ast-grep (AST-aware search),sg -p 'if ($A) { $B }'
   jq,JSON processor,jq '.items[].id'
   yq,YAML/JSON/XML processor,yq '.spec.replicas = 3' file.yaml
   sd,Find & replace,sd 'old' 'new' *.php
-  fzf,Fuzzy finder,history,fzf
+  fzf,Fuzzy finder,ls | fzf
   bat,cat clone (syntax highlighting),bat file.ts
   eza,Modern ls,eza -l --git
   httpie,HTTP client,http GET api/foo
@@ -71,6 +73,8 @@ cli_tools[23]{name,desc,example}:
   mcp-cli-ent,MCP client for the CLI,mcp-cli-ent
   md-over-here,URL to Markdown,md-over-here https://wp.org
   agent-browser,Headless browser control (Refs/Selectors),agent-browser open example.com; snapshot; click @e1
+  biome,Fast JS/TS/CSS linter and formatter (Rust-based standalone binary),biome check src/
+  qmd,Local search engine for markdown notes/docs/knowledge bases (BM25 + semantic + LLM re-ranking); use when searching local knowledge before going online,qmd search "how to configure X"
 
 mcp_client: "When asked to use MCP/MCP server/MCP tools, use 'mcp-cli-ent' in the CLI to find available servers and their tools"
 
