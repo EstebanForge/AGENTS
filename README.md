@@ -61,7 +61,7 @@ Manages symlinks from each agent's config file to the central `AGENTS.md`.
 **Behavior:**
 - Creates parent directories if missing.
 - Backs up any existing file with a timestamp before linking.
-- Only links if the target file already exists (skips missing configs).
+- Links if the agent's config folder exists on the machine, even if the target file doesn't yet — skips only if the agent is not installed.
 - `unlink` restores the most recent backup automatically.
 - VSCode and Windsurf paths are auto-detected at runtime.
 - construct-cli paths are auto-detected when `~/.config/construct-cli/config.toml` is present.
@@ -83,6 +83,7 @@ Manages symlinks from each agent's skills directory to the central `./skills/` f
 **Behavior:**
 - Creates parent directories if missing.
 - Backs up any existing directory with a timestamp before linking.
+- If agents are already linked, prompts to re-link them all (useful to fix issues).
 - `unlink` restores the most recent backup automatically.
 - construct-cli paths are auto-detected when `~/.config/construct-cli/config.toml` is present.
 
@@ -97,14 +98,14 @@ Manages symlinks from each agent's skills directory to the central `./skills/` f
 | Gemini | `~/.gemini/GEMINI.md` | Custom filename |
 | Claude | `~/.claude/CLAUDE.md` | Custom filename |
 | Amp | `~/.config/amp/AGENTS.md` | |
-| Qwen | `~/.qwen/AGENTS.md` | |
-| Copilot | `~/.copilot/AGENTS.md` | |
+| Qwen | `~/.qwen/QWEN.md` | Custom filename — default is `QWEN.md`, configurable via `context.fileName` |
+| Copilot | `~/.copilot/copilot-instructions.md` | Custom filename |
 | OpenCode | `~/.config/opencode/AGENTS.md` | |
 | Cline | `~/Documents/Cline/Rules/AGENTS.md` | Primary path |
 | Cline Alt | `~/Cline/Rules/AGENTS.md` | Alternate path |
 | Codex | `~/.codex/AGENTS.md` | |
 | Factory (Droid) | `~/.factory/AGENTS.md` | |
-| Goose | `~/.config/goose/AGENTS.md` | |
+| Goose | `~/.config/goose/AGENTS.md` | Also reads `.goosehints`; canonical global is `~/.config/goose/.goosehints` |
 | Kilo Code | `~/.kilocode/rules/AGENTS.md` | |
 
 ### AGENTS.md — Auto-detected
@@ -122,8 +123,8 @@ Manages symlinks from each agent's skills directory to the central `./skills/` f
 | Gemini | `~/.config/construct-cli/home/.gemini/GEMINI.md` |
 | Claude | `~/.config/construct-cli/home/.claude/CLAUDE.md` |
 | Amp | `~/.config/construct-cli/home/.config/amp/AGENTS.md` |
-| Qwen | `~/.config/construct-cli/home/.qwen/AGENTS.md` |
-| Copilot | `~/.config/construct-cli/home/.copilot/AGENTS.md` |
+| Qwen | `~/.config/construct-cli/home/.qwen/QWEN.md` |
+| Copilot | `~/.config/construct-cli/home/.copilot/copilot-instructions.md` |
 | OpenCode | `~/.config/construct-cli/home/.config/opencode/AGENTS.md` |
 | Cline | `~/.config/construct-cli/home/.cline/AGENTS.md` |
 | Codex | `~/.config/construct-cli/home/.codex/AGENTS.md` |
@@ -132,19 +133,26 @@ Manages symlinks from each agent's skills directory to the central `./skills/` f
 | Kilo Code | `~/.config/construct-cli/home/.kilocode/rules/AGENTS.md` |
 | Pi | `~/.config/construct-cli/home/.pi/agent/AGENTS.md` |
 
-### Skills — Core (13, always active)
+### Skills — Core (9, always active)
+
+Agents that natively read `~/.agents/skills/` — covered by the **Standard** symlink, no dedicated entry needed:
+
+| Agent | Native path |
+|-------|-------------|
+| Gemini | `~/.agents/skills/` |
+| OpenCode | `~/.agents/skills/` |
+| Codex | `~/.agents/skills/` |
+
+Agents with dedicated symlinks:
 
 | Agent | Path |
 |-------|------|
 | Standard | `~/.agents/skills/` |
-| Gemini | `~/.gemini/skills/` |
 | Claude | `~/.claude/skills/` |
 | Amp | `~/.config/agents/skills/` |
 | Qwen | `~/.qwen/skills/` |
 | Copilot | `~/.copilot/skills/` |
-| OpenCode | `~/.config/opencode/skills/` |
 | Cline | `~/.cline/skills/` |
-| Codex | `~/.codex/skills/` |
 | Droid | `~/.factory/skills/` |
 | Goose | `~/.config/goose/skills/` |
 | Kilo Code | `~/.kilocode/skills/` |
@@ -152,16 +160,24 @@ Manages symlinks from each agent's skills directory to the central `./skills/` f
 
 ### Skills — construct-cli (detected if `~/.config/construct-cli/config.toml` exists)
 
+Agents that natively read `~/.agents/skills/` within the construct-cli home — covered by **construct_Standard**:
+
+| Agent | Native path |
+|-------|-------------|
+| Gemini | `~/.config/construct-cli/home/.agents/skills/` |
+| OpenCode | `~/.config/construct-cli/home/.agents/skills/` |
+| Codex | `~/.config/construct-cli/home/.agents/skills/` |
+
+Agents with dedicated symlinks:
+
 | Agent | Path |
 |-------|------|
-| Gemini | `~/.config/construct-cli/home/.gemini/skills/` |
+| Standard | `~/.config/construct-cli/home/.agents/skills/` |
 | Claude | `~/.config/construct-cli/home/.claude/skills/` |
 | Amp | `~/.config/construct-cli/home/.config/amp/skills/` |
 | Qwen | `~/.config/construct-cli/home/.qwen/skills/` |
 | Copilot | `~/.config/construct-cli/home/.copilot/skills/` |
-| OpenCode | `~/.config/construct-cli/home/.config/opencode/skills/` |
 | Cline | `~/.config/construct-cli/home/.cline/skills/` |
-| Codex | `~/.config/construct-cli/home/.codex/skills/` |
 | Droid | `~/.config/construct-cli/home/.factory/skills/` |
 | Goose | `~/.config/construct-cli/home/.config/goose/skills/` |
 | Kilo Code | `~/.config/construct-cli/home/.kilocode/skills/` |

@@ -11,10 +11,13 @@ CENTRAL_SKILLS="${SCRIPT_DIR}/skills"
 # Agent paths to symlink
 declare -A AGENTS=(
     ["Standard"]="${HOME}/.agents/skills"
-    ["Gemini"]="${HOME}/.gemini/skills"
-    ["Codex"]="${HOME}/.codex/skills"
+    # NOTE: Disabled — Gemini already reads ~/.agents/skills (the emerging standard path)
+    # ["Gemini"]="${HOME}/.gemini/skills"
+    # NOTE: Disabled — Codex already reads ~/.agents/skills (the emerging standard path)
+    # ["Codex"]="${HOME}/.codex/skills"
     ["Claude"]="${HOME}/.claude/skills"
-    ["Opencode"]="${HOME}/.config/opencode/skills"
+    # NOTE: Disabled — OpenCode already reads ~/.agents/skills (the emerging standard path)
+    # ["Opencode"]="${HOME}/.config/opencode/skills"
     ["Pi"]="${HOME}/.pi/agent/skills"
     ["Amp"]="${HOME}/.config/agents/skills"
     ["Qwen"]="${HOME}/.qwen/skills"
@@ -35,14 +38,18 @@ detect_construct_agents() {
 
     local construct_home="${HOME}/.config/construct-cli/home"
 
-    AGENTS["construct_Gemini"]="${construct_home}/.gemini/skills"
+    AGENTS["construct_Standard"]="${construct_home}/.agents/skills"
+    # NOTE: Disabled — Gemini already reads ~/.agents/skills (the emerging standard path)
+    # AGENTS["construct_Gemini"]="${construct_home}/.gemini/skills"
     AGENTS["construct_Claude"]="${construct_home}/.claude/skills"
     AGENTS["construct_Amp"]="${construct_home}/.config/amp/skills"
     AGENTS["construct_Qwen"]="${construct_home}/.qwen/skills"
     AGENTS["construct_Copilot"]="${construct_home}/.copilot/skills"
-    AGENTS["construct_Opencode"]="${construct_home}/.config/opencode/skills"
+    # NOTE: Disabled — OpenCode already reads ~/.agents/skills (the emerging standard path)
+    # AGENTS["construct_Opencode"]="${construct_home}/.config/opencode/skills"
     AGENTS["construct_Cline"]="${construct_home}/.cline/skills"
-    AGENTS["construct_Codex"]="${construct_home}/.codex/skills"
+    # NOTE: Disabled — Codex already reads ~/.agents/skills (the emerging standard path)
+    # AGENTS["construct_Codex"]="${construct_home}/.codex/skills"
     AGENTS["construct_Droid"]="${construct_home}/.factory/skills"
     AGENTS["construct_Goose"]="${construct_home}/.config/goose/skills"
     AGENTS["construct_Kilocode"]="${construct_home}/.kilocode/skills"

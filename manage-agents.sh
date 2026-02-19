@@ -11,12 +11,12 @@ CENTRAL_AGENTS="${SCRIPT_DIR}/AGENTS.md"
 # Agent AGENTS.md paths mapping (core agents - always available)
 declare -A AGENTS_PATHS=(
     ["gemini"]="$HOME/.gemini/GEMINI.md"
-    ["qwen"]="$HOME/.qwen/AGENTS.md"
+    ["qwen"]="$HOME/.qwen/QWEN.md"
     ["opencode"]="$HOME/.config/opencode/AGENTS.md"
     ["claude"]="$HOME/.claude/CLAUDE.md"
     ["amp"]="$HOME/.config/amp/AGENTS.md"
     ["codex"]="$HOME/.codex/AGENTS.md"
-    ["copilot"]="$HOME/.copilot/AGENTS.md"
+    ["copilot"]="$HOME/.copilot/copilot-instructions.md"
     ["factory"]="$HOME/.factory/AGENTS.md"
     ["goose"]="$HOME/.config/goose/AGENTS.md"
     ["kilocode"]="$HOME/.kilocode/rules/AGENTS.md"
@@ -67,8 +67,8 @@ detect_construct_agents() {
     AGENTS_PATHS["construct_gemini"]="$construct_home/.gemini/GEMINI.md"
     AGENTS_PATHS["construct_claude"]="$construct_home/.claude/CLAUDE.md"
     AGENTS_PATHS["construct_amp"]="$construct_home/.config/amp/AGENTS.md"
-    AGENTS_PATHS["construct_qwen"]="$construct_home/.qwen/AGENTS.md"
-    AGENTS_PATHS["construct_copilot"]="$construct_home/.copilot/AGENTS.md"
+    AGENTS_PATHS["construct_qwen"]="$construct_home/.qwen/QWEN.md"
+    AGENTS_PATHS["construct_copilot"]="$construct_home/.copilot/copilot-instructions.md"
     AGENTS_PATHS["construct_opencode"]="$construct_home/.config/opencode/AGENTS.md"
     AGENTS_PATHS["construct_cline"]="$construct_home/.cline/AGENTS.md"
     AGENTS_PATHS["construct_codex"]="$construct_home/.codex/AGENTS.md"
@@ -102,6 +102,16 @@ log_error() {
     echo -e "${RED}[ERROR]${NC} $1"
 }
 
+# Walk up from a path until we find an existing directory
+find_existing_ancestor() {
+    local dir
+    dir="$(dirname "$1")"
+    while [[ ! -d "$dir" ]]; do
+        dir="$(dirname "$dir")"
+    done
+    echo "$dir"
+}
+
 check_central_file() {
     if [[ ! -f "$CENTRAL_AGENTS" ]]; then
         log_error "Central AGENTS.md does not exist: $CENTRAL_AGENTS"
@@ -129,32 +139,40 @@ create_symlinks() {
             continue
         fi
 
-        local parent_dir
-        parent_dir=$(dirname "$target_path")
-
-        if [[ ! -d "$parent_dir" ]]; then
-            log_info "Creating parent directory for $key: $parent_dir"
-            mkdir -p "$parent_dir"
-        fi
-
         if [[ -L "$target_path" ]]; then
             log_warning "Already symlinked: $target_path"
             skipped=$((skipped + 1))
             continue
         fi
 
-        if [[ -f "$target_path" ]]; then
-            if [[ ! -L "$target_path" ]]; then
-                mv "$target_path" "${target_path}.backup.$(date +%Y%m%d_%H%M%S)"
-                log_info "Backed up: $target_path"
-            fi
-            ln -sf "$CENTRAL_AGENTS" "$target_path"
-            log_success "Linked $key -> $target_path"
-            success=$((success + 1))
-        else
-            log_warning "Target path does not exist for $key: $target_path"
+        # Only proceed if the agent's config folder exists on this machine.
+        # Walk up the tree — if the deepest existing ancestor is HOME or /,
+        # the agent is not installed and we skip.
+        local existing_ancestor
+        existing_ancestor="$(find_existing_ancestor "$target_path")"
+        if [[ "$existing_ancestor" == "$HOME" || "$existing_ancestor" == "/" ]]; then
+            log_info "Agent not installed, skipping: $key"
             skipped=$((skipped + 1))
+            continue
         fi
+
+        # Agent is installed — create intermediate dirs if needed
+        local parent_dir
+        parent_dir="$(dirname "$target_path")"
+        if [[ ! -d "$parent_dir" ]]; then
+            log_info "Creating directory for $key: $parent_dir"
+            mkdir -p "$parent_dir"
+        fi
+
+        # Backup existing real file if present
+        if [[ -f "$target_path" ]]; then
+            mv "$target_path" "${target_path}.backup.$(date +%Y%m%d_%H%M%S)"
+            log_info "Backed up: $target_path"
+        fi
+
+        ln -sf "$CENTRAL_AGENTS" "$target_path"
+        log_success "Linked $key -> $target_path"
+        success=$((success + 1))
     done
 
     echo ""
