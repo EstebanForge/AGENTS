@@ -74,9 +74,11 @@ backup_path() {
 }
 
 # Link single agent
+# $3: relink flag (1 = re-create even if already correctly linked)
 link_agent() {
     local name=$1
     local target=$2
+    local relink=${3:-0}
     local parent
     parent="$(dirname "${target}")"
 
@@ -90,8 +92,13 @@ link_agent() {
         local current
         current="$(readlink "${target}")"
         if [[ "${current}" == "${CENTRAL_SKILLS}" ]]; then
-            echo "✓ ${name}: Already linked"
-            return 0
+            if [[ "${relink}" == "1" ]]; then
+                rm "${target}"
+                echo "↺ ${name}: Re-linking"
+            else
+                echo "✓ ${name}: Already linked"
+                return 0
+            fi
         else
             echo "⚠ ${name}: Symlink exists but points elsewhere"
             rm "${target}"
@@ -160,10 +167,31 @@ check_status() {
 # Main commands
 cmd_link() {
     ensure_central_skills
+
+    # Count already-linked agents
+    local already_linked=0
+    for name in "${!AGENTS[@]}"; do
+        local target="${AGENTS[$name]}"
+        if [[ -L "${target}" && "$(readlink "${target}")" == "${CENTRAL_SKILLS}" ]]; then
+            already_linked=$((already_linked + 1))
+        fi
+    done
+
+    local relink=0
+    if [[ "${already_linked}" -gt 0 ]]; then
+        echo "${already_linked} agent(s) are already linked."
+        printf "Re-link them all to fix any issues? [y/N] "
+        read -r answer
+        if [[ "${answer}" =~ ^[Yy]$ ]]; then
+            relink=1
+        fi
+        echo
+    fi
+
     echo "Linking agent skills to: ${CENTRAL_SKILLS}"
     echo
     for name in "${!AGENTS[@]}"; do
-        link_agent "${name}" "${AGENTS[$name]}"
+        link_agent "${name}" "${AGENTS[$name]}" "${relink}"
     done
     echo
     echo "Done. All agents now share central skills directory."
