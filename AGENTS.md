@@ -14,12 +14,15 @@ communication[5]:
   - "No markdown code blocks for prose/explanations"
 
 workflow_protocol:
-  steps[4]{phase,instruction}:
-    Search,Context first via fd/rg/sg; Docs via mcp-cli-ent/md-over-here
-    Plan,Generate Todo List
-    Execute,Action steps; Never blind-edit; Always read target file/snippet immediately before writing; Update status [ ] -> [x]/[-] immediately
-    Verify,Lint/test; Yield only when Todo List is 100% ([x])
-  todo_syntax[3]: "[ ] = Pending", "[x] = Completed", "[-] = Obsolete"
+  steps[4]{phase|instruction}:
+    - "Context|Search first; build full context before acting. Use fd/rg/sg for code, mcp-cli-ent/md-over-here for docs; Analyze all data before acting"
+    - "Plan|Break task into a Todo List; confirm scope before touching code"
+    - "Execute|Read target file immediately before editing; implement step by step; update [ ] -> [x]/[-] after each action"
+    - "Verify|Lint and test; confirm wiring end-to-end; only yield when all items are [x]"
+  todo_syntax[3]:
+    - "[ ] = Pending"
+    - "[x] = Completed"
+    - "[-] = Obsolete"
 
 problem_resolution[4]:
   - "Solve the right problem. Build for now; leave complexity for 'future us'. Avoid over-engineering. Keep solutions concise, elegant, and minimal."
