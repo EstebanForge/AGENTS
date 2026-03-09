@@ -22,166 +22,95 @@ View [AGENTS.md](AGENTS.md) for the full rulebook.
 
 # Centralization Manager
 
-Centralize agent configuration management across all AI coding agents. Maintains a single source of truth for agent rules and shared skills via symlinks.
+Centralize agent configuration management across all AI coding agents. Maintains a single source of truth for agent rules and shared skills.
 
 - **Central AGENTS.md:** `./AGENTS.md`
 - **Central Skills:** `./skills/`
+
+The unified `manage.sh` script handles both instructions and skills in a single pass.
 
 ---
 
 ## Quick Start
 
+Run the manager without arguments for an interactive menu:
+
 ```bash
-# Link everything
-./manage-agents.sh link
-./manage-skills.sh link
+./manage.sh
+```
+
+Or use command-line arguments:
+
+```bash
+# Smart Sync (Link/Copy everything)
+./manage.sh link
+
+# Force Sync (Overwrite existing links/copies)
+./manage.sh link --force
 
 # Verify status
-./manage-agents.sh status
-./manage-skills.sh status
+./manage.sh status
 
-# Remove all symlinks and restore originals
-./manage-agents.sh unlink
-./manage-skills.sh unlink
+# Restore original state (Unlink/Remove copies)
+./manage.sh unlink
 ```
 
 ---
 
-## manage-agents.sh
+## manage.sh
 
-Manages symlinks from each agent's config file to the central `AGENTS.md`.
-
-```bash
-./manage-agents.sh link       # Symlink all agents to ./AGENTS.md
-./manage-agents.sh status     # Show symlink status for all agents
-./manage-agents.sh unlink     # Remove symlinks, restore backups
-./manage-agents.sh help       # Show help
-```
+The unified manager for both instructions (`AGENTS.md`) and skills.
 
 **Behavior:**
+- **Standard Mode:** Uses symlinks for local efficiency.
+- **construct-cli Mode:** Uses surgical direct copies (files and folders) for Docker compatibility.
+- Automatically detects VSCode, Windsurf, and construct-cli environments.
 - Creates parent directories if missing.
-- Backs up any existing file with a timestamp before linking.
-- Links if the agent's config folder exists on the machine, even if the target file doesn't yet — skips only if the agent is not installed.
+- Backs up existing real files/directories before linking.
 - `unlink` restores the most recent backup automatically.
-- VSCode and Windsurf paths are auto-detected at runtime.
-- construct-cli paths are auto-detected when `~/.config/construct-cli/config.toml` is present.
-
----
-
-## manage-skills.sh
-
-Manages symlinks from each agent's skills directory to the central `./skills/` folder.
-
-```bash
-./manage-skills.sh link       # Symlink all agents to ./skills/
-./manage-skills.sh status     # Show symlink status for all agents
-./manage-skills.sh unlink     # Remove symlinks, restore backups
-
-./manage-skills.sh help       # Show help (includes dynamic agent count)
-```
-
-**Behavior:**
-- Creates parent directories if missing.
-- Backs up any existing directory with a timestamp before linking.
-- If agents are already linked, prompts to re-link them all (useful to fix issues).
-- `unlink` restores the most recent backup automatically.
-- construct-cli paths are auto-detected when `~/.config/construct-cli/config.toml` is present.
+- Sorting: Displays regular agents first, followed by `construct_` agents.
 
 ---
 
 ## Supported Agents
 
-### AGENTS.md — Core (12, always active)
+### Instructions (AGENTS.md / CLAUDE.md / etc.)
 
 | Agent | Path | Notes |
 |-------|------|-------|
+| Standard | `~/.agents/AGENTS.md` | Emerging standard path |
 | Gemini | `~/.gemini/GEMINI.md` | Custom filename |
 | Claude | `~/.claude/CLAUDE.md` | Custom filename |
+| Qwen | `~/.qwen/QWEN.md` | Custom filename |
 | Amp | `~/.config/amp/AGENTS.md` | |
-| Qwen | `~/.qwen/QWEN.md` | Custom filename — default is `QWEN.md`, configurable via `context.fileName` |
-| Copilot | `~/.copilot/copilot-instructions.md` | Custom filename |
-| OpenCode | `~/.config/opencode/AGENTS.md` | |
-| Cline | `~/Documents/Cline/Rules/AGENTS.md` | Primary path |
-| Cline Alt | `~/Cline/Rules/AGENTS.md` | Alternate path |
+| Opencode | `~/.config/opencode/AGENTS.md` | |
 | Codex | `~/.codex/AGENTS.md` | |
-| Factory (Droid) | `~/.factory/AGENTS.md` | |
-| Goose | `~/.config/goose/AGENTS.md` | Also reads `.goosehints`; canonical global is `~/.config/goose/.goosehints` |
-| Kilo Code | `~/.kilocode/rules/AGENTS.md` | |
+| Copilot | `~/.copilot/copilot-instructions.md` | Custom filename |
+| Factory | `~/.factory/AGENTS.md` | |
+| Goose | `~/.config/goose/AGENTS.md` | |
+| Kilocode | `~/.kilocode/rules/AGENTS.md` | |
+| Cline | `~/Documents/Cline/Rules/AGENTS.md` | |
+| Pi | `~/.pi/agent/AGENTS.md` | |
 
-### AGENTS.md — Auto-detected
+### Skills
 
-| Agent | Path | Condition |
-|-------|------|-----------|
-| VSCode | `~/Library/Application Support/Code/User/prompts/AGENTS.md.instructions.md` | macOS, if file exists |
-| VSCode | `~/.config/Code/User/prompts/AGENTS.md.instructions.md` | Linux, if file exists |
-| Windsurf | `~/.codeium/windsurf/memories/global_rules.md` | If file exists |
+Agents that natively read `~/.agents/skills/` (covered by **Standard**, no dedicated entry needed):
+- Gemini, Codex, Opencode.
 
-### AGENTS.md — construct-cli (detected if `~/.config/construct-cli/config.toml` exists)
-
-| Agent | Path |
-|-------|------|
-| Gemini | `~/.config/construct-cli/home/.gemini/GEMINI.md` |
-| Claude | `~/.config/construct-cli/home/.claude/CLAUDE.md` |
-| Amp | `~/.config/construct-cli/home/.config/amp/AGENTS.md` |
-| Qwen | `~/.config/construct-cli/home/.qwen/QWEN.md` |
-| Copilot | `~/.config/construct-cli/home/.copilot/copilot-instructions.md` |
-| OpenCode | `~/.config/construct-cli/home/.config/opencode/AGENTS.md` |
-| Cline | `~/.config/construct-cli/home/.cline/AGENTS.md` |
-| Codex | `~/.config/construct-cli/home/.codex/AGENTS.md` |
-| Droid | `~/.config/construct-cli/home/.factory/AGENTS.md` |
-| Goose | `~/.config/construct-cli/home/.config/goose/AGENTS.md` |
-| Kilo Code | `~/.config/construct-cli/home/.kilocode/rules/AGENTS.md` |
-| Pi | `~/.config/construct-cli/home/.pi/agent/AGENTS.md` |
-
-### Skills — Core (9, always active)
-
-Agents that natively read `~/.agents/skills/` — covered by the **Standard** symlink, no dedicated entry needed:
-
-| Agent | Native path |
-|-------|-------------|
-| Gemini | `~/.agents/skills/` |
-| OpenCode | `~/.agents/skills/` |
-| Codex | `~/.agents/skills/` |
-
-Agents with dedicated symlinks:
+Agents with dedicated synchronization:
 
 | Agent | Path |
 |-------|------|
 | Standard | `~/.agents/skills/` |
 | Claude | `~/.claude/skills/` |
-| Amp | `~/.config/agents/skills/` |
 | Qwen | `~/.qwen/skills/` |
+| Amp | `~/.config/amp/skills/` |
 | Copilot | `~/.copilot/skills/` |
 | Cline | `~/.cline/skills/` |
-| Droid | `~/.factory/skills/` |
+| Factory | `~/.factory/skills/` |
 | Goose | `~/.config/goose/skills/` |
-| Kilo Code | `~/.kilocode/skills/` |
+| Kilocode | `~/.kilocode/skills/` |
 | Pi | `~/.pi/agent/skills/` |
-
-### Skills — construct-cli (detected if `~/.config/construct-cli/config.toml` exists)
-
-Agents that natively read `~/.agents/skills/` within the construct-cli home — covered by **construct_Standard**:
-
-| Agent | Native path |
-|-------|-------------|
-| Gemini | `~/.config/construct-cli/home/.agents/skills/` |
-| OpenCode | `~/.config/construct-cli/home/.agents/skills/` |
-| Codex | `~/.config/construct-cli/home/.agents/skills/` |
-
-Agents with dedicated symlinks:
-
-| Agent | Path |
-|-------|------|
-| Standard | `~/.config/construct-cli/home/.agents/skills/` |
-| Claude | `~/.config/construct-cli/home/.claude/skills/` |
-| Amp | `~/.config/construct-cli/home/.config/amp/skills/` |
-| Qwen | `~/.config/construct-cli/home/.qwen/skills/` |
-| Copilot | `~/.config/construct-cli/home/.copilot/skills/` |
-| Cline | `~/.config/construct-cli/home/.cline/skills/` |
-| Droid | `~/.config/construct-cli/home/.factory/skills/` |
-| Goose | `~/.config/construct-cli/home/.config/goose/skills/` |
-| Kilo Code | `~/.config/construct-cli/home/.kilocode/skills/` |
-| Pi | `~/.config/construct-cli/home/.pi/agent/skills/` |
 
 ---
 
@@ -195,10 +124,12 @@ All skills must follow the Agent Skills specification: https://agentskills.io/sp
 
 | Skill | Description |
 |-------|-------------|
-| `refactor-pass` | Perform a refactor pass focused on simplicity after recent changes. Removes dead code, straightens logic flows, removes excessive parameters and premature optimization. Runs build/tests to verify. |
-| `codex-delegate` | Use OpenAI Codex CLI for complex debugging and code analysis via a file-based question/answer pattern (`/tmp/question.txt` → `/tmp/reply.txt`). |
-| `orchestrate` | Structured workflow orchestration: plan-first execution, subagent delegation, self-improvement loops, verification gates, elegance checks, and autonomous bug fixing. |
-| `plan` | Thorough plan review across architecture, code quality, tests, and performance. Presents numbered issues with lettered options, concrete tradeoffs, and opinionated recommendations. Asks for user input before proceeding. |
+| `refactor-pass` | Perform a refactor pass focused on simplicity after recent changes. |
+| `codex-delegate` | Use OpenAI Codex CLI for complex debugging and code analysis. |
+| `orchestrate` | Structured workflow orchestration and subagent delegation. |
+| `plan` | Thorough plan review across architecture, code quality, and performance. |
+| `humanizer` | Remove signs of AI-generated writing from text. |
+| `esteban-alike` | Write in Esteban's voice (English and Spanish). |
 
 ### Adding a Skill
 
@@ -213,7 +144,7 @@ skills/
 ```markdown
 ---
 name: my-skill
-description: One-line description used by agents to decide when to invoke this skill.
+description: One-line description used by agents.
 ---
 
 # My Skill
