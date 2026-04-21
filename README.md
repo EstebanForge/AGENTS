@@ -129,7 +129,6 @@ All skills must follow the Agent Skills specification: https://agentskills.io/sp
 | `orchestrate` | Structured workflow orchestration and subagent delegation. |
 | `plan` | Thorough plan review across architecture, code quality, and performance. |
 | `humanizer` | Remove signs of AI-generated writing from text. |
-| `esteban-alike` | Write in Esteban's voice (English and Spanish). |
 
 ### Adding a Skill
 
