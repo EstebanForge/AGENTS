@@ -35,7 +35,7 @@ log_error() {
 
 # Unified Agent Mapping
 # Format: "InstructionsPath|SkillsPath" (Use "-" if not applicable)
-# Note: Gemini, Codex, and Opencode support the emerging ~/.agents/skills standard
+# Note: Gemini, Codex, Opencode, and Pi support the emerging ~/.agents/skills standard
 # and do not need separate skills mapping.
 declare -A AGENTS=(
     # --- Standard & Standard-Supporting Agents ---
@@ -53,7 +53,7 @@ declare -A AGENTS=(
     ["Goose"]="${HOME}/.config/goose/AGENTS.md|${HOME}/.config/goose/skills"
     ["Kilocode"]="${HOME}/.kilocode/rules/AGENTS.md|${HOME}/.kilocode/skills"
     ["Cline"]="${HOME}/Documents/Cline/Rules/AGENTS.md|${HOME}/.cline/skills"
-    ["Pi"]="${HOME}/.pi/agent/AGENTS.md|${HOME}/.pi/agent/skills"
+    ["Pi"]="${HOME}/.pi/agent/AGENTS.md|-"
 )
 
 # Path detection for extra agents (VSCode, Windsurf)
@@ -112,7 +112,7 @@ detect_construct_agents() {
     AGENTS["construct_Goose"]="${construct_home}/.config/goose/AGENTS.md|${construct_home}/.config/goose/skills"
     AGENTS["construct_Kilocode"]="${construct_home}/.kilocode/rules/AGENTS.md|${construct_home}/.kilocode/skills"
     AGENTS["construct_Cline"]="${construct_home}/.cline/AGENTS.md|${construct_home}/.cline/skills"
-    AGENTS["construct_Pi"]="${construct_home}/.pi/agent/AGENTS.md|${construct_home}/.pi/agent/skills"
+    AGENTS["construct_Pi"]="${construct_home}/.pi/agent/AGENTS.md|-"
 
     log_info "construct-cli detected: added 13 agent paths (Internal Copying Mode)"
 }
@@ -245,6 +245,11 @@ cmd_link() {
     detect_extra_agents; detect_construct_agents
 
     log_info "Managing Agent Configuration & Skills..."
+
+    # Migration: Pi now supports ~/.agents/skills natively
+    unmanage_agent "Pi" "-|${HOME}/.pi/agent/skills"
+    unmanage_agent "construct_Pi" "-|${HOME}/.config/construct-cli/home/.pi/agent/skills"
+
     for name in $(get_sorted_agents); do
         manage_agent "${name}" "${AGENTS[$name]}" "${force}"
     done
