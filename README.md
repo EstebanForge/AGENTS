@@ -124,11 +124,18 @@ All skills must follow the Agent Skills specification: https://agentskills.io/sp
 
 | Skill | Description |
 |-------|-------------|
-| `refactor-pass` | Perform a refactor pass focused on simplicity after recent changes. |
-| `codex-delegate` | Use OpenAI Codex CLI for complex debugging and code analysis. |
-| `orchestrate` | Structured workflow orchestration and subagent delegation. |
-| `plan` | Thorough plan review across architecture, code quality, and performance. |
+| `acpx` | Use acpx as a headless ACP CLI for agent-to-agent communication. |
+| `design-taste-frontend` | Senior UI/UX Engineer. Architect digital interfaces overriding default LLM biases. |
+| `grill-me` | Interview the user relentlessly about a plan or design until reaching shared understanding. |
 | `humanizer` | Remove signs of AI-generated writing from text. |
+| `improve-codebase-architecture` | Explore codebase for architectural improvement, focusing on testability. |
+| `orchestrate` | Structured workflow orchestration for non-trivial tasks. |
+| `plan` | Thorough plan review across architecture, code quality, tests, and performance. |
+| `prd-to-plan` | Turn a PRD into a multi-phase implementation plan using tracer-bullet vertical slices. |
+| `refactor-pass` | Perform a refactor pass focused on simplicity after recent changes. |
+| `request-refactor-plan` | Create a detailed refactor plan with tiny commits via user interview. |
+| `write-a-prd` | Create a PRD through user interview, codebase exploration, and module design. |
+| `write-a-skill` | Create new agent skills with proper structure and bundled resources. |
 
 ### Adding a Skill
 
