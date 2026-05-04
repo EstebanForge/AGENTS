@@ -89,6 +89,9 @@ tool_protocol[3]:
   - "Explain re-work."
   - "Native tools > CLI."
 
+agent_protocol[1]:
+  - "Mentioned agent (pi|codex|gemini|claude|opencode|copilot)? Use acpx skill for interaction."
+
 technical_standards:
   principles: "DRY, KISS, YAGNI, LoD, LOB (Locality of Behaviour). NO SOLID."
   logic: "Early returns. switch > if. Why, not what."
