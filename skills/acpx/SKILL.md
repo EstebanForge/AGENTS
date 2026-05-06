@@ -207,6 +207,32 @@ Behavior:
 
 Permission flags are mutually exclusive.
 
+> ⚠️ **Position matters**: Global options (`--approve-all`, `--deny-all`, `--format`, `--verbose`, etc.) must come **before** the agent name. Putting them after the agent name (e.g. `acpx codex --approve-all 'prompt'`) passes them as agent-specific options which may be rejected.
+
+## Agent quirks
+
+Agents in the built-in registry behave differently over ACP. Know what to expect:
+
+| Agent | Output style | Auth | Notes |
+|-------|-------------|------|-------|
+| `codex` | Clean, direct text | Ambient `OPENAI_API_KEY` | Default agent; most consistent. `thought_level` maps to `reasoning_effort`. |
+| `claude` | Direct text, occasionally verbose | API key or OAuth | May hit **rate limits** — error includes reset time (`resets HH:MM UTC`). Retry after the window. |
+| `gemini` | Text with `[thinking]` reasoning blocks | Ambient `GEMINI_API_KEY` | Reasoning trace is streamed as `[thinking]` sections before the final answer. Expect more verbose output. |
+| `copilot` | Terse/minimal — often just the answer | GitHub OAuth | No reasoning trace, no adornment. Good for scripted extraction. |
+| `opencode` | N/A | `opencode-login` (custom) | **ACP adapter may not work** — session/new requires strict `cwd` and `mcpServers` params. Auth flow is separate from acpx. Prefer `opencode run` natively. |
+| `cursor` | Direct text | `cursor-auth` (custom) | Requires Cursor auth; ACP adapter is still maturing. |
+| `qoder` | Direct text | API key | Accepts `--allowed-tools` and `--max-turns` startup flags forwarded from acpx session options. |
+| `pi` | Standard text | Ambient provider key | Self-hosted via `npx pi-acp`. |
+
+### Rate limits
+
+Adapters (especially hosted models) can hit API rate limits. Common patterns:
+
+- **Claude**: `You've hit your limit · resets HH:MM UTC` — wait until the reset time.
+- **OpenAI-based** (Codex, etc.): `429 Rate Limit` — back off and retry.
+
+acpx propagates the error as-is from the adapter; there is no internal retry logic.
+
 ## Config files
 
 Config files are merged in this order (later wins):
@@ -298,6 +324,55 @@ acpx --format json codex exec 'review changed files' \
 If every permission request is denied/cancelled and none approved, `acpx` exits with permission-denied status.
 
 ## Practical workflows
+
+### Permission flag ordering
+
+Global flags before agent:
+
+```bash
+# ✅ Correct
+acpx --approve-all codex 'summarize changed files'
+
+# ❌ Wrong — `--approve-all` passed to agent, may be rejected
+acpx codex --approve-all 'summarize changed files'
+```
+
+### One-shot vs persistent
+
+Use `exec` for stateless queries (no session saved):
+
+```bash
+acpx --format quiet exec 'Two plus two'       # -> 4
+acpx --format quiet codex exec 'Two plus two'  # explicit agent
+```
+
+Use `prompt` (default) for multi-turn conversations with session persistence:
+
+```bash
+acpx codex 'analyze test output'   # creates/uses session
+acpx codex 'now apply the fix'     # continues same session
+```
+
+### Named sessions
+
+Create a named session first, then prompt:
+
+```bash
+acpx codex sessions new --name backend
+acpx codex -s backend 'fix pagination bug'
+acpx codex -s backend 'run tests'
+```
+
+### Parsing Gemini reasoning traces
+
+When using `--format json`, Gemini's reasoning appears as `[thinking]` blocks in text events. For clean extraction, filter them out:
+
+```bash
+acpx --format json gemini exec 'explain this' \
+  | jq -r 'select(.type=="text" and (.text|startswith("[thinking]")|not)) | .text'
+```
+
+### Parallel named streams
 
 Persistent repo assistant:
 
