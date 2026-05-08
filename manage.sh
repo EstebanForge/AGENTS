@@ -9,6 +9,7 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CENTRAL_AGENTS="${SCRIPT_DIR}/AGENTS.md"
 CENTRAL_SKILLS="${SCRIPT_DIR}/skills"
+CENTRAL_PROMPTS="${SCRIPT_DIR}/prompts"
 
 # Colors for output
 RED='\033[0;31m'
@@ -54,6 +55,11 @@ declare -A AGENTS=(
     ["Kilocode"]="${HOME}/.kilocode/rules/AGENTS.md|${HOME}/.kilocode/skills"
     ["Cline"]="${HOME}/Documents/Cline/Rules/AGENTS.md|${HOME}/.cline/skills"
     ["Pi"]="${HOME}/.pi/agent/AGENTS.md|-"
+)
+
+declare -A PROMPTS=(
+    ["Standard"]="${HOME}/.agents/prompts"
+    ["Pi"]="${HOME}/.pi/agent/prompts"
 )
 
 # Path detection for extra agents (VSCode, Windsurf)
@@ -113,6 +119,8 @@ detect_construct_agents() {
     AGENTS["construct_Kilocode"]="${construct_home}/.kilocode/rules/AGENTS.md|${construct_home}/.kilocode/skills"
     AGENTS["construct_Cline"]="${construct_home}/.cline/AGENTS.md|${construct_home}/.cline/skills"
     AGENTS["construct_Pi"]="${construct_home}/.pi/agent/AGENTS.md|-"
+    PROMPTS["construct_Standard"]="${construct_agents_dir}/prompts"
+    PROMPTS["construct_Pi"]="${construct_home}/.pi/agent/prompts"
 
     log_info "construct-cli detected: added 13 agent paths (Internal Copying Mode)"
 }
@@ -208,6 +216,39 @@ manage_agent() {
     fi
 }
 
+# Prompts management (mirrors skills logic)
+manage_prompts() {
+    local name=$1; local target=$2; local force=${3:-0}
+    if [[ "${name}" == construct_* ]]; then
+        if [[ "${target}" != "${HOME}/.config/construct-cli/home/.agents/"* ]]; then
+            mkdir -p "${target}"
+            if command -v rsync >/dev/null 2>&1; then
+                rsync -a --delete "${CENTRAL_PROMPTS}/" "${target}/"
+            else
+                rm -rf "${target}" && cp -r "${CENTRAL_PROMPTS}" "${target}"
+            fi
+            log_success "${name}: Synchronized prompts"
+        else
+            log_info "${name}: Prompts are source"
+        fi
+    else
+        local ancestor; ancestor="$(find_existing_ancestor "${target}")"
+        if [[ "${ancestor}" != "${HOME}" && "${ancestor}" != "/" ]]; then
+            local needs_link=1
+            if [[ -L "${target}" ]]; then
+                if [[ "$(readlink "${target}")" == "${CENTRAL_PROMPTS}" ]]; then
+                    if [[ "${force}" == "1" ]]; then rm "${target}"; else needs_link=0; log_warning "${name}: Prompts already linked"; fi
+                else rm "${target}"; fi
+            elif [[ -d "${target}" ]]; then backup_path "${target}"; fi
+
+            if [[ "${needs_link}" == "1" ]]; then
+                mkdir -p "$(dirname "${target}")"; ln -s "${CENTRAL_PROMPTS}" "${target}"
+                log_success "${name}: Linked prompts"
+            fi
+        else log_info "${name}: Agent not installed (skipped prompts)"; fi
+    fi
+}
+
 # Unified Unlink/Restore operation
 unmanage_agent() {
     local name=$1; local paths=$2
@@ -227,6 +268,21 @@ unmanage_agent() {
             log_success "${name}: Removed copy $(basename "${target}")"
         fi
     done
+}
+
+unmanage_prompts() {
+    local name=$1; local target=$2
+    if [[ "${name}" == construct_* && "${target}" == "${HOME}/.config/construct-cli/home/.agents/"* ]]; then return 0; fi
+
+    if [[ -L "${target}" ]]; then
+        rm "${target}"
+        log_success "${name}: Removed symlink $(basename "${target}")"
+        local backup; backup="$(find "$(dirname "${target}")" -maxdepth 1 -name "$(basename "${target}").backup.*" 2>/dev/null | sort -r | head -n1)"
+        if [[ -n "${backup}" ]]; then mv "${backup}" "${target}"; log_info "  ↳ Restored backup"; fi
+    elif [[ -e "${target}" && "${name}" == construct_* ]]; then
+        rm -rf "${target}"
+        log_success "${name}: Removed copy $(basename "${target}")"
+    fi
 }
 
 # Get sorted agent names: regular first, then construct_
@@ -252,6 +308,9 @@ cmd_link() {
 
     for name in $(get_sorted_agents); do
         manage_agent "${name}" "${AGENTS[$name]}" "${force}"
+        if [[ -n "${PROMPTS[$name]+isset}" ]]; then
+            manage_prompts "${name}" "${PROMPTS[$name]}" "${force}"
+        fi
     done
     log_success "Synchronization complete."
 }
@@ -261,6 +320,9 @@ cmd_unlink() {
     log_info "Unlinking and restoring original states..."
     for name in $(get_sorted_agents); do
         unmanage_agent "${name}" "${AGENTS[$name]}"
+        if [[ -n "${PROMPTS[$name]+isset}" ]]; then
+            unmanage_prompts "${name}" "${PROMPTS[$name]}"
+        fi
     done
     log_success "Restoration complete."
 }
@@ -268,12 +330,12 @@ cmd_unlink() {
 cmd_status() {
     detect_extra_agents; detect_construct_agents
     log_info "Agent Synchronization Status"
-    printf "  %-20s %-20s %-20s
-" "AGENT" "INSTRUCTIONS" "SKILLS"
+    printf "  %-20s %-20s %-20s %-20s
+" "AGENT" "INSTRUCTIONS" "SKILLS" "PROMPTS"
     echo "  --------------------------------------------------------------------------------"
     for name in $(get_sorted_agents); do
         local paths="${AGENTS[$name]}"; local md="${paths%%|*}"; local sk="${paths#*|}"
-        local md_s="-"; local sk_s="-"
+        local md_s="-"; local sk_s="-"; local pr_s="-"
         if [[ "${md}" != "-" ]]; then
             if [[ -L "${md}" ]]; then md_s="${GREEN}Linked${NC}"; elif [[ -f "${md}" ]]; then md_s="${YELLOW}File${NC}"; else md_s="Missing"; fi
             if [[ "${name}" == construct_* && ! -L "${md}" && -f "${md}" ]]; then md_s="${GREEN}Copied${NC}"; fi
@@ -282,8 +344,13 @@ cmd_status() {
             if [[ -L "${sk}" ]]; then sk_s="${GREEN}Linked${NC}"; elif [[ -d "${sk}" ]]; then sk_s="${YELLOW}Dir${NC}"; else sk_s="Missing"; fi
             if [[ "${name}" == construct_* && ! -L "${sk}" && -d "${sk}" ]]; then sk_s="${GREEN}Copied${NC}"; fi
         fi
-        printf "  %-20s %-30b %-30b
-" "${name}" "${md_s}" "${sk_s}"
+        if [[ -n "${PROMPTS[$name]+isset}" ]]; then
+            local pr="${PROMPTS[$name]}"
+            if [[ -L "${pr}" ]]; then pr_s="${GREEN}Linked${NC}"; elif [[ -d "${pr}" ]]; then pr_s="${YELLOW}Dir${NC}"; else pr_s="Missing"; fi
+            if [[ "${name}" == construct_* && ! -L "${pr}" && -d "${pr}" ]]; then pr_s="${GREEN}Copied${NC}"; fi
+        fi
+        printf "  %-20s %-30b %-30b %-30b
+" "${name}" "${md_s}" "${sk_s}" "${pr_s}"
     done
 }
 # Interactive Menu
