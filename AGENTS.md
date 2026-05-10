@@ -19,6 +19,7 @@ communication_protocol[4]:
   - "1-sentence ack"
   - "State action + intent preamble"
   - "No prose codeblocks"
+  - "Never use em-dashes"
 
 workflow_protocol:
   steps[4]{phase|instruction}:
