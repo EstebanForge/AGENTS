@@ -125,9 +125,11 @@ All skills must follow the Agent Skills specification: https://agentskills.io/sp
 | Skill | Description |
 |-------|-------------|
 | `acpx` | Use acpx as a headless ACP CLI for agent-to-agent communication. |
+| `agent-browser` | Browser automation CLI for AI agents — navigate, click, fill forms, screenshot, scrape, and test web apps. |
 | `design-taste-frontend` | Senior UI/UX Engineer. Architect digital interfaces overriding default LLM biases. |
 | `grill-me` | Interview the user relentlessly about a plan or design until reaching shared understanding. |
 | `humanizer` | Remove signs of AI-generated writing from text. |
+| `hunk-review` | Interacts with live Hunk diff review sessions via CLI. |
 | `improve-codebase-architecture` | Explore codebase for architectural improvement, focusing on testability. |
 | `orchestrate` | Structured workflow orchestration for non-trivial tasks. |
 | `plan` | Thorough plan review across architecture, code quality, tests, and performance. |
