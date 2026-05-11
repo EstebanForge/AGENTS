@@ -207,7 +207,29 @@ Behavior:
 
 Permission flags are mutually exclusive.
 
-> ⚠️ **Position matters**: Global options (`--approve-all`, `--deny-all`, `--format`, `--verbose`, etc.) must come **before** the agent name. Putting them after the agent name (e.g. `acpx codex --approve-all 'prompt'`) passes them as agent-specific options which may be rejected.
+> ⚠️ **Position matters**: Global options must come **before** the agent name. Prompt options (`-s`, `--no-wait`, `--file`) come **after** the agent name. Mixing up the positions passes flags to the wrong layer.
+
+Full ordering: `acpx [global_options] [agent] [prompt_options] [prompt_text]`
+
+```bash
+# ✅ Correct
+acpx --approve-all --format json claude -s feature-x 'continue the refactor'
+#    ^^^ global ^^^              ^^^^^ ^^^ prompt ^^^
+#                                agent  session name
+
+# ❌ Wrong — -s is a prompt option, not global; claude receives it raw
+acpx -s feature-x --approve-all claude 'continue the refactor'
+
+# ❌ Wrong — --approve-all passed to agent, may be rejected
+acpx claude --approve-all -s feature-x 'continue the refactor'
+```
+
+`--agent` (escape hatch) is a global option and cannot be combined with a positional agent name:
+
+```bash
+acpx --agent './bin/custom-acp --profile ci' 'run validation'  # ✅
+# acpx --agent ./custom codex 'prompt'                         # ❌ USAGE ERROR
+```
 
 ## Agent quirks
 
@@ -232,6 +254,28 @@ Adapters (especially hosted models) can hit API rate limits. Common patterns:
 - **OpenAI-based** (Codex, etc.): `429 Rate Limit` — back off and retry.
 
 acpx propagates the error as-is from the adapter; there is no internal retry logic.
+
+### Error recovery
+
+| Exit code | Error | Cause | Recovery |
+|-----------|-------|-------|----------|
+| `4` | `NO_SESSION` | No session for this scope | `acpx <agent> sessions new` or `sessions ensure` |
+| `5` | `PERMISSION_DENIED` | All permission requests denied | Add `--approve-all` or `--approve-reads`; or set `defaultPermissions` in config |
+| `3` | `TIMEOUT` | `--timeout` exceeded | Increase `--timeout` or remove it |
+| `2` | `USAGE` | Bad flags, conflicting flags | Fix invocation; check flag ordering |
+| `1` | `RUNTIME` | Agent/protocol/auth error | Run with `--verbose`; check `acp.message` in `--format json` output |
+| `130` | Interrupted | `Ctrl+C` / SIGINT | Expected; session is still resumable |
+
+**Dead PID**: `acpx` detects a dead saved PID automatically on the next prompt, respawns the agent, and attempts `session/load`. If loading fails, it transparently falls back to `session/new`. No manual recovery needed -- just prompt again.
+
+**Auth errors** surface as `RUNTIME` with `detailCode=AUTH_REQUIRED`. Set credentials via `ACPX_AUTH_<METHOD_ID>` env vars (e.g. `ACPX_AUTH_OPENAI_API_KEY`) or the config `auth` map.
+
+**Idempotent session creation** -- safe to use in scripts before every prompt:
+
+```bash
+acpx claude sessions ensure          # get-or-create, no error if session already exists
+acpx claude sessions ensure --name x
+```
 
 ## Config files
 
@@ -324,6 +368,54 @@ acpx --format json codex exec 'review changed files' \
 If every permission request is denied/cancelled and none approved, `acpx` exits with permission-denied status.
 
 ## Practical workflows
+
+### First use: starting a session with an agent
+
+Sessions must exist before `prompt` works. Exit code `4` / `NO_SESSION` means no session has been created for this scope yet.
+
+```bash
+# 1. Create the session (or use `sessions ensure` for idempotent get-or-create)
+acpx claude sessions new
+
+# 2. Send the first message
+acpx claude 'here is the task: ...'
+
+# 3. Continue — same session, context preserved
+acpx claude 'now apply the fix'
+acpx claude 'run the tests and summarize results'
+```
+
+Named sessions follow the same pattern:
+
+```bash
+acpx claude sessions new --name auth-refactor
+acpx claude -s auth-refactor 'review the auth middleware'
+acpx claude -s auth-refactor 'apply the changes'
+```
+
+### Recovering context after your own session resets
+
+When your own context (Claude Code conversation) resets between sessions, the agent session persists on disk. Re-anchor by reading the session history before continuing:
+
+```bash
+# See all sessions for an agent in the current repo
+acpx claude sessions list
+
+# Read turn history to catch up on prior context
+acpx claude sessions history --limit 20
+
+# Named session history
+acpx claude sessions history auth-refactor --limit 20
+
+# Then continue — session is still live
+acpx claude 'continuing from last session: now address the edge cases we identified'
+```
+
+If the agent subprocess died (dead PID), create a fresh session. The prior turn history is still on disk but the live connection is gone:
+
+```bash
+acpx claude sessions new   # replaces dead session, history previews remain
+```
 
 ### Permission flag ordering
 
