@@ -127,6 +127,7 @@ All skills must follow the Agent Skills specification: https://agentskills.io/sp
 | `acpx` | Use acpx as a headless ACP CLI for agent-to-agent communication. |
 | `agent-browser` | Browser automation CLI for AI agents — navigate, click, fill forms, screenshot, scrape, and test web apps. |
 | `design-taste-frontend` | Senior UI/UX Engineer. Architect digital interfaces overriding default LLM biases. |
+| `dunk-review` | Read user-authored review comments via `dunk comments` CLI and address each one. |
 | `grill-me` | Interview the user relentlessly about a plan or design until reaching shared understanding. |
 | `humanizer` | Remove signs of AI-generated writing from text. |
 | `hunk-review` | Interacts with live Hunk diff review sessions via CLI. |

@@ -1,3 +1,6 @@
 # Ignore specific skills
 skills/.system/
 /skills/esteban-alike
+
+# Dunk review comments (local)
+.dunk/
