@@ -151,6 +151,7 @@ cli_tools_definition[26]{name,desc,example}:
   qmd,Local Search,qmd search "X"
 
 mcp_client_protocol: "Native first. Fallback mcp-cli-ent"
-mcp_servers_definition[2]{name,desc}:
+mcp_servers_definition[3]{name,desc}:
   deepwiki,Fetch framework docs.
   context7,Fetch code snippets/docs.
+  ai-vision-mcp,Image and video analysis via AI vision models (Gemini).
