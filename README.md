@@ -79,7 +79,7 @@ The unified manager for both instructions (`AGENTS.md`) and skills.
 | Agent | Path | Notes |
 |-------|------|-------|
 | Standard | `~/.agents/AGENTS.md` | Emerging standard path |
-| Gemini | `~/.gemini/GEMINI.md` | Custom filename |
+| Antigravity | `~/.gemini/GEMINI.md` | Reads both GEMINI.md and AGENTS.md (backward compat) |
 | Claude | `~/.claude/CLAUDE.md` | Custom filename |
 | Qwen | `~/.qwen/QWEN.md` | Custom filename |
 | Amp | `~/.config/amp/AGENTS.md` | |
@@ -95,7 +95,7 @@ The unified manager for both instructions (`AGENTS.md`) and skills.
 ### Skills
 
 Agents that natively read `~/.agents/skills/` (covered by **Standard**, no dedicated entry needed):
-- Gemini, Codex, Opencode.
+- Antigravity, Codex, Opencode.
 
 Agents with dedicated synchronization:
 

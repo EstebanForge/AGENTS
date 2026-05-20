@@ -36,12 +36,12 @@ log_error() {
 
 # Unified Agent Mapping
 # Format: "InstructionsPath|SkillsPath" (Use "-" if not applicable)
-# Note: Gemini, Codex, Opencode, and Pi support the emerging ~/.agents/skills standard
+# Note: Antigravity, Codex, Opencode, and Pi support the emerging ~/.agents/skills standard
 # and do not need separate skills mapping.
 declare -A AGENTS=(
     # --- Standard & Standard-Supporting Agents ---
     ["Standard"]="${HOME}/.agents/AGENTS.md|${HOME}/.agents/skills"
-    ["Gemini"]="${HOME}/.gemini/GEMINI.md|-"
+    ["Antigravity"]="${HOME}/.gemini/GEMINI.md|-"
     ["Codex"]="${HOME}/.codex/AGENTS.md|-"
     ["Opencode"]="${HOME}/.config/opencode/AGENTS.md|-"
 
@@ -108,7 +108,7 @@ detect_construct_agents() {
     # Add construct variants
     AGENTS["construct_Standard"]="${construct_agents_dir}/AGENTS.md|${construct_agents_dir}/skills"
     AGENTS["construct_Claude"]="${construct_home}/.claude/CLAUDE.md|${construct_home}/.claude/skills"
-    AGENTS["construct_Gemini"]="${construct_home}/.gemini/GEMINI.md|-"
+    AGENTS["construct_Antigravity"]="${construct_home}/.gemini/GEMINI.md|-"
     AGENTS["construct_Qwen"]="${construct_home}/.qwen/QWEN.md|${construct_home}/.qwen/skills"
     AGENTS["construct_Opencode"]="${construct_home}/.config/opencode/AGENTS.md|-"
     AGENTS["construct_Amp"]="${construct_home}/.config/amp/AGENTS.md|${construct_home}/.config/amp/skills"

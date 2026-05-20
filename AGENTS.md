@@ -103,7 +103,7 @@ tool_protocol[3]:
   - "Native tools > CLI"
 
 acpx_protocol[1]:
-  - "Mentioned agent (pi|codex|gemini|claude|opencode|copilot)? Use acpx skill for interaction with them"
+  - "Mentioned agent (pi|codex|antigravity|agy|claude|opencode|copilot)? Use acpx skill for interaction with them"
 
 technical_standards_definition:
   principles: "DRY, KISS, YAGNI, LoD, LOB (Locality of Behaviour). NO SOLID"
@@ -154,4 +154,4 @@ mcp_client_protocol: "Native first. Fallback mcp-cli-ent"
 mcp_servers_definition[3]{name,desc}:
   deepwiki,Fetch framework docs.
   context7,Fetch code snippets/docs.
-  ai-vision-mcp,Image and video analysis via AI vision models (Gemini).
+  ai-vision-mcp,Image and video analysis via AI vision models (Antigravity).
