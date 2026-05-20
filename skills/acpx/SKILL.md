@@ -75,7 +75,7 @@ Friendly agent names resolve to commands:
 - `openclaw` -> `openclaw acp`
 - `codex` -> `npx @zed-industries/codex-acp`
 - `claude` -> `npx -y @agentclientprotocol/claude-agent-acp` (ACPX-owned package range)
-- `gemini` -> `gemini --acp`
+- `antigravity` -> `agy --acp`
 - `cursor` -> `cursor-agent acp`
 - `copilot` -> `copilot --acp --stdio`
 - `droid` -> `droid exec --output-format acp` (`factory-droid` and `factorydroid` also resolve to `droid`)
@@ -239,7 +239,7 @@ Agents in the built-in registry behave differently over ACP. Know what to expect
 |-------|-------------|------|-------|
 | `codex` | Clean, direct text | Ambient `OPENAI_API_KEY` | Default agent; most consistent. `thought_level` maps to `reasoning_effort`. |
 | `claude` | Direct text, occasionally verbose | API key or OAuth | May hit **rate limits** — error includes reset time (`resets HH:MM UTC`). Retry after the window. |
-| `gemini` | Text with `[thinking]` reasoning blocks | Ambient `GEMINI_API_KEY` | Reasoning trace is streamed as `[thinking]` sections before the final answer. Expect more verbose output. |
+| `antigravity` | Text with `[thinking]` reasoning blocks | Ambient `ANTIGRAVITY_API_KEY` | Reasoning trace is streamed as `[thinking]` sections before the final answer. Expect more verbose output. |
 | `copilot` | Terse/minimal — often just the answer | GitHub OAuth | No reasoning trace, no adornment. Good for scripted extraction. |
 | `opencode` | N/A | `opencode-login` (custom) | **ACP adapter may not work** — session/new requires strict `cwd` and `mcpServers` params. Auth flow is separate from acpx. Prefer `opencode run` natively. |
 | `cursor` | Direct text | `cursor-auth` (custom) | Requires Cursor auth; ACP adapter is still maturing. |
@@ -455,12 +455,12 @@ acpx codex -s backend 'fix pagination bug'
 acpx codex -s backend 'run tests'
 ```
 
-### Parsing Gemini reasoning traces
+### Parsing Antigravity reasoning traces
 
-When using `--format json`, Gemini's reasoning appears as `[thinking]` blocks in text events. For clean extraction, filter them out:
+When using `--format json`, Antigravity's reasoning appears as `[thinking]` blocks in text events. For clean extraction, filter them out:
 
 ```bash
-acpx --format json gemini exec 'explain this' \
+acpx --format json antigravity exec 'explain this' \
   | jq -r 'select(.type=="text" and (.text|startswith("[thinking]")|not)) | .text'
 ```
 
