@@ -358,6 +358,7 @@ interactive_menu() {
     echo -e "${BLUE}=== Agents Centralization Manager ===${NC}"
     echo "Please choose an action:"
     options=("Sync (Smart)" "Force Sync (Overwrite All)" "Restore (Unlink)" "Status" "Quit")
+    COLUMNS=1
     select opt in "${options[@]}"; do
         case $opt in
             "Sync (Smart)") cmd_link 0; break ;;
