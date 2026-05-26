@@ -23,7 +23,7 @@ communication_protocol[4]:
 
 workflow_protocol:
   steps[4]{phase|instruction}:
-    - "Context|Search agentmemory FIRST (recall -> smart). Use fd/rg/sg (code), context7 (docs, fallback mcp-cli-ent). Analyze data"
+    - "Context|Search agentmemory FIRST (recall -> smart). If .codegraph/ exists: route codebase exploration through CodeGraph tools (search, context, explore). Else: fd/rg/sg (code), context7 (docs, fallback mcp-cli-ent). Analyze data"
     - "Plan|Todo list. Transform tasks to verifiable goals (test-first). For bugs: Reproduce (fail-first) mandatory. Define success criteria. Confirm scope"
     - "Execute|Read, then edit. Step-by-step. Confirm outcome visually (cat/ls). Long task? Save checkpoint every 3 turns."
     - "Verify|Lint, test, wire end-to-end. Yield when [x]"
@@ -102,6 +102,18 @@ tool_protocol[3]:
   - "Explain re-work"
   - "Native tools > CLI"
 
+codegraph_protocol:
+  priority: "codegraph > fd/rg/sg when .codegraph/ exists. Graph is pre-built index; re-scanning with grep repeats work already done"
+  rule: "Answer directly from CodeGraph. Don't delegate exploration to file-reading sub-agents or grep/read loops. Returned source is authoritative: treat as already read"
+  tools[6]{tool,intent}:
+    codegraph_context,"Map a task/feature/area first. Composes search + node + callers + callees in one call"
+    codegraph_trace,"'How does X reach Y' - call path with each hop's body inline. Follows dynamic-dispatch hops grep can't"
+    codegraph_explore,"Survey several related symbols' source in ONE budget-capped call"
+    codegraph_search,"Find a symbol by name across the codebase"
+    codegraph_callers/codegraph_callees,"Walk call flow one hop at a time"
+    codegraph_impact,"Check what's affected before editing"
+  fallback: "No .codegraph/ in project? Offer: 'Run codegraph init -i to build a code knowledge graph?'"
+
 acpx_protocol[1]:
   - "Mentioned agent (pi|codex|antigravity|agy|claude|opencode|copilot)? Use acpx skill for interaction with them"
 
@@ -151,7 +163,8 @@ cli_tools_definition[26]{name,desc,example}:
   qmd,Local Search,qmd search "X"
 
 mcp_client_protocol: "Native first. Fallback mcp-cli-ent"
-mcp_servers_definition[3]{name,desc}:
+mcp_servers_definition[4]{name,desc}:
   deepwiki,Fetch framework docs.
   context7,Fetch code snippets/docs.
   ai-vision-mcp,Image and video analysis via AI vision models (Antigravity).
+  codegraph,Pre-indexed semantic code knowledge graph. Symbol search, call graphs, impact analysis. 100% local.
