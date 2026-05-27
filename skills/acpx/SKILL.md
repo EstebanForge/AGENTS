@@ -231,6 +231,18 @@ acpx --agent './bin/custom-acp --profile ci' 'run validation'  # ✅
 # acpx --agent ./custom codex 'prompt'                         # ❌ USAGE ERROR
 ```
 
+## Direct agent usage (outside acpx)
+
+Each agent has its own native CLI. Useful when acpx is unavailable or for quick one-shot prompts:
+
+| Agent | CLI command | Interactive | Print (non-interactive) | ACP mode |
+|-------|------------|-------------|--------------------------|----------|
+| `antigravity` | `agy` | `agy -i` | `agy -p 'prompt'` or `agy --prompt 'prompt'` | `agy --acp` |
+| `codex` | `codex` | `codex` | `codex -q 'prompt'` | via acpx |
+| `claude` | `claude` | `claude` | `claude -p 'prompt'` | via acpx |
+
+**Note**: `-p` / `--print` / `--prompt` all require a prompt argument. Omitting it causes `flag needs an argument: -p`.
+
 ## Agent quirks
 
 Agents in the built-in registry behave differently over ACP. Know what to expect:
