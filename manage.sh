@@ -41,7 +41,7 @@ log_error() {
 declare -A AGENTS=(
     # --- Standard & Standard-Supporting Agents ---
     ["Standard"]="${HOME}/.agents/AGENTS.md|${HOME}/.agents/skills"
-    ["Antigravity"]="${HOME}/.gemini/GEMINI.md|-"
+    ["Antigravity"]="${HOME}/.gemini/GEMINI.md|${HOME}/.gemini/skills"
     ["Codex"]="${HOME}/.codex/AGENTS.md|-"
     ["Opencode"]="${HOME}/.config/opencode/AGENTS.md|-"
 
@@ -59,6 +59,7 @@ declare -A AGENTS=(
 
 declare -A PROMPTS=(
     ["Standard"]="${HOME}/.agents/prompts"
+    ["Antigravity"]="${HOME}/.gemini/prompts"
     ["Pi"]="${HOME}/.pi/agent/prompts"
 )
 
@@ -108,7 +109,7 @@ detect_construct_agents() {
     # Add construct variants
     AGENTS["construct_Standard"]="${construct_agents_dir}/AGENTS.md|${construct_agents_dir}/skills"
     AGENTS["construct_Claude"]="${construct_home}/.claude/CLAUDE.md|${construct_home}/.claude/skills"
-    AGENTS["construct_Antigravity"]="${construct_home}/.gemini/GEMINI.md|-"
+    AGENTS["construct_Antigravity"]="${construct_home}/.gemini/GEMINI.md|${construct_home}/.gemini/skills"
     AGENTS["construct_Qwen"]="${construct_home}/.qwen/QWEN.md|${construct_home}/.qwen/skills"
     AGENTS["construct_Opencode"]="${construct_home}/.config/opencode/AGENTS.md|-"
     AGENTS["construct_Amp"]="${construct_home}/.config/amp/AGENTS.md|${construct_home}/.config/amp/skills"
@@ -120,6 +121,7 @@ detect_construct_agents() {
     AGENTS["construct_Cline"]="${construct_home}/.cline/AGENTS.md|${construct_home}/.cline/skills"
     AGENTS["construct_Pi"]="${construct_home}/.pi/agent/AGENTS.md|-"
     PROMPTS["construct_Standard"]="${construct_agents_dir}/prompts"
+    PROMPTS["construct_Antigravity"]="${construct_home}/.gemini/prompts"
     PROMPTS["construct_Pi"]="${construct_home}/.pi/agent/prompts"
 
     log_info "construct-cli detected: added 13 agent paths (Internal Copying Mode)"
