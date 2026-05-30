@@ -75,7 +75,6 @@ Friendly agent names resolve to commands:
 - `openclaw` -> `openclaw acp`
 - `codex` -> `npx @zed-industries/codex-acp`
 - `claude` -> `npx -y @agentclientprotocol/claude-agent-acp` (ACPX-owned package range)
-- `antigravity` -> `agy --acp`
 - `cursor` -> `cursor-agent acp`
 - `copilot` -> `copilot --acp --stdio`
 - `droid` -> `droid exec --output-format acp` (`factory-droid` and `factorydroid` also resolve to `droid`)
@@ -237,7 +236,7 @@ Each agent has its own native CLI. Useful when acpx is unavailable or for quick 
 
 | Agent | CLI command | Interactive | Print (non-interactive) | ACP mode |
 |-------|------------|-------------|--------------------------|----------|
-| `antigravity` | `agy` | `agy -i` | `agy -p 'prompt'` or `agy --prompt 'prompt'` | `agy --acp` |
+| `antigravity` (agy) | `agy` | `agy -i` | `agy -p 'prompt'` or `agy --prompt 'prompt'` | Not supported (no ACP mode) |
 | `codex` | `codex` | `codex` | `codex -q 'prompt'` | via acpx |
 | `claude` | `claude` | `claude` | `claude -p 'prompt'` | via acpx |
 
@@ -251,7 +250,7 @@ Agents in the built-in registry behave differently over ACP. Know what to expect
 |-------|-------------|------|-------|
 | `codex` | Clean, direct text | Ambient `OPENAI_API_KEY` | Default agent; most consistent. `thought_level` maps to `reasoning_effort`. |
 | `claude` | Direct text, occasionally verbose | API key or OAuth | May hit **rate limits** — error includes reset time (`resets HH:MM UTC`). Retry after the window. |
-| `antigravity` | Text with `[thinking]` reasoning blocks | Ambient `ANTIGRAVITY_API_KEY` | Reasoning trace is streamed as `[thinking]` sections before the final answer. Expect more verbose output. |
+| `antigravity` (agy) | Direct text | Ambient `ANTIGRAVITY_API_KEY` | No ACP support. Use direct CLI only: `agy -p 'prompt'` for one-shot, `agy -i` for interactive. |
 | `copilot` | Terse/minimal — often just the answer | GitHub OAuth | No reasoning trace, no adornment. Good for scripted extraction. |
 | `opencode` | N/A | `opencode-login` (custom) | **ACP adapter may not work** — session/new requires strict `cwd` and `mcpServers` params. Auth flow is separate from acpx. Prefer `opencode run` natively. |
 | `cursor` | Direct text | `cursor-auth` (custom) | Requires Cursor auth; ACP adapter is still maturing. |
@@ -467,13 +466,16 @@ acpx codex -s backend 'fix pagination bug'
 acpx codex -s backend 'run tests'
 ```
 
-### Parsing Antigravity reasoning traces
+### Direct Antigravity (agy) usage
 
-When using `--format json`, Antigravity's reasoning appears as `[thinking]` blocks in text events. For clean extraction, filter them out:
+`agy` has no ACP adapter. Use the native CLI directly:
 
 ```bash
-acpx --format json antigravity exec 'explain this' \
-  | jq -r 'select(.type=="text" and (.text|startswith("[thinking]")|not)) | .text'
+# One-shot print mode
+agy -p 'explain this function'
+
+# Interactive session
+agy -i
 ```
 
 ### Parallel named streams
