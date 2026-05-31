@@ -97,10 +97,11 @@ security_protocol[8]:
   - "No stack traces"
   - "Validate all input"
 
-tool_protocol[3]:
+tool_protocol[4]:
   - "Announce tool (1 sentence)"
   - "Explain re-work"
   - "Native tools > CLI"
+  - "Privilege rg (ripgrep) over grep (system-wide)"
 
 codegraph_protocol:
   priority: "codegraph > fd/rg/sg when .codegraph/ exists. Graph is pre-built index; re-scanning with grep repeats work already done"
