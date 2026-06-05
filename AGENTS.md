@@ -97,11 +97,12 @@ security_protocol[8]:
   - "No stack traces"
   - "Validate all input"
 
-tool_protocol[4]:
+tool_protocol[5]:
   - "Announce tool (1 sentence)"
   - "Explain re-work"
   - "Native tools > CLI"
   - "Privilege rg (ripgrep) over grep (system-wide)"
+  - "Command Output: Protect context usage. Any command with unknown or potentially large output must be byte-capped (e.g., COMMAND 2>&1 | head -c 4000)"
 
 codegraph_protocol:
   priority: "codegraph > fd/rg/sg when .codegraph/ exists. Graph is pre-built index; re-scanning with grep repeats work already done"
