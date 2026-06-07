@@ -7,7 +7,7 @@ description: |
   comprehensive "Signs of AI writing" guide. Detects and fixes patterns including:
   inflated symbolism, promotional language, superficial -ing analyses, vague
   attributions, em dash overuse, rule of three, AI vocabulary words, negative
-  parallelisms, and excessive conjunctive phrases.
+  parallelisms, redundant comparisons, and excessive conjunctive phrases.
 allowed-tools:
   - Read
   - Write
@@ -232,9 +232,23 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 
 ---
 
+### 13. Redundant Comparisons
+
+**Words to watch:** compared to (when paired with comparative adjectives/adverbs or "did/was"), as compared to, in comparison with
+
+**Problem:** LLMs frequently produce grammatically redundant comparisons (e.g., combining comparative modifiers like "8x as much" or "more" with "compared to" in the same clause).
+
+**Before:**
+> Developers using the new tool wrote 8x as much code as they did compared to the period from 2021 to 2025.
+
+**After:**
+> Developers using the new tool wrote eight times as much code as they did from 2021 to 2025.
+
+---
+
 ## STYLE PATTERNS
 
-### 13. Em Dash Overuse
+### 14. Em Dash Overuse
 
 **Problem:** LLMs use em dashes (—) more than humans, mimicking "punchy" sales writing.
 
@@ -246,7 +260,7 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 
 ---
 
-### 14. Overuse of Boldface
+### 15. Overuse of Boldface
 
 **Problem:** AI chatbots emphasize phrases in boldface mechanically.
 
@@ -258,7 +272,7 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 
 ---
 
-### 15. Inline-Header Vertical Lists
+### 16. Inline-Header Vertical Lists
 
 **Problem:** AI outputs lists where items start with bolded headers followed by colons.
 
@@ -272,7 +286,7 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 
 ---
 
-### 16. Title Case in Headings
+### 17. Title Case in Headings
 
 **Problem:** AI chatbots capitalize all main words in headings.
 
@@ -284,7 +298,7 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 
 ---
 
-### 17. Emojis
+### 18. Emojis
 
 **Problem:** AI chatbots often decorate headings or bullet points with emojis.
 
@@ -298,7 +312,7 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 
 ---
 
-### 18. Curly Quotation Marks
+### 19. Curly Quotation Marks
 
 **Problem:** ChatGPT uses curly quotes (“...”) instead of straight quotes ("...").
 
@@ -312,7 +326,7 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 
 ## COMMUNICATION PATTERNS
 
-### 19. Collaborative Communication Artifacts
+### 20. Collaborative Communication Artifacts
 
 **Words to watch:** I hope this helps, Of course!, Certainly!, You're absolutely right!, Would you like..., let me know, here is a...
 
@@ -326,7 +340,7 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 
 ---
 
-### 20. Knowledge-Cutoff Disclaimers
+### 21. Knowledge-Cutoff Disclaimers
 
 **Words to watch:** as of [date], Up to my last training update, While specific details are limited/scarce..., based on available information...
 
@@ -340,7 +354,7 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 
 ---
 
-### 21. Sycophantic/Servile Tone
+### 22. Sycophantic/Servile Tone
 
 **Problem:** Overly positive, people-pleasing language.
 
@@ -354,7 +368,7 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 
 ## FILLER AND HEDGING
 
-### 22. Filler Phrases
+### 23. Filler Phrases
 
 **Before → After:**
 - "In order to achieve this goal" → "To achieve this"
@@ -366,7 +380,7 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 
 ---
 
-### 23. Excessive Hedging
+### 24. Excessive Hedging
 
 **Problem:** Over-qualifying statements.
 
@@ -378,7 +392,7 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 
 ---
 
-### 24. Generic Positive Conclusions
+### 25. Generic Positive Conclusions
 
 **Problem:** Vague upbeat endings.
 
@@ -470,6 +484,7 @@ Provide:
 - Removed negative parallelism ("It's not just X; it's Y")
 - Removed rule-of-three patterns and synonym cycling ("catalyst/partner/foundation")
 - Removed false ranges ("from X to Y, from A to B")
+- Removed redundant comparisons (e.g., "8x as much... compared to")
 - Removed em dashes, emojis, boldface headers, and curly quotes
 - Removed copula avoidance ("serves as", "functions as", "stands as") in favor of "is"/"are"
 - Removed formulaic challenges section ("Despite challenges... continues to thrive")
