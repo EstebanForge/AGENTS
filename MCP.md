@@ -19,19 +19,142 @@ Cross-session memory (recall, save, search). Requires local agentmemory service.
 }
 ```
 
-### ai-vision-mcp
+### chrome-devtools
 
-Image/video analysis via AI vision models (Google provider).
+Browser automation: console, navigation, screenshots.
 
 ```json
 {
+  "enabled": false,
   "command": "npx",
-  "args": ["ai-vision-mcp"],
+  "args": ["-y", "chrome-devtools-mcp@latest", "--isolated"],
+  "persistent": true,
+  "timeout": 60
+}
+```
+
+### playwright
+
+Browser automation: elements, snapshots, interactions.
+
+```json
+{
+  "enabled": true,
+  "command": "npx",
+  "args": ["-y", "@playwright/mcp@latest"],
+  "persistent": true,
+  "timeout": 60
+}
+```
+
+### sequential-thinking
+
+Problem-solving and planning.
+
+```json
+{
+  "enabled": false,
+  "command": "npx",
+  "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"],
+  "persistent": false,
+  "timeout": 30
+}
+```
+
+### context7
+
+Code library docs and snippets.
+
+```json
+{
+  "enabled": true,
+  "command": "npx",
+  "args": ["-y", "@upstash/context7-mcp", "--api-key", "${ENT_CONTEXT7_API_KEY}"],
+  "persistent": false,
+  "timeout": 30
+}
+```
+
+### deepwiki
+
+Repository documentation from public Git repos.
+
+```json
+{
+  "enabled": true,
+  "command": "npx",
+  "args": ["-y", "mcp-remote", "https://mcp.deepwiki.com/mcp"],
+  "persistent": false,
+  "timeout": 30
+}
+```
+
+### brave-search
+
+Search the web, images, videos, news + AI summaries.
+
+```json
+{
+  "enabled": true,
+  "command": "npx",
+  "args": ["-y", "@brave/brave-search-mcp-server"],
+  "env": {
+    "BRAVE_API_KEY": "${ENT_BRAVE_API_KEY}"
+  },
+  "persistent": false,
+  "timeout": 30
+}
+```
+
+### time
+
+Current time and timezone conversions.
+
+```json
+{
+  "enabled": false,
+  "command": "uvx",
+  "args": ["mcp-server-time"],
+  "persistent": false,
+  "timeout": 30
+}
+```
+
+### cipher
+
+Memory layer for coding agents: auto-generate AI memories, IDE switching, team sharing.
+
+```json
+{
+  "enabled": false,
+  "command": "cipher",
+  "args": ["--mode", "mcp"],
+  "env": {
+    "MCP_SERVER_MODE": "aggregator",
+    "OPENAI_API_KEY": "${ENT_OPENAI_API_KEY}",
+    "ANTHROPIC_API_KEY": "${ENT_ANTHROPIC_API_KEY}"
+  },
+  "persistent": false,
+  "timeout": 30
+}
+```
+
+### ai-vision
+
+Image and video analysis via AI vision models (Google provider).
+
+```json
+{
+  "enabled": true,
+  "command": "npx",
+  "args": ["-y", "ai-vision-mcp"],
   "env": {
     "IMAGE_PROVIDER": "google",
     "VIDEO_PROVIDER": "google",
     "GEMINI_API_KEY": "${GEMINI_API_KEY}"
-  }
+  },
+  "persistent": false,
+  "timeout": 300
 }
 ```
 
@@ -67,6 +190,7 @@ Paths where MCP servers are configured per agent. Format and location vary.
 | **Kilocode** | `~/.config/kilo/kilo.jsonc` | JSONC (`mcp`) |
 | **Cline** | `~/.cline/data/settings/cline_mcp_settings.json` | JSON (`mcpServers`) |
 | **VS Code** | `~/Library/Application Support/Code/User/mcp.json` | JSON |
+
 
 ### Construct-cli variants
 
