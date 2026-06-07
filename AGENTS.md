@@ -35,6 +35,8 @@ workflow_protocol:
 memory_protocol:
   system: "agentmemory (cross-session)"
   rule: "Search 1st, save always. proactive recall required"
+  strategy: "Recall 1st. If thin, smart_search. Don't assume empty. Wrap via mcp-cli-ent if native tools are missing."
+  priority: "agentmemory > all. No local /memory stores"
   workflow:
     - "Search memory before work"
     - "Save decisions/patterns/bugs/rationale immediately (memory_save)"
@@ -51,13 +53,12 @@ memory_protocol:
     - "User preferences (X over Y)"
     - "Integration quirks (Undocumented behavior)"
     - "Hidden project conventions"
-  tools:
+  mcp_tools:
     recall: "memory_recall (primary, full content)"
     smart: "memory_smart_search (compact; use expandIds)"
     save: "memory_save (add concepts/files)"
     sessions: "memory_sessions (history)"
-  strategy: "Recall 1st. If thin, smart_search. Don't assume empty"
-  priority: "agentmemory > all. No local /memory stores"
+  mcp_fallback: "If memory tools are missing from environment, invoke them using `mcp-cli-ent call agentmemory <tool_name> <args>`"
 
 problem_resolution_protocol[9]:
   - "Think|Don't assume. State assumptions. Vague? (e.g., 'Make it faster') -> Present multiple interpretations & potential paths (e.g., speed vs throughput vs UX). Confused? Halt. Ask"
