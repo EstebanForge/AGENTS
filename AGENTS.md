@@ -166,7 +166,7 @@ cli_tools_definition[26]{name,desc,example}:
   biome,Linter,biome check
   qmd,Local Search,qmd search "X"
 
-mcp_client_protocol: "Native first. Fallback mcp-cli-ent"
+mcp_client_protocol: "Prioritize `mcp-cli-ent`"
 mcp_servers_definition[4]{name,desc}:
   deepwiki,Fetch framework docs.
   context7,Fetch code snippets/docs.
