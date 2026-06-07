@@ -42,7 +42,7 @@
         "-y",
         "@upstash/context7-mcp",
         "--api-key",
-        "${ENT_CONTEXT7_API_KEY}"
+        "${CONTEXT7_API_KEY}"
       ],
       "persistent": false,
       "timeout": 30
@@ -68,7 +68,7 @@
         "@brave/brave-search-mcp-server"
       ],
       "env": {
-        "BRAVE_API_KEY": "${ENT_BRAVE_API_KEY}"
+        "BRAVE_API_KEY": "${BRAVE_API_KEY}"
       },
       "persistent": false,
       "timeout": 30
@@ -94,8 +94,8 @@
       ],
       "env": {
         "MCP_SERVER_MODE": "aggregator",
-        "OPENAI_API_KEY": "${ENT_OPENAI_API_KEY}",
-        "ANTHROPIC_API_KEY": "${ENT_ANTHROPIC_API_KEY}"
+        "OPENAI_API_KEY": "${OPENAI_API_KEY}",
+        "ANTHROPIC_API_KEY": "${ANTHROPIC_API_KEY}"
       },
       "persistent": false,
       "timeout": 30
