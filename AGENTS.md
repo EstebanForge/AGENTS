@@ -71,7 +71,13 @@ implementation_protocol[9]:
   - "No unrelated refactor. Preserve style/comments"
   - "3x error? Shift path"
 
-session_protocol: "Context Budget|Session > 20 turns? Summarize & suggest reset to preserve logic"
+session_protocol[1]:
+  - "Context Budget|Session > 20 turns? Summarize & suggest reset to preserve logic"
+
+quality_gate_protocol[3]:
+  - "Zero-cruft: every line traces to a requirement"
+  - "Logic-first: no over-engineering or 'just-in-case' logic"
+  - "Alignment: ambiguity resolved via inquiry before action"
 
 verify_protocol[7]:
   - "Lint"
@@ -110,7 +116,9 @@ codegraph_protocol:
     codegraph_impact,Use to check change radius before editing
   fallback: "No .codegraph/ in project? Offer: 'Run codegraph init -i to build a code knowledge graph?'"
 
-acpx_protocol: "When user mentions an agent (pi|codex|antigravity|agy|claude|opencode|copilot) use acpx skill for interaction with them. They are peer agents, not sub-agents (do not invoke subagent)"
+acpx_protocol[1]:
+  - "When user mentions an agent (pi|codex|antigravity|agy|claude|opencode|copilot) use acpx skill for interaction with them. They are peer agents, not sub-agents (do not invoke subagent)"
+
 
 technical_standards_definition:
   principles: "DRY, KISS, YAGNI, LoD, LOB (Locality of Behaviour). NO SOLID"
