@@ -71,54 +71,46 @@ problem_resolution_protocol[9]:
   - "No unrelated refactor. Preserve style/comments"
   - "3x error? Shift path"
 
-session_protocol[1]:
-  - "Context Budget|Session > 20 turns? Summarize & suggest reset to preserve logic."
-
-quality_gate_protocol[3]:
-  - "Zero-cruft: every line traces to a requirement"
-  - "Logic-first: no over-engineering or 'just-in-case' logic"
-  - "Alignment: ambiguity resolved via inquiry before action"
+session_protocol: "Context Budget|Session > 20 turns? Summarize & suggest reset to preserve logic"
 
 verify_protocol[7]:
   - "Lint"
   - "Test"
   - "Imports @ top"
   - "Wire end-to-end"
+  - "Analyze failure before fix"
   - "Fix root cause"
   - "No ignored failures"
-  - "Analyze failure before fix"
 
-security_protocol[8]:
-  - "Sanitize/Validate"
+security_protocol[7]:
+  - "Sanitize/Validate all data"
   - "Escape XSS"
   - "CSRF"
   - "Principle least privilege"
   - "No secrets"
   - "Fail closed"
   - "No stack traces"
-  - "Validate all input"
 
 tool_protocol[5]:
   - "Announce tool (1 sentence)"
-  - "Explain re-work"
+  - "If redoing/re-working prior steps: explain why"
   - "Native tools > CLI"
   - "Privilege rg (ripgrep) over grep (system-wide)"
-  - "Command Output: Protect context usage. Any command with unknown or potentially large output must be byte-capped (e.g., COMMAND 2>&1 | head -c 4000)"
+  - "Command Output: Protect context usage. Run verbose commands via rtk CLI proxy tool or byte-cap them (e.g., rtk command or command 2>&1 | head -c 4000)"
 
 codegraph_protocol:
   priority: "codegraph > fd/rg/sg when .codegraph/ exists. Graph is pre-built index; re-scanning with grep repeats work already done"
   rule: "Answer directly from CodeGraph. Don't delegate exploration to file-reading sub-agents or grep/read loops. Returned source is authoritative: treat as already read"
   tools[6]{tool,intent}:
-    codegraph_context,"Map a task/feature/area first. Composes search + node + callers + callees in one call"
-    codegraph_trace,"'How does X reach Y' - call path with each hop's body inline. Follows dynamic-dispatch hops grep can't"
-    codegraph_explore,"Survey several related symbols' source in ONE budget-capped call"
-    codegraph_search,"Find a symbol by name across the codebase"
-    codegraph_callers/codegraph_callees,"Walk call flow one hop at a time"
-    codegraph_impact,"Check what's affected before editing"
+    codegraph_context,Use first for any architecture/context query
+    codegraph_trace,Use to trace call path execution between two symbols
+    codegraph_explore,Use to inspect source code of multiple related symbols
+    codegraph_search,Use to search symbols by name
+    codegraph_callers/codegraph_callees,Use to walk call hierarchy hop-by-hop
+    codegraph_impact,Use to check change radius before editing
   fallback: "No .codegraph/ in project? Offer: 'Run codegraph init -i to build a code knowledge graph?'"
 
-acpx_protocol[1]:
-  - "Mentioned agent (pi|codex|antigravity|agy|claude|opencode|copilot)? Use acpx skill for interaction with them"
+acpx_protocol: "Mentioned agent (pi|codex|antigravity|agy|claude|opencode|copilot)? Use acpx skill for interaction with them"
 
 technical_standards_definition:
   principles: "DRY, KISS, YAGNI, LoD, LOB (Locality of Behaviour). NO SOLID"
@@ -138,12 +130,12 @@ technical_standards_definition:
   hypermedia: "HTML + status codes (Datastar/HTMX)"
   naming: "methods: verbs; variables: nouns"
 
-cli_tools_definition[26]{name,desc,example}:
+cli_tools_definition[27]{name,desc,example}:
   fd,Fast finder,fd src
-  rg,ripgrep,rg "TODO"
-  sg,ast-grep,sg -p 'if ($A) { $B }'
-  jq,JSON,jq '.id'
-  yq,YAML,yq '.replicas = 3'
+  rg,ripgrep a better grep,rg "TODO"
+  sg,ast-grep structural search & replace,sg -p 'if ($A) { $B }'
+  jq,JSON processor,jq '.id'
+  yq,YAML processor,yq '.replicas = 3'
   sd,Find/Replace,sd 'old' 'new'
   fzf,Fuzzy finder,fzf
   bat,Syntax cat,bat file
@@ -165,12 +157,43 @@ cli_tools_definition[26]{name,desc,example}:
   agent-browser,Headless,agent-browser open; click @e1
   biome,Linter,biome check
   qmd,Local Search,qmd search "X"
+  rtk,Token killer,rtk build
 
-mcp_client_protocol: "Prioritize `mcp-cli-ent`"
-mcp_servers_definition[6]{name,desc}:
-  deepwiki,Fetch framework docs.
-  context7,Fetch code snippets/docs.
-  ai-vision,Image and video analysis via AI vision models (Antigravity).
-  codegraph,Pre-indexed semantic code knowledge graph. Symbol search, call graphs, impact analysis. 100% local.
-  brave-search,Search the web, images, videos, news + AI summaries.
-  agentmemory,Cross-session memory (recall, save, search). Requires local agentmemory service.
+mcp_client_protocol: "mcp-cli-ent. Primary MCP client"
+mcp_servers_definition[6]:
+  - name: deepwiki
+    desc: Fetch framework docs and wiki structure from GitHub repositories to gain codebase context
+  - name: context7
+    desc: Retrieve up-to-date documentation and code snippets for third-party libraries and packages
+    tools[2]{name,desc}:
+      resolve-library-id,Resolves a package name to a Context7-compatible library ID
+      query-docs,Retrieves and queries up-to-date documentation and code examples from Context7
+  - name: ai-vision
+    desc: Image and video analysis via AI vision models (Antigravity)
+    tools[4]{name,desc}:
+      analyze_image,"Analyze static images using AI vision models (Gemini)"
+      compare_images,"Compare multiple images using AI vision models"
+      detect_objects_in_image,Detect objects in an image and generate annotated bounding boxes
+      analyze_video,Analyze video files using AI vision models
+  - name: codegraph
+    desc: Local code knowledge graph. Symbol search, call graphs, impact analysis. 100% local
+    tools[10]{name,desc}:
+      codegraph_search,Quick symbol search by name
+      codegraph_context,"Primary tool for task context: maps search, node, callers, and callees"
+      codegraph_callers,Find all callers of a specific symbol
+      codegraph_callees,Find all dependencies of a specific symbol
+      codegraph_impact,Analyze the impact radius of changing a symbol
+      codegraph_node,"Get detailed symbol properties, signature, docstring, and call trail"
+      codegraph_explore,"Fetch code for multiple related symbols in one call"
+      codegraph_status,Get index statistics
+      codegraph_files,Get project file structure tree from index
+      codegraph_trace,"Map call path execution trace between two symbols"
+  - name: brave-search
+    desc: Search the web, images, videos, news + AI summaries
+  - name: agentmemory
+    desc: Cross-session memory (recall, save, search)
+    tools[4]{name,desc}:
+      memory_recall,Search past session observations
+      memory_save,Store decisions or patterns in long-term memory
+      memory_sessions,List recent sessions and status
+      memory_smart_search,Hybrid semantic and keyword search
