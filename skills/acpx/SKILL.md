@@ -199,7 +199,7 @@ Behavior:
 - `--deny-all`: deny all permission requests
 - `--format <fmt>`: output format (`text`, `json`, `quiet`)
 - `--suppress-reads`: suppress raw read-file contents while preserving the selected format
-- `--timeout <seconds>`: max wait time (positive number)
+- `--timeout <seconds>`: max wait time (positive number). Desired default is `300` seconds at minimum on first call to prevent premature termination. If execution fails due to a timeout, retry by incrementing the timeout value in `+60` second steps (i.e., `360` seconds, then `420` seconds, then `480` seconds) up to a maximum of three recovery attempts. Stop retrying after the third increment.
 - `--ttl <seconds>`: queue owner idle TTL before shutdown (default `300`, `0` disables TTL)
 - `--model <id>`: request an agent model during session creation; non-Claude agents must advertise ACP models and support `session/set_model`
 - `--verbose`: verbose ACP/debug logs to stderr
@@ -272,7 +272,7 @@ acpx propagates the error as-is from the adapter; there is no internal retry log
 |-----------|-------|-------|----------|
 | `4` | `NO_SESSION` | No session for this scope | `acpx <agent> sessions new` or `sessions ensure` |
 | `5` | `PERMISSION_DENIED` | All permission requests denied | Add `--approve-all` or `--approve-reads`; or set `defaultPermissions` in config |
-| `3` | `TIMEOUT` | `--timeout` exceeded | Increase `--timeout` or remove it |
+| `3` | `TIMEOUT` | `--timeout` exceeded | Set/increase to `300`s minimum. If it fails, retry by incrementing the value in `+60`s steps (up to 3 retries max: `360`s, `420`s, `480`s). |
 | `2` | `USAGE` | Bad flags, conflicting flags | Fix invocation; check flag ordering |
 | `1` | `RUNTIME` | Agent/protocol/auth error | Run with `--verbose`; check `acp.message` in `--format json` output |
 | `130` | Interrupted | `Ctrl+C` / SIGINT | Expected; session is still resumable |
