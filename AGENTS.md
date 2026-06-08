@@ -110,7 +110,7 @@ codegraph_protocol:
     codegraph_impact,Use to check change radius before editing
   fallback: "No .codegraph/ in project? Offer: 'Run codegraph init -i to build a code knowledge graph?'"
 
-acpx_protocol: "Mentioned agent (pi|codex|antigravity|agy|claude|opencode|copilot)? Use acpx skill for interaction with them"
+acpx_protocol: "When user mentions an agent (pi|codex|antigravity|agy|claude|opencode|copilot) use acpx skill for interaction with them. They are peer agents, not sub-agents (do not invoke subagent)"
 
 technical_standards_definition:
   principles: "DRY, KISS, YAGNI, LoD, LOB (Locality of Behaviour). NO SOLID"
