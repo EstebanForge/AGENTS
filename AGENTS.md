@@ -152,41 +152,17 @@ cli_tools_definition[20]{name,desc,example}:
   qmd,Local md search,qmd search "X"
   rtk,Token killer,rtk build
 
-mcp_client_protocol: "mcp-cli-ent. Primary MCP client"
+mcp_client_protocol: "mcp-cli-ent. Primary MCP client. Run 'mcp-cli-ent list-tools <server-name>' to inspect available tools dynamically"
 mcp_servers_definition[6]:
   - name: deepwiki
     desc: Fetch framework docs and wiki structure from GitHub repositories to gain codebase context
   - name: context7
     desc: Retrieve up-to-date documentation and code snippets for third-party libraries and packages
-    tools[2]{name,desc}:
-      resolve-library-id,Resolves a package name to a Context7-compatible library ID
-      query-docs,Retrieves and queries up-to-date documentation and code examples from Context7
   - name: ai-vision
     desc: Image and video analysis via AI vision models (Antigravity)
-    tools[4]{name,desc}:
-      analyze_image,"Analyze static images using AI vision models (Gemini)"
-      compare_images,"Compare multiple images using AI vision models"
-      detect_objects_in_image,Detect objects in an image and generate annotated bounding boxes
-      analyze_video,Analyze video files using AI vision models
   - name: codegraph
     desc: Local code knowledge graph. Symbol search, call graphs, impact analysis. 100% local
-    tools[10]{name,desc}:
-      codegraph_search,Quick symbol search by name
-      codegraph_context,"Primary tool for task context: maps search, node, callers, and callees"
-      codegraph_callers,Find all callers of a specific symbol
-      codegraph_callees,Find all dependencies of a specific symbol
-      codegraph_impact,Analyze the impact radius of changing a symbol
-      codegraph_node,"Get detailed symbol properties, signature, docstring, and call trail"
-      codegraph_explore,"Fetch code for multiple related symbols in one call"
-      codegraph_status,Get index statistics
-      codegraph_files,Get project file structure tree from index
-      codegraph_trace,"Map call path execution trace between two symbols"
   - name: brave-search
     desc: Search the web, images, videos, news + AI summaries
   - name: agentmemory
     desc: Cross-session memory (recall, save, search)
-    tools[4]{name,desc}:
-      memory_recall,Search past session observations
-      memory_save,Store decisions or patterns in long-term memory
-      memory_sessions,List recent sessions and status
-      memory_smart_search,Hybrid semantic and keyword search
