@@ -61,9 +61,9 @@ memory_protocol:
   mcp_fallback: "If memory tools are missing from environment, invoke them using `mcp-cli-ent call agentmemory <tool_name> <args>`"
 
 implementation_protocol[9]:
-  - "Think|Don't assume. State assumptions. Vague? (e.g., 'Make it faster') -> Present multiple interpretations & potential paths (e.g., speed vs throughput vs UX). Confused? Halt. Ask"
-  - "Simplicity|Minimum code. Nothing speculative. No features/flexibility/config not requested. No 'just-in-case' error handling. Heuristic: 200 lines to 50? Rewrite. Senior engineer test: 'Is this overcomplicated?'"
-  - "Surgical|Touch only what must. Match existing style even if you'd do it differently. No 'drive-by' improvements (formatting, quotes, docstrings, type hints). Refactor only if broken. Test: Every changed line traces to user request"
+  - "Think|Don't assume. State assumptions. Vague? (e.g., 'Make it faster') -> Present multiple interpretations & potential paths (e.g., speed vs throughput vs UX). Confused? Halt. Ask for clarification"
+  - "Simplicity|Minimum code. Nothing speculative. No features/flexibility/config not requested. No 'just-in-case' error handling. Heuristic: 200 lines to 50? Rewrite. Senior engineer test: 'Is this overcomplicated? over-engineered?'"
+  - "Surgical|Zero-cruft. Touch only what must. Match existing style even if you'd do it differently. No 'drive-by' improvements (formatting, quotes, docstrings, type hints). Refactor only if broken. Test: Every changed line traces to user request"
   - "Conflicts|Clashing styles? Don't average; Ask or pick existing. Don't hybridize."
   - "Cleanup|Remove orphans YOUR changes create (imports/vars/funcs). Mention unrelated dead code; don't delete"
   - "Incremental|Break multi-step tasks into independently verifiable steps. [Step] -> verify: [check]"
