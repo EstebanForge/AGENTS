@@ -152,17 +152,14 @@ cli_tools_definition[20]{name,desc,example}:
   qmd,Local md search,qmd search "X"
   rtk,Token killer,rtk build
 
-mcp_client_protocol: "mcp-cli-ent. Primary MCP client. Run 'mcp-cli-ent list-tools <server-name>' to inspect available tools dynamically"
-mcp_servers_definition[6]:
-  - name: deepwiki
-    desc: Fetch framework docs and wiki structure from GitHub repositories to gain codebase context
-  - name: context7
-    desc: Retrieve up-to-date documentation and code snippets for third-party libraries and packages
-  - name: ai-vision
-    desc: Image and video analysis via AI vision models (Antigravity)
-  - name: codegraph
-    desc: Local code knowledge graph. Symbol search, call graphs, impact analysis. 100% local
-  - name: brave-search
-    desc: Search the web, images, videos, news + AI summaries
-  - name: agentmemory
-    desc: Cross-session memory (recall, save, search)
+mcp_protocol:
+  client: "mcp-cli-ent"
+  servers: "agentmemory (memory), context7 (libraries), deepwiki (docs), ai-vision (vision), brave-search (web), codegraph (code)"
+  discover: "Run `mcp-cli-ent` (bare) to dynamically discover enabled servers and tools (outputs JSON: {server_name: [{name, description}]})"
+  list_tools: "Run `mcp-cli-ent list-tools <server_name>` to inspect full schema, params, and calls for a specific server"
+  call: "Run `mcp-cli-ent call <server_name> <tool_name> '<json_params>'` to execute a tool"
+  rules:
+    - "Always discover dynamically using `mcp-cli-ent` instead of assuming server availability"
+    - "Select tools semantically based on tool descriptions in the discovery output"
+
+
