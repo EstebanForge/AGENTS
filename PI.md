@@ -162,5 +162,6 @@ No servers configured in mcp.json. Available via `mcp-cli-ent`: deepwiki, contex
   "git:github.com/code-yeongyu/pi-nested-agents-md",
   "npm:@howaboua/pi-subagent-review",
   "npm:pi-init",
+  "npm:@ff-labs/pi-fff",
 ]
 ```
