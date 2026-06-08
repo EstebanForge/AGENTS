@@ -130,26 +130,19 @@ technical_standards_definition:
   hypermedia: "HTML + status codes (Datastar/HTMX)"
   naming: "methods: verbs; variables: nouns"
 
-cli_tools_definition[27]{name,desc,example}:
+cli_tools_definition[20]{name,desc,example}:
   fd,Fast finder,fd src
   rg,ripgrep a better grep,rg "TODO"
   sg,ast-grep structural search & replace,sg -p 'if ($A) { $B }'
   jq,JSON processor,jq '.id'
   yq,YAML processor,yq '.replicas = 3'
   sd,Find/Replace,sd 'old' 'new'
-  fzf,Fuzzy finder,fzf
-  bat,Syntax cat,bat file
-  eza,Modern ls,eza -l
   httpie,HTTP client,http GET
   gh,GitHub CLI,gh pr list
-  delta,Git pager,git diff
   cliff,Changelog,git-cliff
-  tldr,Short man,tldr tar
   procs,Modern ps,procs
-  tmux,Multiplexer,tmux
   just,Command runner,just build
   tree,Dir tree,tree -L 2
-  sshpass,SSH pass,sshpass -p pass ssh u@h
   socat,Netcat+,socat -v
   direnv,Env loader,direnv allow
   mcp-cli-ent,MCP cli interface,mcp-cli-ent
