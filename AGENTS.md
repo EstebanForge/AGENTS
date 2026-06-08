@@ -152,11 +152,11 @@ cli_tools_definition[27]{name,desc,example}:
   sshpass,SSH pass,sshpass -p pass ssh u@h
   socat,Netcat+,socat -v
   direnv,Env loader,direnv allow
-  mcp-cli-ent,MCP CLI,mcp-cli-ent
-  md-over-here,Fetch/Save MD,md-over-here url > file.md
-  agent-browser,Headless,agent-browser open; click @e1
+  mcp-cli-ent,MCP cli interface,mcp-cli-ent
+  md-over-here,Fetch/Save md,md-over-here url > file.md
+  agent-browser,Headless browser,agent-browser open; click @e1
   biome,Linter,biome check
-  qmd,Local Search,qmd search "X"
+  qmd,Local md search,qmd search "X"
   rtk,Token killer,rtk build
 
 mcp_client_protocol: "mcp-cli-ent. Primary MCP client"
