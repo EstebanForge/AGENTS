@@ -169,5 +169,3 @@ mcp_protocol:
   rules:
     - "Always discover dynamically using `mcp-cli-ent` instead of assuming server availability"
     - "Select tools semantically based on tool descriptions in the discovery output"
-
-
