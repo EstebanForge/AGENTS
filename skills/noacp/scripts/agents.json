@@ -1,0 +1,10 @@
+{
+  "agy": {
+    "command": "agy",
+    "print_flag": "-p",
+    "input_mode": "flag",
+    "interactive_flag": "-i",
+    "timeout_default": 120,
+    "notes": "No ACP. One-shot print mode only. Full prompt passed via flag."
+  }
+}
