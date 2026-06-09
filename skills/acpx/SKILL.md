@@ -236,7 +236,6 @@ Each agent has its own native CLI. Useful when acpx is unavailable or for quick 
 
 | Agent | CLI command | Interactive | Print (non-interactive) | ACP mode |
 |-------|------------|-------------|--------------------------|----------|
-| `antigravity` (agy) | `agy` | `agy -i` | `agy -p 'prompt'` or `agy --prompt 'prompt'` | Not supported (no ACP mode) |
 | `codex` | `codex` | `codex` | `codex -q 'prompt'` | via acpx |
 | `claude` | `claude` | `claude` | `claude -p 'prompt'` | via acpx |
 
@@ -250,7 +249,6 @@ Agents in the built-in registry behave differently over ACP. Know what to expect
 |-------|-------------|------|-------|
 | `codex` | Clean, direct text | Ambient `OPENAI_API_KEY` | Default agent; most consistent. `thought_level` maps to `reasoning_effort`. |
 | `claude` | Direct text, occasionally verbose | API key or OAuth | May hit **rate limits** — error includes reset time (`resets HH:MM UTC`). Retry after the window. |
-| `antigravity` (agy) | Direct text | Ambient `ANTIGRAVITY_API_KEY` | No ACP support. Use direct CLI only: `agy -p 'prompt'` for one-shot, `agy -i` for interactive. |
 | `copilot` | Terse/minimal — often just the answer | GitHub OAuth | No reasoning trace, no adornment. Good for scripted extraction. |
 | `opencode` | N/A | `opencode-login` (custom) | **ACP adapter may not work** — session/new requires strict `cwd` and `mcpServers` params. Auth flow is separate from acpx. Prefer `opencode run` natively. |
 | `cursor` | Direct text | `cursor-auth` (custom) | Requires Cursor auth; ACP adapter is still maturing. |
@@ -464,18 +462,6 @@ Create a named session first, then prompt:
 acpx codex sessions new --name backend
 acpx codex -s backend 'fix pagination bug'
 acpx codex -s backend 'run tests'
-```
-
-### Direct Antigravity (agy) usage
-
-`agy` has no ACP adapter. Use the native CLI directly:
-
-```bash
-# One-shot print mode
-agy -p 'explain this function'
-
-# Interactive session
-agy -i
 ```
 
 ### Parallel named streams
