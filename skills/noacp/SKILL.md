@@ -48,7 +48,9 @@ Tags: `<orchestrator>` (you), `<agent>` (them). The `agent` attribute on `<sessi
 | Command | Usage | What it does |
 |---------|-------|--------------|
 | `new` | `session.sh new <agent> [id]` | Create session file, print path. Random id if omitted. |
-| `prompt` | `session.sh prompt <file> "text"` | Append orchestrator block, call agent, append agent block, print response. |
+| `prompt` | `session.sh prompt <file> [opts] ["text"]` | Append orchestrator block, call agent, append agent block, print response. |
+| `prompt` | `... --timeout N` | Override agent timeout for this call (seconds). |
+| `prompt` | `... --file prompt.txt` | Read prompt text from file (avoids shell arg size limits). |
 | `history` | `session.sh history <file>` | Print all turn pairs in readable format. |
 | `list` | `session.sh list` | List all sessions in `NOACP_DIR`. |
 | `close` | `session.sh close <file>` | Mark session closed, keep file on disk. |
@@ -79,6 +81,23 @@ Defined in `scripts/agents.json`. Add new agents with `command` + `input_mode`:
 - No tool-use callbacks during agent turn.
 - No cancel mid-turn. Use OS signals (`timeout` wrapper).
 - No parallel turns on same session. Sequential only.
+
+### Large payloads and arg size limits
+
+Agents using `flag` input_mode pass the entire session file as a CLI argument. Linux `ARG_MAX` is typically 2MB. Session history grows each turn. The script rejects payloads over 1MB with a clear error.
+
+For large prompts (docs, code reviews, multi-file context):
+1. Use `--file prompt.txt` to read prompt from file
+2. Use `stdin` or `file` input_mode in `agents.json` instead of `flag`
+3. Start a new session when history grows too large
+
+```bash
+# Large prompt via file
+bash skills/noacp/scripts/session.sh prompt /tmp/noacp/abc123.xml --file /tmp/large-review.txt
+
+# Override timeout for slow agents
+bash skills/noacp/scripts/session.sh prompt /tmp/noacp/abc123.xml --timeout 300 "Analyze this"
+```
 
 ## Advanced
 
