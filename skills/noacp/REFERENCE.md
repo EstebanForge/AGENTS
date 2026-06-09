@@ -62,3 +62,27 @@ EOF
 ```
 
 Prefer the script. It handles multiline content, XML escaping, `input_mode` routing, and edge cases that inline bash cannot safely cover.
+
+## Troubleshooting
+
+### `arithmetic syntax error` on first prompt
+
+Symptom: `session.sh: line N: 0: arithmetic syntax error`
+
+Cause: Old versions used `grep -c 'pattern' || echo 0` which outputs TWO lines ("0" from grep + "0" from echo) when no matches exist. Command substitution captures both as `"0\n0"` which breaks arithmetic.
+
+Fix: Ensure you're running the updated `session.sh` where `current_turn()` uses `local count=0; count=$(grep -c ...) || true`.
+
+### Agent receives truncated or empty prompt
+
+Cause: Shell argument size limits. `flag` input_mode passes the full session file as a CLI arg. On Linux, `ARG_MAX` is ~2MB. After XML escaping (ampersand/angle bracket expansion), a 500KB text payload becomes ~2MB.
+
+Fix: Use `--file prompt.txt` for large prompts, or switch the agent to `stdin`/`file` input_mode in `agents.json`.
+
+### Agent times out
+
+Fix: Use `--timeout N` to override the agent's default timeout per-call.
+
+```bash
+bash skills/noacp/scripts/session.sh prompt /tmp/noacp/abc.xml --timeout 300 "Long analysis task"
+```

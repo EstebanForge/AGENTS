@@ -16,7 +16,9 @@ Usage: session.sh <command> [args]
 
 Commands:
   new <agent> [id]          Create session, print file path
-  prompt <file> "text"      Send prompt, get response
+  prompt <file> [opts] [text]  Send prompt, get response
+    --timeout N             Override timeout (seconds)
+    --file prompt.txt       Read prompt text from file
   history <file>            Print readable history
   list                      List active sessions
   close <file>              Close session
@@ -48,7 +50,9 @@ agent_field() {
 
 current_turn() {
   local file="$1"
-  grep -c '<orchestrator turn=' "$file" 2>/dev/null || echo 0
+  local count=0
+  count=$(grep -c '<orchestrator turn=' "$file" 2>/dev/null) || true
+  echo "$count"
 }
 
 current_ts() { date -u +"%Y-%m-%dT%H:%M:%SZ"; }
@@ -79,15 +83,43 @@ EOF
 }
 
 cmd_prompt() {
-  local file="${1:-}" prompt="${2:-}"
-  [[ -z "$file" ]] && die "Usage: session.sh prompt <file> \"prompt text\""
-  [[ -z "$prompt" ]] && die "Prompt text required"
+  local file="" prompt=""
+  local timeout_override=""
+  local prompt_from_file=""
+
+  # Parse options (interleaved: options and positionals in any order)
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      --timeout)
+        timeout_override="$2"; shift 2 ;;
+      --file)
+        prompt_from_file="$2"; shift 2 ;;
+      -*)
+        die "Unknown option: $1" ;;
+      *)
+        if [[ -z "$file" ]]; then
+          file="$1"
+        elif [[ -z "$prompt" ]]; then
+          prompt="$1"
+        fi
+        shift ;;
+    esac
+  done
+
+  [[ -z "$file" ]] && die "Usage: session.sh prompt <file> [--timeout N] [--file prompt.txt] [\"prompt text\"]"
+  [[ -z "$prompt" && -z "$prompt_from_file" ]] && die "Prompt text required (arg or --file)"
   [[ -f "$file" ]] || die "Session file not found: $file"
 
   # Extract agent name from session tag (portable)
   local agent
   agent=$(attr_val "$file" "agent")
   [[ -z "$agent" ]] && die "No agent attribute in session file"
+
+  # Read prompt from file if specified
+  if [[ -n "$prompt_from_file" ]]; then
+    [[ -f "$prompt_from_file" ]] || die "Prompt file not found: $prompt_from_file"
+    prompt=$(cat "$prompt_from_file")
+  fi
 
   local cfg
   cfg=$(agent_config "$agent")
@@ -98,6 +130,8 @@ cmd_prompt() {
   local timeout_val
   timeout_val=$(agent_field "$cfg" "timeout_default")
   [[ "$timeout_val" == "null" ]] && timeout_val=120
+  # Per-call timeout override takes precedence
+  [[ -n "$timeout_override" ]] && timeout_val="$timeout_override"
 
   # Calculate next turn
   local turn
@@ -116,8 +150,25 @@ cmd_prompt() {
   sed -i '/^<\/session>$/d' "$file"
   printf '<orchestrator turn="%d" ts="%s">%s</orchestrator>\n' "$turn" "$ts" "$prompt_escaped" >> "$file"
 
+  # Ensure session file is always valid even if agent crashes/times out
+  cleanup_session() {
+    if ! tail -1 "$file" | grep -q '</session>' 2>/dev/null; then
+      printf '</session>\n' >> "$file"
+    fi
+  }
+  trap cleanup_session EXIT
+
   # Build agent invocation based on input_mode
   local response exit_code
+  # For flag mode: check payload size against ARG_MAX
+  # Linux ARG_MAX is typically 2MB; use conservative 1MB threshold
+  if [[ "$input_mode" == "flag" ]]; then
+    local payload_size
+    payload_size=$(wc -c < "$file")
+    if [[ "$payload_size" -gt 1048576 ]]; then
+      die "Session file is ${payload_size} bytes, exceeds 1MB safe limit for flag input_mode. Use stdin or file input_mode instead, or shorten session history."
+    fi
+  fi
   case "$input_mode" in
     flag)
       local print_flag
@@ -148,6 +199,9 @@ cmd_prompt() {
   # Append agent block and closing tag
   ts=$(current_ts)
   printf '<agent turn="%d" ts="%s">%s</agent>\n</session>\n' "$turn" "$ts" "$response_escaped" >> "$file"
+
+  # Clear cleanup trap on success
+  trap - EXIT
 
   # Print agent response (unescaped for readability)
   echo "$response" | xml_unescape
@@ -192,8 +246,8 @@ cmd_list() {
     local agent id turns closed
     agent=$(attr_val "$f" "agent")
     id=$(attr_val "$f" "id")
-    turns=$(grep -c '<orchestrator turn=' "$f" 2>/dev/null || echo 0)
-    closed=$(grep -c 'closed="true"' "$f" 2>/dev/null || echo 0)
+    turns=$(grep -c '<orchestrator turn=' "$f" 2>/dev/null) || turns=0
+    closed=$(grep -c 'closed="true"' "$f" 2>/dev/null) || closed=0
     local status="open"
     [[ "$closed" -gt 0 ]] && status="closed"
     printf "%-20s agent=%-8s turns=%-3s %-7s %s\n" "$(basename "$f")" "${agent:-?}" "$turns" "$status" "$f"
@@ -245,15 +299,15 @@ cmd_validate() {
   fi
 
   # Check closed status
-  local closed
-  closed=$(grep -c 'closed="true"' "$f" 2>/dev/null || echo 0)
+  local closed=0
+  closed=$(grep -c 'closed="true"' "$file" 2>/dev/null) || true
   if [[ "$closed" -gt 0 ]]; then
     echo "WARN: session is closed"
   fi
 
   # Check turn monotonicity from orchestrator blocks
   local turns
-  turns=$(grep -oE '<orchestrator turn="[0-9]+"' "$file" | grep -oE '[0-9]+' | sort -un | tr '\n' ' ')
+  turns=$(grep -oE '<orchestrator turn="[0-9]+"' "$file" | grep -oE '[0-9]+' | sort -un | tr '\n' ' ') || turns=""
   local expected=1
   for t in $turns; do
     [[ "$t" -eq "$expected" ]] || { echo "FAIL: expected turn $expected, got $t"; errors=$((errors+1)); }
@@ -261,9 +315,9 @@ cmd_validate() {
   done
 
   # Check paired blocks
-  local orch_count agent_count
-  orch_count=$(grep -c '<orchestrator turn=' "$file" 2>/dev/null || echo 0)
-  agent_count=$(grep -c '<agent turn=' "$file" 2>/dev/null || echo 0)
+  local orch_count=0 agent_count=0
+  orch_count=$(grep -c '<orchestrator turn=' "$file" 2>/dev/null) || true
+  agent_count=$(grep -c '<agent turn=' "$file" 2>/dev/null) || true
   # Last turn may be in-flight (orchestrator without agent response yet)
   if [[ "$agent_count" -lt $((orch_count - 1)) ]]; then
     echo "FAIL: unpaired blocks ($orch_count orchestrator, $agent_count agent)"

@@ -9,6 +9,12 @@ description: Use acpx as a headless ACP CLI for agent-to-agent communication, in
 
 Use this skill when you need to run coding agents through `acpx`, manage persistent ACP sessions, queue prompts, or consume structured agent output from scripts.
 
+## Antigravity (agy) redirect
+
+`agy` has no ACP adapter and cannot be used through `acpx`.
+
+If the user asks to use `acpx` with `agy` / `antigravity`, **stop and switch to the `noacp` skill instead**. Load `skills/noacp/SKILL.md` and follow its instructions for file-based agy sessions. Do not attempt any `acpx` commands for agy.
+
 ## What acpx is
 
 `acpx` is a headless, scriptable CLI client for the Agent Client Protocol (ACP). It is built for agent-to-agent communication over the command line and avoids PTY scraping.
