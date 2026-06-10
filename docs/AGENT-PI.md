@@ -142,7 +142,8 @@
 { "mcpServers": {} }
 ```
 
-No servers configured in mcp.json. Available via `mcp-cli-ent`: deepwiki, context7, ai-vision, codegraph, brave-search, agentmemory.
+No servers configured in mcp.json. Available via `mcp-cli-ent`: deepwiki, ai-vision, codegraph, brave-search.
+Agentmemory now provided natively by the `pi-agentmemory` extension.
 
 ## Extensions (`settings.json` -> packages)
 
@@ -154,7 +155,7 @@ No servers configured in mcp.json. Available via `mcp-cli-ent`: deepwiki, contex
   "git:github.com/ferologics/pi-notify",
   "npm:pi-web-providers",
   "npm:pi-ask-user",
-  "npm:@dreki-gg/pi-context7",
+  "git:https://github.com/EstebanForge/pi-agentmemory",
   "npm:pi-autoresearch",
   "npm:pi-acp",
   "npm:pi-claude-cli",
@@ -163,5 +164,6 @@ No servers configured in mcp.json. Available via `mcp-cli-ent`: deepwiki, contex
   "npm:@howaboua/pi-subagent-review",
   "npm:pi-init",
   "npm:@ff-labs/pi-fff",
+  "npm:@upstash/context7-pi"
 ]
 ```
