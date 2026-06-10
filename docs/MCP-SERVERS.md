@@ -65,6 +65,10 @@ Problem-solving and planning.
 
 Code library docs and snippets.
 
+**Pi**: Native via `@upstash/context7-pi` extension (tools: `resolve-library-id`, `query-docs`). No MCP config needed.
+
+**Other agents**: MCP server config below.
+
 ```json
 {
   "enabled": true,

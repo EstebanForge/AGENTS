@@ -23,7 +23,7 @@ communication_protocol[5]:
 
 workflow_protocol:
   steps[4]{phase|instruction}:
-    - "Context|Search agentmemory FIRST (recall -> smart). If .codegraph/ exists: route codebase exploration through CodeGraph tools (search, context, explore). Else: fd/rg/sg (code), context7 (docs, fallback mcp-cli-ent). Analyze data"
+    - "Context|Search agentmemory (memory_search) FIRST (recall -> smart). If .codegraph/ exists: route codebase exploration through CodeGraph tools (search, context, explore). Else: fd/rg/sg (code). For library docs use context7 (extension, fallback to mcp server). Analyze data"
     - "Plan|Todo list. Transform tasks to verifiable goals (test-first). For bugs: Reproduce (fail-first) mandatory. Define success criteria. Confirm scope"
     - "Execute|Read, then edit. Step-by-step. Confirm outcome visually (cat/ls). Long task? Save checkpoint every 3 turns."
     - "Verify|Lint, test, wire end-to-end. Yield when [x]"
@@ -53,12 +53,6 @@ memory_protocol:
     - "User preferences (X over Y)"
     - "Integration quirks (Undocumented behavior)"
     - "Hidden project conventions"
-  mcp_tools:
-    recall: "memory_recall (primary, full content)"
-    smart: "memory_smart_search (compact; use expandIds)"
-    save: "memory_save (add concepts/files)"
-    sessions: "memory_sessions (history)"
-  mcp_fallback: "If memory tools are missing from environment, invoke them using `mcp-cli-ent call agentmemory <tool_name> <args>`"
 
 implementation_protocol[9]:
   - "Think|Don't assume. State assumptions. Vague? (e.g., 'Make it faster') -> Present multiple interpretations & potential paths (e.g., speed vs throughput vs UX). Confused? Halt. Ask for clarification"
@@ -119,7 +113,6 @@ codegraph_protocol:
 acpx_protocol[1]:
   - "When user mentions an agent (pi|codex|antigravity|agy|claude|opencode|copilot) use acpx skill for interaction with them. They are peer agents, not sub-agents (do not invoke subagent)"
 
-
 technical_standards_definition:
   principles: "DRY, KISS, YAGNI, LoD, LOB (Locality of Behaviour). NO SOLID"
   logic: "Early returns. switch > if. Why, not what"
@@ -162,7 +155,7 @@ cli_tools_definition[20]{name,desc,example}:
 
 mcp_protocol:
   client: "mcp-cli-ent"
-  servers: "agentmemory (memory), context7 (libraries), deepwiki (docs), ai-vision (vision), brave-search (web), codegraph (code)"
+  servers: "deepwiki (docs), ai-vision (vision), brave-search (web), codegraph (code)"
   discover: "Run `mcp-cli-ent` (bare) to dynamically discover enabled servers and tools (outputs JSON: {server_name: [{name, description}]})"
   list_tools: "Run `mcp-cli-ent list-tools <server_name>` to inspect full schema, params, and calls for a specific server"
   call: "Run `mcp-cli-ent call <server_name> <tool_name> '<json_params>'` to execute a tool"
