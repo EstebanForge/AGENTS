@@ -3,6 +3,8 @@ name: acpx
 description: Use acpx as a headless ACP CLI for agent-to-agent communication, including prompt/exec/sessions workflows, session scoping, queueing, permissions, and output formats.
 ---
 
+> **Deprecated.** Superseded by [`@estebanforge/pi-orbitals`](https://github.com/EstebanForge/pi-orbitals), which drives claude/codex/agy as interactive tmux sessions (subscription quota) instead of headless `-p` billing. Use `orbit_start` / `orbit_send` / `orbit_events`. Kept as a fallback.
+
 # acpx
 
 ## When to use this skill
