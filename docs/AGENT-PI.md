@@ -164,6 +164,8 @@ Agentmemory now provided natively by the `pi-agentmemory` extension.
   "npm:@howaboua/pi-subagent-review",
   "npm:pi-init",
   "npm:@ff-labs/pi-fff",
-  "npm:@upstash/context7-pi"
+  "npm:@upstash/context7-pi",
+  "npm:@howaboua/pi-glm-via-anthropic",
+  "npm:glm-vision"
 ]
 ```
