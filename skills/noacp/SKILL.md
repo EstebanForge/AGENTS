@@ -3,6 +3,8 @@ name: noacp
 description: File-based session protocol for agents without ACP support. Wraps any CLI agent (agy, etc.) in persistent multi-turn conversations using shared session files. Use when acpx is unavailable, the target agent lacks ACP, or when user mentions noacp, agy session, file-based agent, or non-ACP agent communication.
 ---
 
+> **Deprecated.** Superseded by [`@estebanforge/pi-orbitals`](https://github.com/EstebanForge/pi-orbitals), which drives claude/codex/agy as interactive tmux sessions (subscription quota). Use `orbit_start` / `orbit_send` / `orbit_events` instead. Kept as a fallback.
+
 # noacp
 
 File-based session protocol. Replaces ACPX for agents that lack ACP adapters.
