@@ -222,27 +222,40 @@ cmd_history() {
   [[ -f "$file" ]] || die "Session file not found: $file"
 
   echo "=== Session: $(basename "$file") ==="
-  # Extract turn pairs using awk - handle multiline content between tags
-  awk -v unescape_script='s/\&lt;/</g; s/\&gt;/>/g; s/\&amp;/\&/g' '
-    /<orchestrator turn=/ {
+  awk '
+    /<orchestrator turn="/ {
       match($0, /turn="[0-9]+"/)
       t=substr($0, RSTART+6, RLENGTH-7)
+      printf "\n--- Turn %s (orchestrator) ---\n", t
       sub(/.*<orchestrator[^>]*>/, "")
-      sub(/<\/orchestrator>.*/, "")
-      unescape_script
-      printf "\n--- Turn %s (orchestrator) ---\n%s\n", t, $0
+      in_orch=1
+    }
+    in_orch {
+      if (sub(/<\/orchestrator>.*/, "")) {
+        print
+        in_orch=0
+      } else {
+        print
+      }
       next
     }
-    /<agent turn=/ {
+    /<agent turn="/ {
       match($0, /turn="[0-9]+"/)
       t=substr($0, RSTART+6, RLENGTH-7)
+      printf "--- Turn %s (agent) ---\n", t
       sub(/.*<agent[^>]*>/, "")
-      sub(/<\/agent>.*/, "")
-      unescape_script
-      printf "--- Turn %s (agent) ---\n%s\n", t, $0
+      in_agent=1
+    }
+    in_agent {
+      if (sub(/<\/agent>.*/, "")) {
+        print
+        in_agent=0
+      } else {
+        print
+      }
       next
     }
-  ' "$file"
+  ' "$file" | xml_unescape
   echo ""
   echo "=== End ==="
 }
