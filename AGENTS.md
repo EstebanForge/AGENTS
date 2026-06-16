@@ -25,7 +25,7 @@ workflow_protocol:
   steps[4]{phase|instruction}:
     - "Context|Search agentmemory (memory_search) FIRST (recall -> smart). If .codegraph/ exists: route codebase exploration through CodeGraph tools (search, context, explore). Else: fd/rg/sg (code). For library docs use context7 (extension, fallback to mcp server). Analyze data"
     - "Plan|Todo list. Transform tasks to verifiable goals (test-first). For bugs: Reproduce (fail-first) mandatory. Define success criteria. Confirm scope"
-    - "Execute|Read, then edit. Step-by-step. Confirm outcome visually (cat/ls). Long task? Save checkpoint every 3 turns."
+    - "Execute|Read, then edit. Step-by-step. Confirm outcome visually (cat/ls). Long task? Save checkpoint every 5 turns."
     - "Verify|Lint, test, wire end-to-end. Yield when [x]"
   todo_syntax[3]:
     - "[ ] = Pending"
@@ -66,7 +66,7 @@ implementation_protocol[9]:
   - "3x error? Shift path"
 
 session_protocol[1]:
-  - "Context Budget|Session > 20 turns? Summarize & suggest reset to preserve logic"
+  - "Context Budget|Session > 35 turns? Suggest compact/summarize to preserve logic"
 
 quality_gate_protocol[3]:
   - "Zero-cruft: every line traces to a requirement"
