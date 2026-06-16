@@ -33,6 +33,15 @@ exit 1; }
 xml_escape() { sed 's/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g'; }
 xml_unescape() { sed 's/\&lt;/</g; s/\&gt;/>/g; s/\&amp;/\&/g'; }
 
+# Portable in-place sed: BSD (macOS) needs empty suffix arg, GNU (Linux) does not
+sed_inplace() {
+  if sed --version >/dev/null 2>&1; then
+    sed -i "$@"       # GNU sed
+  else
+    sed -i '' "$@"    # BSD sed (macOS)
+  fi
+}
+
 # Resolve agent config from agents.json
 agent_config() {
   local agent="$1"
@@ -56,7 +65,7 @@ current_turn() {
 }
 
 current_ts() { date -u +"%Y-%m-%dT%H:%M:%SZ"; }
-gen_id() { tr -dc 'a-f0-9' < /dev/urandom | head -c 8; }
+gen_id() { LC_ALL=C tr -dc 'a-f0-9' < /dev/urandom | head -c 8; }
 
 # Portably extract attribute value (no grep -P)
 attr_val() {
@@ -147,7 +156,7 @@ cmd_prompt() {
 
   # Strip-and-append: remove </session>, append orchestrator block
   # This avoids all sed metacharacter issues
-  sed -i '/^<\/session>$/d' "$file"
+  sed_inplace '/^<\/session>$/d' "$file"
   printf '<orchestrator turn="%d" ts="%s">%s</orchestrator>\n' "$turn" "$ts" "$prompt_escaped" >> "$file"
 
   # Ensure session file is always valid even if agent crashes/times out
@@ -264,7 +273,7 @@ cmd_close() {
   # Strip-and-append closed metadata
   local ts
   ts=$(current_ts)
-  sed -i '/^<\/session>$/d' "$file"
+  sed_inplace '/^<\/session>$/d' "$file"
   printf '<meta closed="true" closedAt="%s"/>\n</session>\n' "$ts" >> "$file"
   echo "Closed: $file"
 }
