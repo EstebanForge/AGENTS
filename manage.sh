@@ -188,7 +188,10 @@ manage_agent() {
         if [[ "${name}" == construct_* ]]; then
             # Construct Mode: Direct Copy
             if [[ "${target}" != "${HOME}/.config/construct-cli/home/.agents/"* ]]; then
-                mkdir -p "$(dirname "${target}")"
+                # Clear a dangling symlink at target: a leftover broken link makes
+                # mkdir -p fail with ENOENT, and macOS rsync mkpath also errors (#534).
+                [[ -L "${target}" && ! -e "${target}" ]] && rm -f "${target}"
+                mkdir -p "${target}"
                 if command -v rsync >/dev/null 2>&1; then
                     rsync -a --delete "${CENTRAL_SKILLS}/" "${target}/"
                 else
@@ -223,6 +226,7 @@ manage_prompts() {
     local name=$1; local target=$2; local force=${3:-0}
     if [[ "${name}" == construct_* ]]; then
         if [[ "${target}" != "${HOME}/.config/construct-cli/home/.agents/"* ]]; then
+            [[ -L "${target}" && ! -e "${target}" ]] && rm -f "${target}"
             mkdir -p "${target}"
             if command -v rsync >/dev/null 2>&1; then
                 rsync -a --delete "${CENTRAL_PROMPTS}/" "${target}/"
