@@ -72,6 +72,22 @@ Defined in `scripts/agents.json`. Add new agents with `command` + `input_mode`:
 
 `input_mode` values: `flag` (prompt via CLI flag), `stdin` (prompt via stdin), `file` (prompt via file path arg).
 
+## Prefer file input for multi-line prompts
+
+Default to `--file` for any prompt longer than a single line, not only when the payload is large. File input removes shell escaping issues (quotes, backticks, `$`, newlines) and makes the prompt easy to inspect, edit, and replay.
+
+```bash
+PROMPT=$(mktemp --suffix=.md)
+cat > "$PROMPT" <<'EOF'
+Multi-line instructions go here.
+Special characters like $, `, ", ', \ pass through unchanged.
+EOF
+bash skills/noacp/scripts/session.sh prompt /tmp/noacp/abc123.xml --file "$PROMPT"
+rm -f "$PROMPT"
+```
+
+Single-line prompts can still go inline: `bash skills/noacp/scripts/session.sh prompt /tmp/noacp/abc123.xml "summarize this file"`.
+
 ## Limitations
 
 - No streaming. Agent responds once per call.
