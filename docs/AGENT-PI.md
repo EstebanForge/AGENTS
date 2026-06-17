@@ -7,27 +7,16 @@
 ```json
 {
   "defaultProvider": "zai",
-  "defaultModel": "glm-5.1",
+  "defaultModel": "glm-5.2",
   "defaultThinkingLevel": "medium",
-  "transport": "auto",
-  "editorPaddingX": 2,
-  "steeringMode": "one-at-a-time",
-  "followUpMode": "one-at-a-time",
-  "treeFilterMode": "default",
-  "compaction": { "enabled": true },
-  "retry": { "enabled": true },
   "enabledModels": [
-    "zai/glm-5.1",
     "google/gemini-2.5-flash",
-    "google/gemini-2.5-pro",
     "google/gemini-3.1-flash-lite",
     "google/gemini-3.1-pro-preview",
     "google/gemini-3.5-flash",
-    "zai/glm-5v-turbo",
-    "deepseek/deepseek-v4-flash",
-    "deepseek/deepseek-v4-pro",
-    "minimax/MiniMax-M3",
-    "lmstudio/google/gemma-4-12b"
+    "lmstudio/google/gemma-4-12b",
+    "zai/glm-5.2",
+    "minimax/MiniMax-M3"
   ]
 }
 ```
@@ -145,27 +134,33 @@
 No servers configured in mcp.json. Available via `mcp-cli-ent`: deepwiki, ai-vision, codegraph, brave-search.
 Agentmemory now provided natively by the `pi-agentmemory` extension.
 
-## Extensions (`settings.json` -> packages)
+## Extensions (`settings.json`)
+
+Local extension files and installed packages (all active).
 
 ```json
+"extensions": [
+  "/Users/esteban/.pi/agent/extensions/muxy-notify.ts"
+],
 "packages": [
-  "npm:pi-librarian",
-  "npm:pi-subagents",
   "npm:@sherif-fanous/pi-rtk",
   "git:github.com/ferologics/pi-notify",
   "npm:pi-web-providers",
   "npm:pi-ask-user",
-  "git:https://github.com/EstebanForge/pi-agentmemory",
-  "npm:pi-autoresearch",
+  "npm:@dreki-gg/pi-context7",
   "npm:pi-acp",
-  "npm:pi-claude-cli",
   "npm:@tintinweb/pi-tasks",
+  "npm:pi-context-usage",
   "git:github.com/code-yeongyu/pi-nested-agents-md",
   "npm:@howaboua/pi-subagent-review",
   "npm:pi-init",
-  "npm:@ff-labs/pi-fff",
   "npm:@upstash/context7-pi",
+  "npm:@estebanforge/pi-agentmemory",
+  "npm:@mcowger/pi-better-messages-cache",
+  "npm:glm-vision",
   "npm:@howaboua/pi-glm-via-anthropic",
-  "npm:glm-vision"
+  "npm:pi-token-speed",
+  "npm:pi-go-review",
+  "npm:pi-diff-review"
 ]
 ```
