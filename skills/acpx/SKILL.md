@@ -130,6 +130,22 @@ Prompt options:
 - `--no-wait`: enqueue and return immediately when session is already busy
 - `-f, --file <path>`: read prompt text from file (`-` means stdin)
 
+### Prefer file input for multi-line prompts
+
+For any prompt longer than a single line, write it to a temp file and pass it via `-f/--file` instead of inline text. File input sidesteps shell quoting, escaping, and `ARG_MAX` hazards, which downstream agents and scripts handle more reliably.
+
+```bash
+PROMPT=$(mktemp --suffix=.md)
+cat > "$PROMPT" <<'EOF'
+Multi-line instructions go here.
+Special characters like $, `, ", ', \ pass through unchanged.
+EOF
+acpx codex --file "$PROMPT"
+rm -f "$PROMPT"
+```
+
+Single-line prompts can still go inline: `acpx codex 'summarize this file'`.
+
 ### Exec (one-shot)
 
 ```bash
