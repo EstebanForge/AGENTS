@@ -136,17 +136,13 @@ Agentmemory now provided natively by the `pi-agentmemory` extension.
 
 ## Extensions (`settings.json`)
 
-Local extension files and installed packages (all active).
+Installed packages (all active). Verified via `pi list`. No local extension files registered.
 
 ```json
-"extensions": [
-  "/Users/esteban/.pi/agent/extensions/muxy-notify.ts"
-],
 "packages": [
   "npm:@sherif-fanous/pi-rtk",
   "git:github.com/ferologics/pi-notify",
   "npm:pi-web-providers",
-  "npm:pi-ask-user",
   "npm:@dreki-gg/pi-context7",
   "npm:pi-acp",
   "npm:@tintinweb/pi-tasks",
@@ -161,6 +157,8 @@ Local extension files and installed packages (all active).
   "npm:@howaboua/pi-glm-via-anthropic",
   "npm:pi-token-speed",
   "npm:pi-go-review",
-  "npm:pi-diff-review"
+  "npm:pi-diff-review",
+  "npm:@narumitw/pi-auto-thinking",
+  "npm:@juicesharp/rpiv-ask-user-question"
 ]
 ```
