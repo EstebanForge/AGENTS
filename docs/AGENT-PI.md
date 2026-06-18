@@ -159,6 +159,7 @@ Installed packages (all active). Verified via `pi list`. No local extension file
   "npm:pi-go-review",
   "npm:pi-diff-review",
   "npm:@narumitw/pi-auto-thinking",
-  "npm:@juicesharp/rpiv-ask-user-question"
+  "npm:@juicesharp/rpiv-ask-user-question",
+  "npm:@vndv/pi-codegraph"
 ]
 ```
