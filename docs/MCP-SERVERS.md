@@ -11,11 +11,12 @@ Cross-session memory (recall, save, search). Requires local agentmemory service.
 
 ```json
 {
+  "enabled": true,
   "command": "npx",
   "args": ["-y", "@agentmemory/mcp"],
-  "env": {
-    "AGENTMEMORY_URL": "http://localhost:3111"
-  }
+  "directTools": true,
+  "persistent": false,
+  "timeout": 30
 }
 ```
 
@@ -39,7 +40,7 @@ Browser automation: elements, snapshots, interactions.
 
 ```json
 {
-  "enabled": true,
+  "enabled": false,
   "command": "npx",
   "args": ["-y", "@playwright/mcp@latest"],
   "persistent": true,
@@ -73,7 +74,7 @@ Code library docs and snippets.
 {
   "enabled": true,
   "command": "npx",
-  "args": ["-y", "@upstash/context7-mcp", "--api-key", "${ENT_CONTEXT7_API_KEY}"],
+  "args": ["-y", "@upstash/context7-mcp", "--api-key", "${CONTEXT7_API_KEY}"],
   "persistent": false,
   "timeout": 30
 }
@@ -103,7 +104,7 @@ Search the web, images, videos, news + AI summaries.
   "command": "npx",
   "args": ["-y", "@brave/brave-search-mcp-server"],
   "env": {
-    "BRAVE_API_KEY": "${ENT_BRAVE_API_KEY}"
+    "BRAVE_API_KEY": "${BRAVE_API_KEY}"
   },
   "persistent": false,
   "timeout": 30
@@ -131,12 +132,13 @@ Memory layer for coding agents: auto-generate AI memories, IDE switching, team s
 ```json
 {
   "enabled": false,
+  "type": "stdio",
   "command": "cipher",
   "args": ["--mode", "mcp"],
   "env": {
     "MCP_SERVER_MODE": "aggregator",
-    "OPENAI_API_KEY": "${ENT_OPENAI_API_KEY}",
-    "ANTHROPIC_API_KEY": "${ENT_ANTHROPIC_API_KEY}"
+    "OPENAI_API_KEY": "${OPENAI_API_KEY}",
+    "ANTHROPIC_API_KEY": "${ANTHROPIC_API_KEY}"
   },
   "persistent": false,
   "timeout": 30
@@ -168,8 +170,11 @@ Local code knowledge graph. Symbol search, call graphs, impact analysis. 100% lo
 
 ```json
 {
+  "enabled": true,
   "command": "codegraph",
-  "args": ["serve", "--mcp"]
+  "args": ["serve", "--mcp"],
+  "persistent": false,
+  "timeout": 30
 }
 ```
 

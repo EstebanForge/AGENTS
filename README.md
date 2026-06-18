@@ -126,20 +126,30 @@ All skills must follow the Agent Skills specification: https://agentskills.io/sp
 |-------|-------------|
 | `acpx` | Use acpx as a headless ACP CLI for agent-to-agent communication. |
 | `agent-browser` | Browser automation CLI for AI agents — navigate, click, fill forms, screenshot, scrape, and test web apps. |
+| `codebase-design` | Shared vocabulary for designing deep modules — interface, depth, seam, adapter. |
+| `commit` | Read this skill before making git commits. |
 | `datastar` | Build reactive hypermedia-driven web apps using Datastar. Signals, data-* attributes, SSE backend events, actions, and patterns like CQRS, active search, infinite scroll. |
 | `design-taste-frontend` | Senior UI/UX Engineer. Architect digital interfaces overriding default LLM biases. |
-| `dunk-review` | Read user-authored review comments via `dunk comments` CLI and address each one. |
-| `grill-me` | Interview the user relentlessly about a plan or design until reaching shared understanding. |
+| `diagnosing-bugs` | Disciplined diagnosis loop for hard bugs and perf regressions: reproduce, minimise, hypothesise, instrument, fix, regression-test. |
+| `domain-modeling` | Build and sharpen a project's domain model; maintain `CONTEXT.md` and ADRs inline. |
+| `grill-me` | Relentless interview to sharpen a plan or design (user-invoked wrapper for `/grilling`). |
+| `grill-with-docs` | Relentless interview that also builds the domain model (glossary + ADRs) as you go. |
+| `grilling` | The reusable interview loop behind `grill-me` and `grill-with-docs`. |
+| `handoff` | Compact the current conversation into a handoff document for another agent to pick up. |
 | `humanizer` | Remove signs of AI-generated writing from text. |
-| `hunk-review` | Interacts with live Hunk diff review sessions via CLI. |
-| `improve-codebase-architecture` | Explore codebase for architectural improvement, focusing on testability. |
+| `improve-codebase-architecture` | Scan a codebase for deepening opportunities, present them as a visual HTML report, then grill through whichever one you pick. |
+| `mcp-cli-ent` | Interact with MCP servers using the `mcp-cli-ent` command-line client. |
+| `noacp` | File-based session protocol for agents without ACP support (`agy`, etc.). |
 | `orchestrate` | Structured workflow orchestration for non-trivial tasks. |
 | `plan` | Thorough plan review across architecture, code quality, tests, and performance. |
 | `prd-to-plan` | Turn a PRD into a multi-phase implementation plan using tracer-bullet vertical slices. |
 | `refactor-pass` | Perform a refactor pass focused on simplicity after recent changes. |
 | `request-refactor-plan` | Create a detailed refactor plan with tiny commits via user interview. |
-| `write-a-prd` | Create a PRD through user interview, codebase exploration, and module design. |
-| `write-a-skill` | Create new agent skills with proper structure and bundled resources. |
+| `tdd` | Test-driven development with a red-green-refactor loop, one vertical slice at a time. |
+| `teach` | Teach the user a new skill or concept over multiple sessions in a stateful workspace. |
+| `to-issues` | Break a plan, spec, or PRD into independently-grabbable issues using vertical slices. |
+| `to-prd` | Turn the current conversation into a PRD and publish it to the issue tracker. |
+| `writing-great-skills` | Reference for writing and editing skills well — the vocabulary and principles that make a skill predictable. |
 
 ### Adding a Skill
 

@@ -8,15 +8,19 @@
 {
   "defaultProvider": "zai",
   "defaultModel": "glm-5.2",
-  "defaultThinkingLevel": "medium",
+  "defaultThinkingLevel": "low",
   "enabledModels": [
+    "zai/glm-5.1",
     "google/gemini-2.5-flash",
+    "google/gemini-2.5-pro",
     "google/gemini-3.1-flash-lite",
     "google/gemini-3.1-pro-preview",
     "google/gemini-3.5-flash",
+    "deepseek/deepseek-v4-flash",
+    "deepseek/deepseek-v4-pro",
+    "minimax/MiniMax-M3",
     "lmstudio/google/gemma-4-12b",
-    "zai/glm-5.2",
-    "minimax/MiniMax-M3"
+    "zai/glm-5.2"
   ]
 }
 ```
@@ -140,21 +144,23 @@ Installed packages (all active). Verified via `pi list`. No local extension file
 
 ```json
 "packages": [
+  "npm:pi-librarian",
+  "npm:pi-subagents",
   "npm:@sherif-fanous/pi-rtk",
   "git:github.com/ferologics/pi-notify",
   "npm:pi-web-providers",
-  "npm:@dreki-gg/pi-context7",
+  "npm:pi-autoresearch",
   "npm:pi-acp",
   "npm:@tintinweb/pi-tasks",
   "npm:pi-context-usage",
   "git:github.com/code-yeongyu/pi-nested-agents-md",
   "npm:@howaboua/pi-subagent-review",
   "npm:pi-init",
+  "npm:@ff-labs/pi-fff",
   "npm:@upstash/context7-pi",
   "npm:@estebanforge/pi-agentmemory",
   "npm:@mcowger/pi-better-messages-cache",
   "npm:glm-vision",
-  "npm:@howaboua/pi-glm-via-anthropic",
   "npm:pi-token-speed",
   "npm:pi-go-review",
   "npm:pi-diff-review",
