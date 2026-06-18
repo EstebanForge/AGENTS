@@ -99,16 +99,19 @@ tool_protocol[5]:
   - "Command Output: Protect context usage. Run verbose commands via rtk CLI proxy tool or byte-cap them (e.g., rtk command or command 2>&1 | head -c 4000)"
 
 codegraph_protocol:
-  priority: "codegraph > fd/rg/sg when .codegraph/ exists. Graph is pre-built index; re-scanning with grep repeats work already done"
+  priority: "codegraph > fd/rg/sg when .codegraph/ exists. Graph is pre-built index; re-scanning with grep repeats work already done, avoid unless absolutely necessary"
   rule: "Answer directly from CodeGraph. Don't delegate exploration to file-reading sub-agents or grep/read loops. Returned source is authoritative: treat as already read"
-  tools[6]{tool,intent}:
+  tools[8]{tool,intent}:
     codegraph_context,Use first for any architecture/context query
     codegraph_trace,Use to trace call path execution between two symbols
     codegraph_explore,Use to inspect source code of multiple related symbols
     codegraph_search,Use to search symbols by name
     codegraph_callers/codegraph_callees,Use to walk call hierarchy hop-by-hop
     codegraph_impact,Use to check change radius before editing
-  fallback: "No .codegraph/ in project? Offer: 'Run codegraph init -i to build a code knowledge graph?'"
+    codegraph_node,One symbol's signature, location, source, callers, and callees
+    codegraph_files,Indexed file tree
+  fallback: "No .codegraph/ in project? Offer: 'Run `codegraph init -i` to build a code knowledge graph?'"
+  stale: "Run `codegraph index && codegraph sync` to update the code knowledge graph"
 
 acpx_protocol[1]:
   - "When user mentions an agent (pi|codex|antigravity|agy|claude|opencode|copilot) use acpx skill for interaction with them. They are peer agents, not sub-agents (do not invoke subagent)"
