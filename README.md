@@ -139,6 +139,7 @@ All skills must follow the Agent Skills specification: https://agentskills.io/sp
 | `humanizer` | Remove signs of AI-generated writing from text. |
 | `improve-codebase-architecture` | Scan a codebase for deepening opportunities, present them as a visual HTML report, then grill through whichever one you pick. |
 | `mcp-cli-ent` | Interact with MCP servers using the `mcp-cli-ent` command-line client. |
+| `mermaid-diagrams` | Validate and fix Mermaid diagrams by rendering them with the official mermaid-cli (mmdc). mmdc has no lint mode; rendering is the validation. |
 | `noacp` | File-based session protocol for agents without ACP support (`agy`, etc.). |
 | `orchestrate` | Structured workflow orchestration for non-trivial tasks. |
 | `plan` | Thorough plan review across architecture, code quality, tests, and performance. |
