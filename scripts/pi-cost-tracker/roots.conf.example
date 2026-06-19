@@ -1,0 +1,19 @@
+# Ledger roots for the unified cost tracker. One path per line.
+# Copy this file to roots.conf and edit paths for your machine:
+#   cp roots.conf.example roots.conf
+# install.sh generates roots.conf for you if it is missing.
+#
+# The FIRST listed root is "primary": prices.json + monthly/ archive live there.
+# Lines starting with # are comments; blank lines are ignored.
+# Runtime overrides (no edit needed):
+#   PI_COST_LEDGERS=/path/a:/path/b   (PATH-style, colon-separated)
+#   PI_COST_LEDGER=/path/a            (legacy: single root only)
+
+# Primary: host pi (scripts, prices, and archive live here).
+~/.pi/cost-tracker
+
+# Optional: a second pi environment that also produces a ledger.
+# Example: construct-cli sandbox home. Add/remove lines for your setup.
+# The host scripts read every root listed here and report a COMBINED total;
+# ledgers must be disjoint (each call logged once) for an accurate sum.
+# ~/.config/construct-cli/home/.pi/cost-tracker
