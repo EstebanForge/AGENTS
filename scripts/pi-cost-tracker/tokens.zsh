@@ -4,24 +4,25 @@
 
 tokens() {
   local ct="$HOME/.pi/cost-tracker"
-  local choice range month
+  local choice range month ep
   while true; do
     cat <<'MENU'
 
 pi token cost tracker  (reads all roots in roots.conf)
 
   1) live spend — this month
-  2) live spend — all history
+  2) live spend — all history (by month)
   3) live spend — specific month/day
   4) squash month into archive (+ trend)
   5) show trend (history.csv)
   6) show archive detail for a month
+  7) export last 12 months to CSV
   q) quit
 MENU
     printf '\n> '; read -r choice || break
     case "$choice" in
       1) "$ct/api-equiv.sh" "$(date +%Y/%m)" ;;
-      2) "$ct/api-equiv.sh" all ;;
+      2) "$ct/api-equiv.sh" --by-month ;;
       3) printf 'range (YYYY/MM or YYYY/MM/DD): '; read -r range
          [ -n "$range" ] && "$ct/api-equiv.sh" "$range" ;;
       4) printf 'month (YYYY/MM) [enter=current]: '; read -r month
@@ -34,6 +35,9 @@ MENU
          else
            echo "no archive for ${month:-<empty>}; squash it first (option 4)"
          fi ;;
+      7) printf 'output path [enter = ./pi-cost-last12months-<today>.csv]: '; read -r ep
+         if [ -z "$ep" ]; then "$ct/api-equiv.sh" --export-csv
+         else "$ct/api-equiv.sh" --export-csv "$ep"; fi ;;
       q|Q) echo "bye"; break ;;
       *) echo "invalid: $choice" ;;
     esac

@@ -152,8 +152,10 @@ Both scripts read this. Edit ONE file when prices change.
 ### `api-equiv.sh` - live cost view (combined, all roots)
 
 ```
-usage: api-equiv.sh [YYYY/MM | YYYY/MM/DD | all]
+usage: api-equiv.sh [YYYY/MM | YYYY/MM/DD | all | --by-month | --export-csv [path]]
   api-equiv.sh             # all history (all roots)
+  api-equiv.sh --by-month  # all history grouped per month (table + TOTAL)
+  api-equiv.sh --export-csv [path]  # last 12 months -> one CSV (default ./pi-cost-last12months-<date>.csv)
   api-equiv.sh 2026/06     # one month
   api-equiv.sh 2026/06/19  # one day
 
@@ -187,9 +189,10 @@ The `tokens()` function (in `tokens.zsh`, deployed by `install.sh`) presents a
 numbered menu so you never have to remember the scripts:
 
 ```
-1) live spend — this month        4) squash month into archive (+ trend)
-2) live spend — all history       5) show trend (history.csv)
-3) live spend — specific range    6) show archive detail for a month
+  1) live spend — this month        4) squash month into archive (+ trend)
+  2) live spend — all history (by month)  5) show trend (history.csv)
+  3) live spend — specific range    6) show archive detail for a month
+                                   7) export last 12 months to CSV
                                   q) quit
 ```
 
