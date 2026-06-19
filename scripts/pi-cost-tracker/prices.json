@@ -1,0 +1,6 @@
+{
+  "_doc": "GLM API prices per 1M tokens (input / cache-read / output). Source: docs.z.ai/guides/overview/pricing. cacheWrite = 0 (limited-time free). Edit THIS file when prices change. Used by api-equiv.sh and monthly-rollup.sh.",
+  "glm-5.2":     {"i": 1.4,  "c": 0.26, "o": 4.4},
+  "glm-5-turbo": {"i": 1.2,  "c": 0.24, "o": 4.0},
+  "glm-4.7":     {"i": 0.6,  "c": 0.11, "o": 2.2}
+}

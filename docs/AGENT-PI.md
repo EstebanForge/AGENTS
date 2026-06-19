@@ -115,20 +115,6 @@
 
 > Note: Exa API key redacted. Set your own. Brave key is environment-specific.
 
-## Subagent Review (`~/.pi/agent/pi-subagent-review.json`)
-
-```json
-{
-  "model": "openai-codex/gpt-5.4",
-  "thinking": "high",
-  "summary": {
-    "enabled": true,
-    "model": "openai-codex/gpt-5.4",
-    "thinking": "low"
-  }
-}
-```
-
 ## MCP Servers (`~/.pi/agent/mcp.json`)
 
 ```json
@@ -142,10 +128,13 @@ Agentmemory now provided natively by the `pi-agentmemory` extension.
 
 Installed packages (all active). Verified via `pi list`. No local extension files registered.
 
+> `@ctogg/pi-cost-counter` writes the spend ledger consumed by the token cost
+> tracker. Full setup + scripts + installer: [AGENT-PI-cost-tracking.md](AGENT-PI-cost-tracking.md).
+
 ```json
 "packages": [
   "npm:pi-librarian",
-  "npm:pi-subagents",
+  "npm:@gotgenes/pi-subagents",
   "npm:@sherif-fanous/pi-rtk",
   "git:github.com/ferologics/pi-notify",
   "npm:pi-web-providers",
@@ -154,7 +143,6 @@ Installed packages (all active). Verified via `pi list`. No local extension file
   "npm:@tintinweb/pi-tasks",
   "npm:pi-context-usage",
   "git:github.com/code-yeongyu/pi-nested-agents-md",
-  "npm:@howaboua/pi-subagent-review",
   "npm:pi-init",
   "npm:@ff-labs/pi-fff",
   "npm:@upstash/context7-pi",
@@ -162,6 +150,8 @@ Installed packages (all active). Verified via `pi list`. No local extension file
   "npm:@mcowger/pi-better-messages-cache",
   "npm:glm-vision",
   "npm:pi-token-speed",
+  "npm:@ctogg/pi-cost-counter",
+  "npm:pi-token-burden",
   "npm:pi-go-review",
   "npm:pi-diff-review",
   "npm:@narumitw/pi-auto-thinking",
