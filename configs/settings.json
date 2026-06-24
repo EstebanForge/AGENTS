@@ -1,7 +1,7 @@
 {
   "lastChangelogVersion": "0.80.2",
-  "defaultProvider": "minimax",
-  "defaultModel": "MiniMax-M3",
+  "defaultProvider": "zai",
+  "defaultModel": "glm-5.2",
   "packages": [
     "npm:pi-librarian",
     "npm:@sherif-fanous/pi-rtk",
@@ -28,10 +28,19 @@
     "npm:@gotgenes/pi-subagents",
     "npm:@estebanforge/pi-go-review",
     "npm:@estebanforge/pi-rust-review",
-    "npm:pi-claude-bridge"
+    "npm:pi-claude-bridge",
+    "npm:@estebanforge/pi-php-review",
+    {
+      "source": "npm:@estebanforge/pi-glm-tweaks",
+      "extensions": [
+        "+extensions/index.ts"
+      ]
+    },
+    "npm:@estebanforge/pi-ts-review",
+    "npm:@estebanforge/pi-js-review"
   ],
   "treeFilterMode": "default",
-  "defaultThinkingLevel": "minimal",
+  "defaultThinkingLevel": "high",
   "transport": "auto",
   "editorPaddingX": 2,
   "enabledModels": [
