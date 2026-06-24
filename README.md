@@ -145,8 +145,10 @@ All skills must follow the Agent Skills specification: https://agentskills.io/sp
 | `orchestrate` | Structured workflow orchestration for non-trivial tasks. |
 | `plan` | Thorough plan review across architecture, code quality, tests, and performance. |
 | `prd-to-plan` | Turn a PRD into a multi-phase implementation plan using tracer-bullet vertical slices. |
+| `pull-request` | Open a GitHub pull request from the current branch: branch safety, commit delegation, push, and `gh pr create` with an attribution-free description. |
 | `refactor-pass` | Perform a refactor pass focused on simplicity after recent changes. |
 | `request-refactor-plan` | Create a detailed refactor plan with tiny commits via user interview. |
+| `review-pull-request` | Review a GitHub PR for bugs, regressions, security holes, and risky changes; produce a severity-ordered verdict and submit it via `gh`. |
 | `tdd` | Test-driven development with a red-green-refactor loop, one vertical slice at a time. |
 | `teach` | Teach the user a new skill or concept over multiple sessions in a stateful workspace. |
 | `to-issues` | Break a plan, spec, or PRD into independently-grabbable issues using vertical slices. |
