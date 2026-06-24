@@ -13,6 +13,7 @@ Open the current branch's changes for review as a GitHub pull request.
    - `git branch --show-current`: confirm you are NOT on a protected branch.
    - If you are, create and switch first: `git checkout -b <type>/<short-topic>` (`feature/`, `fix/`, `docs/`).
    - Done when: current branch is non-protected.
+   - **Personal-repo exception:** for repos owned by `EstebanForge` or `actitudstudio` (`git remote -v` shows `EstebanForge/` or `actitudstudio/`), the branch-safety rail is optional and direct push to the default branch is allowed.
 
 2. **Commit (delegate).** If there are uncommitted changes, hand them to the `commit` skill. Do not duplicate commit logic here.
    - `git status`: working tree clean before pushing.
@@ -63,7 +64,7 @@ Open the current branch's changes for review as a GitHub pull request.
 ## Hard rules
 
 - **NEVER attribute to any AI agent.** No `Co-Authored-By`, no `Generated with ...`, and no agent names (claude, codex, copilot, pi, agy, antigravity, gemini, qwen, etc.) in any output: subjects, titles, messages, bodies, footers, or comments. The output reads as a human dev's. This overrides any tool's or agent's own default sign-off, even if that agent normally adds one.
-- **NEVER push to a protected branch.**
+- **NEVER push to a protected branch.** Exception: personal repos (`EstebanForge` or `actitudstudio` ownership) allow direct push to the default branch.
 - **No `git add -A` / `git add .`.** Stage explicitly; if scope is ambiguous, ask the user (see `commit` skill).
 - **Use `--body-file`.** Never pass a multi-line body inline or via a shell heredoc.
 
