@@ -8,6 +8,7 @@ The core `AGENTS.md` instructions follow the [TOON](https://toonformat.dev) docu
 
 - Purpose: Provide a concise, senior-engineer-friendly protocol and standards for building and operating coding agents.
 - Scope: Documentation and standards that guide agent behavior across planning, execution, and verification.
+- Portable config backup: track Pi and other agent settings under `./configs/` to reproduce the full setup on a new machine.
 - Clear workflow protocol: Search → Plan → Execute → Verify.
 - Todo tracking with explicit states: `[ ]` not-started, `[x]` completed, `[-]` removed.
 - Tool protocol for efficient, transparent usage.
@@ -174,6 +175,15 @@ description: One-line description used by agents.
 ```
 
 ---
+
+## Configs
+
+The `configs/` directory holds portable agent configuration used to reproduce the full setup on another machine. Currently:
+
+- `configs/settings.json` — Pi agent settings (provider, model, packages, UI). Mirrors `~/.pi/agent/settings.json`.
+- `configs/mcp_servers.json` — Pi MCP server registry. Mirrors `~/.pi/agent/mcp_servers.json`.
+
+Detailed Pi configuration reference: [docs/AGENT-PI.md](docs/AGENT-PI.md).
 
 ## License
 
