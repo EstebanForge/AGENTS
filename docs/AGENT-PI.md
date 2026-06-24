@@ -115,14 +115,18 @@
 
 > Note: Exa API key redacted. Set your own. Brave key is environment-specific.
 
-## MCP Servers (`~/.pi/agent/mcp.json`)
+## MCP Servers (`~/.pi/agent/mcp_servers.json`)
 
-```json
-{ "mcpServers": {} }
-```
+Enabled servers (canonical registry tracked in this repo: [`../configs/mcp_servers.json`](../configs/mcp_servers.json)):
 
-No servers configured in mcp.json. Available via `mcp-cli-ent`: deepwiki, ai-vision, codegraph, brave-search.
-Agentmemory now provided natively by the `pi-agentmemory` extension.
+- `agentmemory` — cross-session memory (native `pi-agentmemory` extension)
+- `ai-vision` — image/video analysis (Gemini)
+- `brave-search` — web search, images, news
+- `codegraph` — local code knowledge graph
+- `context7` — library docs and snippets
+- `deepwiki` — public repository documentation
+
+Disabled but available: `chrome-devtools`, `playwright`, `sequential-thinking`, `time`, `cipher`.
 
 ## Extensions (`settings.json`)
 
@@ -130,11 +134,12 @@ Installed packages (all active). Verified via `pi list`. No local extension file
 
 > `@ctogg/pi-cost-counter` writes the spend ledger consumed by the token cost
 > tracker. Full setup + scripts + installer: [AGENT-PI-cost-tracking.md](AGENT-PI-cost-tracking.md).
+>
+> Canonical source tracked in this repo: [`../configs/settings.json`](../configs/settings.json).
 
 ```json
 "packages": [
   "npm:pi-librarian",
-  "npm:@gotgenes/pi-subagents",
   "npm:@sherif-fanous/pi-rtk",
   "git:github.com/ferologics/pi-notify",
   "npm:pi-web-providers",
@@ -150,12 +155,15 @@ Installed packages (all active). Verified via `pi list`. No local extension file
   "npm:@mcowger/pi-better-messages-cache",
   "npm:glm-vision",
   "npm:pi-token-speed",
-  "npm:@ctogg/pi-cost-counter",
-  "npm:pi-token-burden",
-  "npm:pi-go-review",
   "npm:pi-diff-review",
   "npm:@narumitw/pi-auto-thinking",
   "npm:@juicesharp/rpiv-ask-user-question",
-  "npm:@vndv/pi-codegraph"
+  "npm:@vndv/pi-codegraph",
+  "npm:@ctogg/pi-cost-counter",
+  "npm:pi-token-burden",
+  "npm:@gotgenes/pi-subagents",
+  "npm:@estebanforge/pi-go-review",
+  "npm:@estebanforge/pi-rust-review",
+  "npm:pi-claude-bridge"
 ]
 ```
