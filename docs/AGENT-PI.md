@@ -174,7 +174,6 @@ Installed packages (all active, 30 total). Verified via `pi list`. Canonical sou
   "npm:pi-diff-review",
   "npm:@narumitw/pi-auto-thinking",
   "npm:@juicesharp/rpiv-ask-user-question",
-  "npm:@vndv/pi-codegraph",
   "npm:@ctogg/pi-cost-counter",
   "npm:pi-token-burden",
   "npm:@gotgenes/pi-subagents",
@@ -184,7 +183,8 @@ Installed packages (all active, 30 total). Verified via `pi list`. Canonical sou
   "npm:@estebanforge/pi-php-review",
   { "source": "npm:@estebanforge/pi-glm-tweaks", "extensions": ["+extensions/index.ts"] },
   "npm:@estebanforge/pi-ts-review",
-  "npm:@estebanforge/pi-js-review"
+  "npm:@estebanforge/pi-js-review",
+  "npm:@estebanforge/pi-codegraph-enhanced"
 ]
 ```
 

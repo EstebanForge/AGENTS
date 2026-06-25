@@ -187,6 +187,43 @@ The `configs/` directory holds portable agent configuration used to reproduce th
 
 Detailed Pi configuration reference: [docs/AGENT-PI.md](docs/AGENT-PI.md).
 
+### Pi Extensions
+
+Pi packages installed in this instance (30 total, verified via `pi list`). Canonical list tracked in [`configs/settings.json`](configs/settings.json).
+
+| Package | Purpose |
+|---------|---------|
+| `pi-librarian` | GitHub research scout for code/docs lookup |
+| `@sherif-fanous/pi-rtk` | Token-saving command proxy |
+| `git:ferologics/pi-notify` | Event notifications |
+| `pi-web-providers` | Web search/contents/research/answer providers |
+| `pi-autoresearch` | Autonomous experiment loop |
+| `pi-acp` | Headless ACP CLI for agent-to-agent comms |
+| `@tintinweb/pi-tasks` | Task management |
+| `pi-context-usage` | Context budget visibility |
+| `git:code-yeongyu/pi-nested-agents-md` | Nested-agent markdown handling |
+| `pi-init` | AGENTS.md initialization |
+| `@ff-labs/pi-fff` | Fuzzy file finder / grep |
+| `@upstash/context7-pi` | Library docs + snippets |
+| `@estebanforge/pi-agentmemory` | Cross-session memory (native extension) |
+| `@mcowger/pi-better-messages-cache` | Improved message caching |
+| `glm-vision` | GLM vision (image input) |
+| `pi-token-speed` | Token speed display |
+| `pi-diff-review` | Diff review |
+| `@narumitw/pi-auto-thinking` | Automatic thinking-level control |
+| `@juicesharp/rpiv-ask-user-question` | Structured user-question tool |
+| `@estebanforge/pi-codegraph-enhanced` | Local code knowledge graph (replaces `@vndv/pi-codegraph`) |
+| `@ctogg/pi-cost-counter` | Spend ledger for token cost tracking |
+| `pi-token-burden` | Token burden display |
+| `@gotgenes/pi-subagents` | Subagent execution |
+| `@estebanforge/pi-go-review` | Go review (100 Go Mistakes checklist) |
+| `@estebanforge/pi-rust-review` | Rust review (code smells guide) |
+| `pi-claude-bridge` | Bridge to Claude models |
+| `@estebanforge/pi-php-review` | PHP review (8.2+ anti-patterns) |
+| `@estebanforge/pi-glm-tweaks` | GLM provider tweaks (`+extensions/index.ts`) |
+| `@estebanforge/pi-ts-review` | TypeScript / React review |
+| `@estebanforge/pi-js-review` | JavaScript review |
+
 ## License
 
 This project is licensed. See `LICENSE` for details.
