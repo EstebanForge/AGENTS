@@ -118,6 +118,7 @@ peer_routing_protocol:
     - "1-shot exec/modify/run|yes|AskClaude mode=full"
     - "1-shot exec/modify/run|no|acpx exec | self"
     - "multi-turn / persistent peer session|any|acpx (session)"
+  askclaude_model_rule: "Default model=sonnet. Override only when user requests (opus, haiku, others)"
   bias_guard: "Want a challenge not a rubber-stamp: isolated=true + name exact file paths, so it does not inherit your self-assessment"
 
 technical_standards_definition:
