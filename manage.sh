@@ -360,11 +360,23 @@ cmd_status() {
 " "${name}" "${md_s}" "${sk_s}" "${pr_s}"
     done
 }
+# Install or uninstall the fuse-agents shell plugin.
+# Bootstraps (clone to /tmp) then hands off to the plugin's own script.
+cmd_fuse_agents() {
+    local action="${1:-install}"
+    local script="${SCRIPT_DIR}/scripts/fuse-agents.sh"
+    if [[ ! -x "${script}" ]]; then
+        log_error "fuse-agents bootstrap script not found or not executable: ${script}"
+        exit 1
+    fi
+    "${script}" "${action}"
+}
+
 # Interactive Menu
 interactive_menu() {
     echo -e "${BLUE}=== Agents Centralization Manager ===${NC}"
     echo "Please choose an action:"
-    options=("Sync (Smart)" "Force Sync (Overwrite All)" "Restore (Unlink)" "Status" "Quit")
+    options=("Sync (Smart)" "Force Sync (Overwrite All)" "Restore (Unlink)" "Status" "Install fuse-agents plugin" "Uninstall fuse-agents plugin" "Quit")
     COLUMNS=1
     select opt in "${options[@]}"; do
         case $opt in
@@ -372,6 +384,8 @@ interactive_menu() {
             "Force Sync (Overwrite All)") cmd_link 1; break ;;
             "Restore (Unlink)") cmd_unlink; break ;;
             "Status") cmd_status; break ;;
+            "Install fuse-agents plugin") cmd_fuse_agents install; break ;;
+            "Uninstall fuse-agents plugin") cmd_fuse_agents uninstall; break ;;
             "Quit") exit 0 ;;
             *) echo "Invalid option $REPLY" ;;
         esac
