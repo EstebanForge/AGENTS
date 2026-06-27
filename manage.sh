@@ -137,7 +137,8 @@ find_existing_ancestor() {
 # Backup existing path
 backup_path() {
     local path=$1
-    local backup="${path}.backup.$(date +%Y%m%d_%H%M%S)"
+    local backup
+    backup="${path}.backup.$(date +%Y%m%d_%H%M%S)"
     if [[ -e "${path}" && ! -L "${path}" ]]; then
         mv "${path}" "${backup}"
         log_info "  ↳ Backed up to: ${backup}"
