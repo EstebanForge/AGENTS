@@ -70,6 +70,44 @@ The unified manager for both instructions (`AGENTS.md`) and skills.
 - Backs up existing real files/directories before linking.
 - `unlink` restores the most recent backup automatically.
 - Sorting: Displays regular agents first, followed by `construct_` agents.
+- Also drives the **fuse-agents** shell plugin install/uninstall (see below).
+
+---
+
+## Shell Plugins
+
+### fuse-agents
+
+[fuse-agents](https://github.com/EstebanForge/fuse-agents) is a cross-shell plugin (Bash & Zsh) that auto-fuses per-project AI config files (`CLAUDE.md`, `GEMINI.md`) into a unified `AGENTS.md` with symlink management on every directory change.
+
+This repo bootstraps it reproducibly: the menu entry clones the plugin to a throwaway location under `/tmp` and hands off to the plugin's own installer/uninstaller. No local checkout assumed, works on any machine with `git`.
+
+**Menu options (5 and 6):**
+
+```bash
+./manage.sh
+# 5) Install fuse-agents plugin
+# 6) Uninstall fuse-agents plugin
+```
+
+**Direct script:**
+
+```bash
+./scripts/fuse-agents.sh install     # clone to /tmp + run install.sh
+./scripts/fuse-agents.sh uninstall   # clone to /tmp + run uninstall.sh
+```
+
+**What the installer does (in the plugin repo):**
+- Copies the plugin into `~/.zsh/plugins/fuse-agents` (or `~/.bash/...`).
+- Creates `~/.zshrc` / `~/.bashrc` if missing, and appends the `source` line.
+- Idempotent: re-runs skip duplicate wiring.
+
+**What the uninstaller does:**
+- Strips only the `# Load Fuse Agents plugin` block from the rc file (other config preserved).
+- Removes the plugin directory and the empty `plugins/` parent if it ends up empty.
+- Safe no-op if never installed.
+
+After either action, restart your shell (or `source ~/.zshrc` / `~/.bashrc`).
 
 ---
 
