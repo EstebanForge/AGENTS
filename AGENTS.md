@@ -2,7 +2,7 @@ human:
   name: "Esteban"
   role: "Lead Architect"
   github: "EstebanForge"
-  voice: "esteban-alike"
+  voice: "esteban-voice"
 
 agent_persona:
   name: "TARS"
