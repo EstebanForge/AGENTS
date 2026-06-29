@@ -227,7 +227,7 @@ Detailed Pi configuration reference: [docs/AGENT-PI.md](docs/AGENT-PI.md).
 
 ### Pi Extensions
 
-Pi packages installed in this instance (30 total, verified via `pi list`). Canonical list tracked in [`configs/settings.json`](configs/settings.json).
+Pi packages installed in this instance (29 total, verified via `pi list`). Canonical list tracked in [`configs/settings.json`](configs/settings.json).
 
 | Package | Purpose |
 |---------|---------|
@@ -248,7 +248,6 @@ Pi packages installed in this instance (30 total, verified via `pi list`). Canon
 | `glm-vision` | GLM vision (image input) |
 | `pi-token-speed` | Token speed display |
 | `pi-diff-review` | Diff review |
-| `@narumitw/pi-auto-thinking` | Automatic thinking-level control |
 | `@juicesharp/rpiv-ask-user-question` | Structured user-question tool |
 | `@estebanforge/pi-codegraph-enhanced` | Local code knowledge graph (replaces `@vndv/pi-codegraph`) |
 | `@ctogg/pi-cost-counter` | Spend ledger for token cost tracking |

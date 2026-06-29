@@ -20,7 +20,6 @@
     "npm:glm-vision",
     "npm:pi-token-speed",
     "npm:pi-diff-review",
-    "npm:@narumitw/pi-auto-thinking",
     "npm:@juicesharp/rpiv-ask-user-question",
     "npm:@ctogg/pi-cost-counter",
     "npm:pi-token-burden",
@@ -68,7 +67,7 @@
   "theme": "dark",
   "tokenSpeed": {
     "display": "full",
-    "useProviderTokens": true,
-    "countStrategy": "direct"
+    "useProviderTokens": false,
+    "countStrategy": "estimate"
   }
 }
