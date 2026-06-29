@@ -151,7 +151,7 @@ Disabled but available: `chrome-devtools`, `playwright`, `sequential-thinking`, 
 
 ## Extensions (`settings.json`)
 
-Installed packages (all active, 30 total). Verified via `pi list`. Canonical source: [`../configs/settings.json`](../configs/settings.json).
+Installed packages (all active, 29 total). Verified via `pi list`. Canonical source: [`../configs/settings.json`](../configs/settings.json).
 
 ```json
 "packages": [
@@ -172,7 +172,6 @@ Installed packages (all active, 30 total). Verified via `pi list`. Canonical sou
   "npm:glm-vision",
   "npm:pi-token-speed",
   "npm:pi-diff-review",
-  "npm:@narumitw/pi-auto-thinking",
   "npm:@juicesharp/rpiv-ask-user-question",
   "npm:@ctogg/pi-cost-counter",
   "npm:pi-token-burden",
