@@ -8,7 +8,7 @@ tokens() {
   while true; do
     cat <<'MENU'
 
-pi token cost tracker  (reads all roots in roots.conf)
+pi token cost tracker  (host-owned; reads host + construct ledgers)
 
   1) live spend — this month
   2) live spend — all history (by month)

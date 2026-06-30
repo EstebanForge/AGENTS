@@ -3,17 +3,21 @@
 #   cp roots.conf.example roots.conf
 # install.sh generates roots.conf for you if it is missing.
 #
+# IMPORTANT: paths must be ABSOLUTE (no ~ expansion when read from a file).
+#   Use full paths like /home/you/.pi/cost-tracker, not ~/.pi/cost-tracker.
+# For a portable config, skip this file and use the env override (below).
+#
 # The FIRST listed root is "primary": prices.json + monthly/ archive live there.
 # Lines starting with # are comments; blank lines are ignored.
-# Runtime overrides (no edit needed):
+# Runtime overrides (no edit needed, portable):
 #   PI_COST_LEDGERS=/path/a:/path/b   (PATH-style, colon-separated)
 #   PI_COST_LEDGER=/path/a            (legacy: single root only)
 
 # Primary: host pi (scripts, prices, and archive live here).
-~/.pi/cost-tracker
+/Users/CHANGE_ME/.pi/cost-tracker
 
 # Optional: a second pi environment that also produces a ledger.
 # Example: construct-cli sandbox home. Add/remove lines for your setup.
 # The host scripts read every root listed here and report a COMBINED total;
 # ledgers must be disjoint (each call logged once) for an accurate sum.
-# ~/.config/construct-cli/home/.pi/cost-tracker
+# /Users/CHANGE_ME/.config/construct-cli/home/.pi/cost-tracker
