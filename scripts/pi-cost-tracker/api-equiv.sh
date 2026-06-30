@@ -141,16 +141,18 @@ if [ "$BYMONTH" = 1 ]; then
     ($rows | map(.ap)|add) as $tap |
     def row(a): a | map(tostring) | join("|");
     "month|calls|tokens_in|tokens_out|cache_read|total|api_usd|blended_Mtok",
-    ( $rows[] | row([.month, (.calls|chilean), (.ti|chilean), (.to|chilean), (.tc|chilean), ((.ti+.to+.tc)|chilean), (rnd3(.ap)|chilean), (rnd2(.ap/((.ti+.to+.tc)/1e6))|chilean)]) ),
-    row(["TOTAL", ($nc|chilean), ($ti|chilean), ($to|chilean), ($tc|chilean), (($ti+$to+$tc)|chilean), (rnd3($tap)|chilean), (rnd2($tap/(($ti+$to+$tc)/1e6))|chilean)])
+    ( $rows[] | row([.month, (.calls|chilean), (.ti|chilean), (.to|chilean), (.tc|chilean), ((.ti+.to+.tc)|chilean), (rnd2(.ap)|chilean), (rnd2(.ap/((.ti+.to+.tc)/1e6))|chilean)]) ),
+    row(["TOTAL", ($nc|chilean), ($ti|chilean), ($to|chilean), ($tc|chilean), (($ti+$to+$tc)|chilean), (rnd2($tap)|chilean), (rnd2($tap/(($ti+$to+$tc)/1e6))|chilean)])
   ' | { column -t -s'|' 2>/dev/null || cat; }
   exit 0
 fi
 
 cat "${files[@]}" | jq -rs --argjson p "$PRICES_JSON" --arg sel "$SEL" --arg conv "$CACHE_CONV" '
   # Chilean number format: '.' thousands, ',' decimal.
-  def group3: if length <= 3 then . else (.[0:-3] | group3) + "." + .[-3:] end;
+  def group3: if length <= 3 then . else (.[0:-3] | group3) + ".." + .[-3:] end;
   def chilean: (tostring | split(".")) as $p | ($p[0] | group3) + (if ($p|length) > 1 then "," + $p[1] else "" end);
+  # Money: always 2 decimals (rounds to cents), then Chilean format.
+  def money2(x): ((x * 100 | round) / 100 | chilean);
 
   def noncached(r):
     if $conv == "included"
@@ -183,10 +185,10 @@ tokens in:     \($t.tok_in | chilean)
 tokens out:    \($t.tok_out | chilean)
 cache read:    \($t.tok_cache | chilean)
 total tokens:  \($all | chilean)
-API-equiv:     $\(($t.api_usd * 1000 | round) / 1000 | chilean) USD
-blended:       $\(($blend * 100 | round) / 100 | chilean) / Mtok
+API-equiv:     $\(money2($t.api_usd)) USD
+blended:       $\(money2($blend)) / Mtok
 
 by model:
-\($by | map("  \(.model)  calls=\(.calls | chilean)  in=\(.tok_in | chilean)  out=\(.tok_out | chilean)  cache=\(.tok_cache | chilean)  api=$\((.api_usd * 1000 | round) / 1000 | chilean)") | join("\n"))
+\($by | map("  \(.model)  calls=\(.calls | chilean)  in=\(.tok_in | chilean)  out=\(.tok_out | chilean)  cache=\(.tok_cache | chilean)  api=$\(money2(.api_usd))") | join("\n"))
 "
 '
