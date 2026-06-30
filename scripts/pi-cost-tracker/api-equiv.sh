@@ -126,6 +126,9 @@ if [ "$BYMONTH" = 1 ]; then
       ((noncached(r) * $q.i) + ((r.tokens.cacheRead//0) * $q.c) + ((r.tokens.output//0) * $q.o)) / 1e6;
     def rnd3(x): (x * 1000 | round) / 1000;
     def rnd2(x): (x * 100 | round) / 100;
+    # Chilean number format: '.' thousands, ',' decimal.
+    def group3: if length <= 3 then . else (.[0:-3] | group3) + "." + .[-3:] end;
+    def chilean: (tostring | split(".")) as $p | ($p[0] | group3) + (if ($p|length) > 1 then "," + $p[1] else "" end);
     (group_by(monthof) | sort_by(.[0]|monthof) | map({
       month:(.[0]|monthof), calls:length,
       ti:(map(.tokens.input//0)|add),
@@ -138,8 +141,8 @@ if [ "$BYMONTH" = 1 ]; then
     ($rows | map(.ap)|add) as $tap |
     def row(a): a | map(tostring) | join("|");
     "month|calls|tokens_in|tokens_out|cache_read|total|api_usd|blended_Mtok",
-    ( $rows[] | row([.month, .calls, .ti, .to, .tc, (.ti+.to+.tc), rnd3(.ap), rnd2(.ap/((.ti+.to+.tc)/1e6))]) ),
-    row(["TOTAL", $nc, $ti, $to, $tc, ($ti+$to+$tc), rnd3($tap), rnd2($tap/(($ti+$to+$tc)/1e6))])
+    ( $rows[] | row([.month, (.calls|chilean), (.ti|chilean), (.to|chilean), (.tc|chilean), ((.ti+.to+.tc)|chilean), (rnd3(.ap)|chilean), (rnd2(.ap/((.ti+.to+.tc)/1e6))|chilean)]) ),
+    row(["TOTAL", ($nc|chilean), ($ti|chilean), ($to|chilean), ($tc|chilean), (($ti+$to+$tc)|chilean), (rnd3($tap)|chilean), (rnd2($tap/(($ti+$to+$tc)/1e6))|chilean)])
   ' | { column -t -s'|' 2>/dev/null || cat; }
   exit 0
 fi
