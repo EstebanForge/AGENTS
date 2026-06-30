@@ -145,6 +145,10 @@ if [ "$BYMONTH" = 1 ]; then
 fi
 
 cat "${files[@]}" | jq -rs --argjson p "$PRICES_JSON" --arg sel "$SEL" --arg conv "$CACHE_CONV" '
+  # Chilean number format: '.' thousands, ',' decimal.
+  def group3: if length <= 3 then . else (.[0:-3] | group3) + "." + .[-3:] end;
+  def chilean: (tostring | split(".")) as $p | ($p[0] | group3) + (if ($p|length) > 1 then "," + $p[1] else "" end);
+
   def noncached(r):
     if $conv == "included"
     then ([0, ((r.tokens.input//0) - (r.tokens.cacheRead//0))] | max)
@@ -171,15 +175,15 @@ cat "${files[@]}" | jq -rs --argjson p "$PRICES_JSON" --arg sel "$SEL" --arg con
 
   "range:        \($sel)
 conv:         \($conv)   (input \((if $conv=="included" then "includes" else "excludes" end)) cacheRead)
-calls:         \($t.calls)
-tokens in:     \($t.tok_in)
-tokens out:    \($t.tok_out)
-cache read:    \($t.tok_cache)
-total tokens:  \($all)
-API-equiv:     $\(($t.api_usd * 1000 | round) / 1000) USD
-blended:       $\(($blend * 100 | round) / 100) / Mtok
+calls:         \($t.calls | chilean)
+tokens in:     \($t.tok_in | chilean)
+tokens out:    \($t.tok_out | chilean)
+cache read:    \($t.tok_cache | chilean)
+total tokens:  \($all | chilean)
+API-equiv:     $\(($t.api_usd * 1000 | round) / 1000 | chilean) USD
+blended:       $\(($blend * 100 | round) / 100 | chilean) / Mtok
 
 by model:
-\($by | map("  \(.model)  calls=\(.calls)  in=\(.tok_in)  out=\(.tok_out)  cache=\(.tok_cache)  api=$\((.api_usd * 1000 | round) / 1000)") | join("\n"))
+\($by | map("  \(.model)  calls=\(.calls | chilean)  in=\(.tok_in | chilean)  out=\(.tok_out | chilean)  cache=\(.tok_cache | chilean)  api=$\((.api_usd * 1000 | round) / 1000 | chilean)") | join("\n"))
 "
 '
