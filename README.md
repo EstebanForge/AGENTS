@@ -130,6 +130,7 @@ After either action, restart your shell (or `source ~/.zshrc` / `~/.bashrc`).
 | Kilocode | `~/.kilocode/rules/AGENTS.md` | |
 | Cline | `~/Documents/Cline/Rules/AGENTS.md` | |
 | Pi | `~/.pi/agent/AGENTS.md` | |
+| Zcode | `~/.zcode/AGENTS.md` | |
 
 ### Skills
 
@@ -150,6 +151,7 @@ Agents with dedicated synchronization:
 | Goose | `~/.config/goose/skills/` |
 | Kilocode | `~/.kilocode/skills/` |
 | Pi | `~/.pi/agent/skills/` |
+| Zcode | `~/.zcode/skills/` |
 
 ---
 

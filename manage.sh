@@ -55,6 +55,7 @@ declare -A AGENTS=(
     ["Kilocode"]="${HOME}/.kilocode/rules/AGENTS.md|${HOME}/.kilocode/skills"
     ["Cline"]="${HOME}/Documents/Cline/Rules/AGENTS.md|${HOME}/.cline/skills"
     ["Pi"]="${HOME}/.pi/agent/AGENTS.md|-"
+    ["Zcode"]="${HOME}/.zcode/AGENTS.md|${HOME}/.zcode/skills"
 )
 
 declare -A PROMPTS=(
@@ -120,11 +121,12 @@ detect_construct_agents() {
     AGENTS["construct_Kilocode"]="${construct_home}/.kilocode/rules/AGENTS.md|${construct_home}/.kilocode/skills"
     AGENTS["construct_Cline"]="${construct_home}/.cline/AGENTS.md|${construct_home}/.cline/skills"
     AGENTS["construct_Pi"]="${construct_home}/.pi/agent/AGENTS.md|-"
+    AGENTS["construct_Zcode"]="${construct_home}/.zcode/AGENTS.md|${construct_home}/.zcode/skills"
     PROMPTS["construct_Standard"]="${construct_agents_dir}/prompts"
     PROMPTS["construct_Antigravity"]="${construct_home}/.gemini/prompts"
     PROMPTS["construct_Pi"]="${construct_home}/.pi/agent/prompts"
 
-    log_info "construct-cli detected: added 13 agent paths (Internal Copying Mode)"
+    log_info "construct-cli detected: added 14 agent paths (Internal Copying Mode)"
 }
 
 # Walk up from a path until we find an existing directory
