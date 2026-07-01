@@ -232,7 +232,7 @@ Pi packages installed in this instance (29 total, verified via `pi list`). Canon
 | Package | Purpose |
 |---------|---------|
 | `pi-librarian` | GitHub research scout for code/docs lookup |
-| `@sherif-fanous/pi-rtk` | Token-saving command proxy |
+| `pi-rtk-optimizer` | RTK command rewriting + tool-output compaction |
 | `git:ferologics/pi-notify` | Event notifications |
 | `pi-web-providers` | Web search/contents/research/answer providers |
 | `pi-autoresearch` | Autonomous experiment loop |
