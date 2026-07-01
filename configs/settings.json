@@ -1,10 +1,9 @@
 {
-  "lastChangelogVersion": "0.80.2",
+  "lastChangelogVersion": "0.80.3",
   "defaultProvider": "zai",
   "defaultModel": "glm-5.2",
   "packages": [
     "npm:pi-librarian",
-    "npm:@sherif-fanous/pi-rtk",
     "git:github.com/ferologics/pi-notify",
     "npm:pi-web-providers",
     "npm:pi-autoresearch",
@@ -36,7 +35,8 @@
     },
     "npm:@estebanforge/pi-ts-review",
     "npm:@estebanforge/pi-js-review",
-    "npm:@estebanforge/pi-codegraph-enhanced"
+    "npm:@estebanforge/pi-codegraph-enhanced",
+    "npm:pi-rtk-optimizer"
   ],
   "treeFilterMode": "default",
   "defaultThinkingLevel": "high",
@@ -54,7 +54,8 @@
     "zai/glm-5.2",
     "claude-bridge/claude-opus-4-8",
     "claude-bridge/claude-haiku-4-5",
-    "claude-bridge/claude-sonnet-4-6"
+    "claude-bridge/claude-sonnet-4-6",
+    "claude-bridge/claude-sonnet-5"
   ],
   "steeringMode": "one-at-a-time",
   "followUpMode": "one-at-a-time",

@@ -23,7 +23,8 @@ Canonical source in this repo: [`../configs/settings.json`](../configs/settings.
     "zai/glm-5.2",
     "claude-bridge/claude-opus-4-8",
     "claude-bridge/claude-haiku-4-5",
-    "claude-bridge/claude-sonnet-4-6"
+    "claude-bridge/claude-sonnet-4-6",
+    "claude-bridge/claude-sonnet-5"
   ]
 }
 ```
@@ -156,7 +157,6 @@ Installed packages (all active, 29 total). Verified via `pi list`. Canonical sou
 ```json
 "packages": [
   "npm:pi-librarian",
-  "npm:@sherif-fanous/pi-rtk",
   "git:github.com/ferologics/pi-notify",
   "npm:pi-web-providers",
   "npm:pi-autoresearch",
@@ -183,7 +183,8 @@ Installed packages (all active, 29 total). Verified via `pi list`. Canonical sou
   { "source": "npm:@estebanforge/pi-glm-tweaks", "extensions": ["+extensions/index.ts"] },
   "npm:@estebanforge/pi-ts-review",
   "npm:@estebanforge/pi-js-review",
-  "npm:@estebanforge/pi-codegraph-enhanced"
+  "npm:@estebanforge/pi-codegraph-enhanced",
+  "npm:pi-rtk-optimizer"
 ]
 ```
 
