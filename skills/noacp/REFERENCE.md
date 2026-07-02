@@ -10,12 +10,15 @@
     "print_flag": "string - flag for prompt text (required when input_mode=flag)",
     "interactive_flag": "string - flag for interactive mode (unused by noacp)",
     "timeout_default": "number - default timeout in seconds (default: 120)",
+    "model": "string - optional --model value injected as `--model \"<model>\"` (e.g. agy model aliases)",
     "notes": "string - freeform notes"
   }
 }
 ```
 
 Required fields: `command` + `input_mode`. When `input_mode` is `flag`, `print_flag` is also required.
+
+`model` is injected before the prompt in all three `input_mode` variants. When set, the agent is invoked as `<command> --model "<model>" [print_flag] [prompt]`. Use it for agents whose CLI accepts a `--model` flag (agy, etc.). Find valid model strings via `agy models`.
 
 `input_mode` values:
 - `flag`: agent receives prompt text as a CLI flag argument (e.g. `agy -p "text"`)

@@ -5,6 +5,62 @@
     "input_mode": "flag",
     "interactive_flag": "-i",
     "timeout_default": 180,
-    "notes": "No ACP. One-shot print mode only. Full prompt passed via flag. Use --timeout for large payloads."
+    "notes": "Default agy. No --model flag, uses agy's own default. One-shot print mode. Full prompt via flag."
+  },
+  "agy-flash": {
+    "command": "agy",
+    "print_flag": "-p",
+    "input_mode": "flag",
+    "timeout_default": 120,
+    "model": "Gemini 3.5 Flash (Medium)",
+    "notes": "Default for 'agy flash' / 'agy 3.5 flash'. Medium = balanced price/perf. Claude quota NOT used."
+  },
+  "agy-flash-high": {
+    "command": "agy",
+    "print_flag": "-p",
+    "input_mode": "flag",
+    "timeout_default": 120,
+    "model": "Gemini 3.5 Flash (High)",
+    "notes": "Highest reasoning depth for 3.5 Flash."
+  },
+  "agy-flash-low": {
+    "command": "agy",
+    "print_flag": "-p",
+    "input_mode": "flag",
+    "timeout_default": 90,
+    "model": "Gemini 3.5 Flash (Low)",
+    "notes": "Cheapest 3.5 Flash tier. Use for trivial prompts."
+  },
+  "agy-pro": {
+    "command": "agy",
+    "print_flag": "-p",
+    "input_mode": "flag",
+    "timeout_default": 240,
+    "model": "Gemini 3.1 Pro (High)",
+    "notes": "Default for 'agy pro' / 'agy 3.1 pro'. Slower than Flash, stronger reasoning. Claude quota NOT used."
+  },
+  "agy-pro-low": {
+    "command": "agy",
+    "print_flag": "-p",
+    "input_mode": "flag",
+    "timeout_default": 180,
+    "model": "Gemini 3.1 Pro (Low)",
+    "notes": "3.1 Pro on lower reasoning effort. Cheaper than agy-pro."
+  },
+  "agy-claude": {
+    "command": "agy",
+    "print_flag": "-p",
+    "input_mode": "flag",
+    "timeout_default": 240,
+    "model": "Claude Sonnet 4.6 (Thinking)",
+    "notes": "Default for 'agy claude'. Counts against the Claude quota, not the Gemini one."
+  },
+  "agy-opus": {
+    "command": "agy",
+    "print_flag": "-p",
+    "input_mode": "flag",
+    "timeout_default": 360,
+    "model": "Claude Opus 4.6 (Thinking)",
+    "notes": "Claude Opus. Counts against the Claude quota. Most expensive option."
   }
 }

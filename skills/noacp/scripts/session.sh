@@ -169,6 +169,13 @@ cmd_prompt() {
 
   # Build agent invocation based on input_mode
   local response exit_code
+  # Optional --model flag from agents.json (e.g. agy model aliases)
+  local model
+  model=$(agent_field "$cfg" "model")
+  local model_args=()
+  if [[ "$model" != "null" && -n "$model" ]]; then
+    model_args=(--model "$model")
+  fi
   # For flag mode: check payload size against ARG_MAX
   # Linux ARG_MAX is typically 2MB; use conservative 1MB threshold
   if [[ "$input_mode" == "flag" ]]; then
@@ -182,13 +189,13 @@ cmd_prompt() {
     flag)
       local print_flag
       print_flag=$(agent_field "$cfg" "print_flag")
-      response=$(timeout "$timeout_val" "$cmd" "$print_flag" "$(cat "$file")" 2>/dev/null) && exit_code=0 || exit_code=$?
+      response=$(timeout "$timeout_val" "$cmd" "${model_args[@]}" "$print_flag" "$(cat "$file")" 2>/dev/null) && exit_code=0 || exit_code=$?
       ;;
     stdin)
-      response=$(timeout "$timeout_val" "$cmd" < <(cat "$file") 2>/dev/null) && exit_code=0 || exit_code=$?
+      response=$(timeout "$timeout_val" "$cmd" "${model_args[@]}" < <(cat "$file") 2>/dev/null) && exit_code=0 || exit_code=$?
       ;;
     file)
-      response=$(timeout "$timeout_val" "$cmd" "$file" 2>/dev/null) && exit_code=0 || exit_code=$?
+      response=$(timeout "$timeout_val" "$cmd" "${model_args[@]}" "$file" 2>/dev/null) && exit_code=0 || exit_code=$?
       ;;
     *)
       die "Unknown input_mode '$input_mode' for agent '$agent'"

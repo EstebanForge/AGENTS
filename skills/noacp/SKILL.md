@@ -1,6 +1,6 @@
 ---
 name: noacp
-description: File-based session protocol for agents without ACP support. Wraps any CLI agent (agy, etc.) in persistent multi-turn conversations using shared session files. Use when acpx is unavailable, the target agent lacks ACP, or when user mentions noacp, agy session, file-based agent, or non-ACP agent communication.
+description: File-based session protocol for agents without ACP support. Wraps any CLI agent (agy, etc.) in persistent multi-turn conversations using shared session files. Use when acpx is unavailable, the target agent lacks ACP, or when user mentions noacp, agy session, file-based agent, or non-ACP agent communication. Supports agy model selection via aliases (agy-flash, agy-pro, agy-claude, etc.).
 ---
 
 File-based session protocol. Replaces ACPX for agents that lack ACP adapters.
@@ -71,6 +71,55 @@ Defined in `scripts/agents.json`. Add new agents with `command` + `input_mode`:
 ```
 
 `input_mode` values: `flag` (prompt via CLI flag), `stdin` (prompt via stdin), `file` (prompt via file path arg).
+
+## Choosing an agy model
+
+agy supports model selection via `--model "<name>"`. The exact strings live in `agy models` output; the registry pre-binds the common tiers to dedicated aliases. When the user asks for agy by flavor, pick the alias whose name matches; this file gives you the map.
+
+### Phrase -> alias
+
+| User says | Agent alias | Effective `--model` |
+|-----------|-------------|----------------------|
+| `agy` (no flavor) | `agy` | agy's own default (no `--model` injected) |
+| `agy flash` / `agy 3.5 flash` | `agy-flash` | `Gemini 3.5 Flash (Medium)` |
+| `agy flash high` / quality-priority flash | `agy-flash-high` | `Gemini 3.5 Flash (High)` |
+| `agy flash low` / cheap flash | `agy-flash-low` | `Gemini 3.5 Flash (Low)` |
+| `agy pro` / `agy 3.1 pro` | `agy-pro` | `Gemini 3.1 Pro (High)` |
+| `agy pro low` / cheap pro | `agy-pro-low` | `Gemini 3.1 Pro (Low)` |
+| `agy claude` / `agy sonnet` | `agy-claude` | `Claude Sonnet 4.6 (Thinking)` |
+| `agy opus` / strongest claude | `agy-opus` | `Claude Opus 4.6 (Thinking)` |
+
+If the user names the version and tier explicitly (`agy 3.1 pro low`, `agy 3.5 flash high`), use the matching suffix entry. Bare `agy flash` and bare `agy pro` map to the Medium / High defaults respectively (best price/perf). `agy claude` maps to Sonnet, the cheaper Claude tier that still uses the Claude quota.
+
+### Quota and cost
+
+- **Claude models** (`agy-claude`, `agy-opus`) draw from the **Claude quota** in your Antigravity plan -- a separate bucket from Gemini. Use them only when reasoning style matters (Claude's edit behavior, instruction following). Opus is the most expensive of all options.
+- **Gemini 3.1 Pro** is slower and pricier than 3.5 Flash but stronger on multi-step reasoning.
+- **Gemini 3.5 Flash (Low)** is the cheapest. Use it for trivial / throwaway prompts.
+- **Default `agy`** lets the CLI pick. Prefer an explicit alias if the user named one.
+
+### Discovery
+
+Model names change between agy releases. Verify with `agy models` before relying on any name in this table. Add a new alias to `agents.json` with the verbatim string from that command, plus a matching `timeout_default` (Claude/Pro need higher defaults -- see existing entries).
+
+### Worked example
+
+User: "spin up an agy pro session and review this auth PR".
+
+```bash
+bash skills/noacp/scripts/session.sh new agy-pro
+# /tmp/noacp/<id>.xml
+
+PROMPT=$(mktemp --suffix=.md)
+cat > "$PROMPT" <<'EOF'
+Review the auth PR against this repo. Flag timing vulns, missing CSRF,
+and unsafe redirects. Output a punchlist only -- no code patches.
+EOF
+bash skills/noacp/scripts/session.sh prompt /tmp/noacp/<id>.xml --file "$PROMPT"
+rm -f "$PROMPT"
+```
+
+Picking `agy-pro` ensures `--model "Gemini 3.1 Pro (High)"` is injected by `session.sh` automatically -- you do not need to add the flag yourself.
 
 ## Prefer file input for multi-line prompts
 
