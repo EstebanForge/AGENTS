@@ -5,3 +5,6 @@ skills/.system/
 # Dunk review comments (local)
 .dunk/
 .pi/
+
+# Gemini local config
+.gemini/
