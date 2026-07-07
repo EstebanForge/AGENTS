@@ -229,16 +229,13 @@ Detailed Pi configuration reference: [docs/AGENT-PI.md](docs/AGENT-PI.md).
 
 ### Pi Extensions
 
-Pi packages installed in this instance (29 total, verified via `pi list`). Canonical list tracked in [`configs/settings.json`](configs/settings.json).
+Pi packages installed in this instance (27 total, verified via `pi list`). Canonical list tracked in [`configs/settings.json`](configs/settings.json).
 
 | Package | Purpose |
 |---------|---------|
-| `pi-librarian` | GitHub research scout for code/docs lookup |
 | `pi-rtk-optimizer` | RTK command rewriting + tool-output compaction |
 | `git:ferologics/pi-notify` | Event notifications |
 | `pi-web-providers` | Web search/contents/research/answer providers |
-| `pi-autoresearch` | Autonomous experiment loop |
-| `pi-acp` | Headless ACP CLI for agent-to-agent comms |
 | `@tintinweb/pi-tasks` | Task management |
 | `pi-context-usage` | Context budget visibility |
 | `git:code-yeongyu/pi-nested-agents-md` | Nested-agent markdown handling |
@@ -262,6 +259,7 @@ Pi packages installed in this instance (29 total, verified via `pi list`). Canon
 | `@estebanforge/pi-glm-tweaks` | GLM provider tweaks (`+extensions/index.ts`) |
 | `@estebanforge/pi-ts-review` | TypeScript / React review |
 | `@estebanforge/pi-js-review` | JavaScript review |
+| `@estebanforge/pi-asana` | Asana tasks/projects/comments (native extension) |
 
 ## License
 

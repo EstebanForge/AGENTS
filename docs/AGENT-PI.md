@@ -12,9 +12,7 @@ Canonical source in this repo: [`../configs/settings.json`](../configs/settings.
   "defaultModel": "glm-5.2",
   "defaultThinkingLevel": "high",
   "enabledModels": [
-    "zai/glm-5.1",
     "google/gemini-2.5-flash",
-    "google/gemini-2.5-pro",
     "google/gemini-3.1-flash-lite",
     "google/gemini-3.5-flash",
     "deepseek/deepseek-v4-flash",
@@ -23,8 +21,8 @@ Canonical source in this repo: [`../configs/settings.json`](../configs/settings.
     "zai/glm-5.2",
     "claude-bridge/claude-opus-4-8",
     "claude-bridge/claude-haiku-4-5",
-    "claude-bridge/claude-sonnet-4-6",
-    "claude-bridge/claude-sonnet-5"
+    "claude-bridge/claude-sonnet-5",
+    "google/gemini-3.1-pro-preview"
   ]
 }
 ```
@@ -152,15 +150,12 @@ Disabled but available: `chrome-devtools`, `playwright`, `sequential-thinking`, 
 
 ## Extensions (`settings.json`)
 
-Installed packages (all active, 29 total). Verified via `pi list`. Canonical source: [`../configs/settings.json`](../configs/settings.json).
+Installed packages (all active, 27 total). Verified via `pi list`. Canonical source: [`../configs/settings.json`](../configs/settings.json).
 
 ```json
 "packages": [
-  "npm:pi-librarian",
   "git:github.com/ferologics/pi-notify",
   "npm:pi-web-providers",
-  "npm:pi-autoresearch",
-  "npm:pi-acp",
   "npm:@tintinweb/pi-tasks",
   "npm:pi-context-usage",
   "git:github.com/code-yeongyu/pi-nested-agents-md",
@@ -184,7 +179,8 @@ Installed packages (all active, 29 total). Verified via `pi list`. Canonical sou
   "npm:@estebanforge/pi-ts-review",
   "npm:@estebanforge/pi-js-review",
   "npm:@estebanforge/pi-codegraph-enhanced",
-  "npm:pi-rtk-optimizer"
+  "npm:pi-rtk-optimizer",
+  "npm:@estebanforge/pi-asana"
 ]
 ```
 

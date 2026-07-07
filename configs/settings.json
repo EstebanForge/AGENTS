@@ -3,11 +3,8 @@
   "defaultProvider": "zai",
   "defaultModel": "glm-5.2",
   "packages": [
-    "npm:pi-librarian",
     "git:github.com/ferologics/pi-notify",
     "npm:pi-web-providers",
-    "npm:pi-autoresearch",
-    "npm:pi-acp",
     "npm:@tintinweb/pi-tasks",
     "npm:pi-context-usage",
     "git:github.com/code-yeongyu/pi-nested-agents-md",
@@ -36,16 +33,15 @@
     "npm:@estebanforge/pi-ts-review",
     "npm:@estebanforge/pi-js-review",
     "npm:@estebanforge/pi-codegraph-enhanced",
-    "npm:pi-rtk-optimizer"
+    "npm:pi-rtk-optimizer",
+    "npm:@estebanforge/pi-asana"
   ],
   "treeFilterMode": "default",
   "defaultThinkingLevel": "high",
   "transport": "auto",
   "editorPaddingX": 2,
   "enabledModels": [
-    "zai/glm-5.1",
     "google/gemini-2.5-flash",
-    "google/gemini-2.5-pro",
     "google/gemini-3.1-flash-lite",
     "google/gemini-3.5-flash",
     "deepseek/deepseek-v4-flash",
@@ -54,8 +50,8 @@
     "zai/glm-5.2",
     "claude-bridge/claude-opus-4-8",
     "claude-bridge/claude-haiku-4-5",
-    "claude-bridge/claude-sonnet-4-6",
-    "claude-bridge/claude-sonnet-5"
+    "claude-bridge/claude-sonnet-5",
+    "google/gemini-3.1-pro-preview"
   ],
   "steeringMode": "one-at-a-time",
   "followUpMode": "one-at-a-time",
