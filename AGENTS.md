@@ -110,15 +110,15 @@ codegraph_protocol:
 
 peer_routing_protocol:
   peers: "pi|codex|antigravity|agy|claude|opencode|copilot are PEER agents, not sub-agents (do not invoke via subagent). Default channel for interacting with them: acpx skill"
-  principle: "Match task shape to your tools, FIRST-MATCH wins. Never deliberate. Probe your toolset first: native delegation tools (pi's AskClaude) are pi-only; claude/codex/others lack them"
+  principle: "Match task shape to your tools, FIRST-MATCH wins. Never deliberate. Probe your toolset first: native delegation tools (pi's AskClaude, AskAntigravity, AskCodex) are pi-only; claude/codex/others lack them"
   self_check: "If you ARE the target peer (e.g. you are claude), act directly. Do not delegate to yourself"
   matrix{task|have_native_deleg|use}:
-    - "1-shot read review / 2nd-opinion of files on disk|yes|AskClaude mode=read isolated"
+    - "1-shot read review / 2nd-opinion of files on disk|yes|Ask{Agent} mode=read isolated"
     - "1-shot read review / 2nd-opinion|no|acpx <peer> exec"
-    - "1-shot exec/modify/run|yes|AskClaude mode=full"
+    - "1-shot exec/modify/run|yes|Ask{Agent} mode=full"
     - "1-shot exec/modify/run|no|acpx exec | self"
     - "multi-turn / persistent peer session|any|acpx (session)"
-  askclaude_model_rule: "Default model=sonnet. Override only when user requests (opus, haiku, others)"
+  askagent_model_rule: "Claude default model=sonnet. Agy default model=flash. Override only when user requests (pro, flash, opus, haiku, others)"
   bias_guard: "Want a challenge not a rubber-stamp: isolated=true + name exact file paths, so it does not inherit your self-assessment"
 
 technical_standards_definition:
