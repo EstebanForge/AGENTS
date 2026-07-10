@@ -65,6 +65,17 @@ implementation_protocol:
   - "No unrelated refactor. Preserve style/comments"
   - "3x error? Shift path"
 
+simplicity_ladder:
+  rule: "Runs AFTER understanding the problem. Read code + trace flow first, then climb. Stop at first rung that holds. Two rungs work -> take the higher. Never simplify away: trust-boundary validation, data-loss error handling, security, a11y. Those off the block"
+  rungs{rung|check}:
+    - "1|Need to exist? Speculative = skip, say so one line (YAGNI)"
+    - "2|Already in codebase? Reuse helper/util/pattern. Look before writing; reimplementing a util a few files over is top slop"
+    - "3|Stdlib does it? Use it"
+    - "4|Native platform feature? Use it (native input over picker lib, CSS over JS, DB constraint over app code)"
+    - "5|Installed dependency solves it? Use it. No new dep for what few lines do"
+    - "6|One line? One line"
+    - "7|Only then: minimum code that works"
+
 session_protocol:
   - "Context Budget|Session > 35 turns? Suggest compact/summarize to preserve logic"
 
@@ -74,7 +85,7 @@ verify_protocol:
   - "Imports @ top"
   - "Wire end-to-end"
   - "Analyze failure before fix"
-  - "Fix root cause"
+  - "Fix root cause, not symptom. Grep all callers. One shared guard > many caller guards"
   - "No ignored failures"
 
 security_protocol:

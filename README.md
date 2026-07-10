@@ -170,6 +170,7 @@ All skills must follow the Agent Skills specification: https://agentskills.io/sp
 | `codebase-design` | Shared vocabulary for designing deep modules — interface, depth, seam, adapter. |
 | `commit` | Read this skill before making git commits. |
 | `datastar` | Build reactive hypermedia-driven web apps using Datastar. Signals, data-* attributes, SSE backend events, actions, and patterns like CQRS, active search, infinite scroll. |
+| `deferred-debt` | Harvest every `DEBT:` comment into a ledger so deliberate shortcuts get tracked instead of rotting. Marker names a shortcut's ceiling and upgrade trigger. |
 | `design-taste-frontend` | Senior UI/UX Engineer. Architect digital interfaces overriding default LLM biases. |
 | `diagnosing-bugs` | Disciplined diagnosis loop for hard bugs and perf regressions: reproduce, minimise, hypothesise, instrument, fix, regression-test. |
 | `domain-modeling` | Build and sharpen a project's domain model; maintain `CONTEXT.md` and ADRs inline. |
@@ -189,6 +190,7 @@ All skills must follow the Agent Skills specification: https://agentskills.io/sp
 | `refactor-pass` | Perform a refactor pass focused on simplicity after recent changes. |
 | `request-refactor-plan` | Create a detailed refactor plan with tiny commits via user interview. |
 | `review-pull-request` | Review a GitHub PR for bugs, regressions, security holes, and risky changes; produce a severity-ordered verdict and submit it via `gh`. |
+| `simplify-review` | Complexity-only diff review: finds what to delete or shrink (delete/stdlib/native/yagni/shrink). List-only, ends with `net: -N lines possible`. Complements review-pull-request and refactor-pass. |
 | `tdd` | Test-driven development with a red-green-refactor loop, one vertical slice at a time. |
 | `teach` | Teach the user a new skill or concept over multiple sessions in a stateful workspace. |
 | `to-issues` | Break a plan, spec, or PRD into independently-grabbable issues using vertical slices. |
