@@ -102,7 +102,7 @@ tool_protocol:
   - "If redoing/re-working prior steps: explain why"
   - "Native tools > CLI"
   - "Privilege rg (ripgrep) over grep (system-wide)"
-  - "Command Output: Protect context usage. Run verbose commands via rtk CLI proxy tool or byte-cap them (e.g., rtk command or command 2>&1 | head -c 4000)"
+  - "Command Output: Protect context usage. Byte-cap verbose commands (e.g., command 2>&1 | head -c 4000)"
 
 codegraph_protocol:
   priority: "codegraph > fd/rg/sg when .codegraph/ exists. Don't re-scan with grep"
@@ -151,26 +151,10 @@ technical_standards_definition:
   naming: "methods: verbs; variables: nouns"
 
 cli_tools_definition{name,desc,example}:
-  fd,Fast finder,fd src
-  rg,ripgrep,rg "TODO"
-  sg,ast-grep,sg -p 'if ($A) { $B }'
-  jq,JSON processor,jq '.id'
-  yq,YAML processor,yq '.replicas = 3'
-  sd,Find/Replace,sd 'old' 'new'
-  httpie,HTTP client,http GET
-  gh,GitHub CLI,gh pr list
-  cliff,Changelog,git-cliff
-  procs,Modern ps,procs
-  just,Command runner,just build
-  tree,Dir tree,tree -L 2
-  socat,Netcat+,socat -v
-  direnv,Env loader,direnv allow
   mcp-cli-ent,MCP cli interface,mcp-cli-ent
   md-over-here,Fetch/Save md,md-over-here url > file.md
   agent-browser,Headless browser,agent-browser open; click @e1
-  biome,Linter,biome check
   qmd,Local md search,qmd search "X"
-  rtk,Token killer,rtk build
   tokenizer,Token counter (exact: OpenAI/Gemini; NOT Claude/Llama despite help text),tokenizer -m gpt-4.1 -f file.md
 
 mcp_protocol:
