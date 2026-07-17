@@ -66,3 +66,7 @@ A description of the things that are out of scope for this refactor.
 Any further notes about the refactor.
 
 </refactor-plan-template>
+
+## Notes
+
+- Write the issue body in Esteban's formal voice (`esteban-voice` skill, FORMAL mode, for tone only: first-person active, no em dashes, concrete specifics). Keep the refactor plan template structure above.
