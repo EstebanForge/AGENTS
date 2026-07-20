@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "0.80.3",
+  "lastChangelogVersion": "0.80.10",
   "defaultProvider": "zai",
   "defaultModel": "glm-5.2",
   "packages": [
@@ -9,7 +9,10 @@
     "npm:pi-context-usage",
     "git:github.com/code-yeongyu/pi-nested-agents-md",
     "npm:pi-init",
-    "npm:@ff-labs/pi-fff",
+    {
+      "source": "npm:@ff-labs/pi-fff",
+      "extensions": []
+    },
     "npm:@upstash/context7-pi",
     "npm:@estebanforge/pi-agentmemory",
     "npm:@mcowger/pi-better-messages-cache",
@@ -17,7 +20,6 @@
     "npm:pi-token-speed",
     "npm:pi-diff-review",
     "npm:@juicesharp/rpiv-ask-user-question",
-    "npm:@ctogg/pi-cost-counter",
     "npm:pi-token-burden",
     "npm:@gotgenes/pi-subagents",
     "npm:@estebanforge/pi-go-review",
@@ -34,7 +36,15 @@
     "npm:@estebanforge/pi-js-review",
     "npm:@estebanforge/pi-codegraph-enhanced",
     "npm:pi-rtk-optimizer",
-    "npm:@estebanforge/pi-asana"
+    "npm:@estebanforge/pi-asana",
+    "npm:@estebanforge/pi-ask-antigravity",
+    "npm:@estebanforge/pi-ask-codex",
+    "npm:@estebanforge/pi-slack-me",
+    "npm:@pi-kaush/pi-inline-skill-identifier",
+    "npm:@mobrienv/pi-tidy-tools",
+    "git:github.com/jnsahaj/pi-agent-browser-screenshot",
+    "git:github.com/tmustier/pi-queue-steer",
+    "npm:@estebanforge/pi-token-cost-ledger"
   ],
   "treeFilterMode": "default",
   "defaultThinkingLevel": "high",

@@ -231,7 +231,7 @@ Detailed Pi configuration reference: [docs/AGENT-PI.md](docs/AGENT-PI.md).
 
 ### Pi Extensions
 
-Pi packages installed in this instance (27 total, verified via `pi list`). Canonical list tracked in [`configs/settings.json`](configs/settings.json).
+Pi packages installed in this instance (34 total, verified via `pi list`). Canonical list tracked in [`configs/settings.json`](configs/settings.json).
 
 | Package | Purpose |
 |---------|---------|
@@ -242,7 +242,7 @@ Pi packages installed in this instance (27 total, verified via `pi list`). Canon
 | `pi-context-usage` | Context budget visibility |
 | `git:code-yeongyu/pi-nested-agents-md` | Nested-agent markdown handling |
 | `pi-init` | AGENTS.md initialization |
-| `@ff-labs/pi-fff` | Fuzzy file finder / grep |
+| `@ff-labs/pi-fff` | Fuzzy file finder / grep (extensions filtered) |
 | `@upstash/context7-pi` | Library docs + snippets |
 | `@estebanforge/pi-agentmemory` | Cross-session memory (native extension) |
 | `@mcowger/pi-better-messages-cache` | Improved message caching |
@@ -250,8 +250,6 @@ Pi packages installed in this instance (27 total, verified via `pi list`). Canon
 | `pi-token-speed` | Token speed display |
 | `pi-diff-review` | Diff review |
 | `@juicesharp/rpiv-ask-user-question` | Structured user-question tool |
-| `@estebanforge/pi-codegraph-enhanced` | Local code knowledge graph (replaces `@vndv/pi-codegraph`) |
-| `@ctogg/pi-cost-counter` | Spend ledger for token cost tracking |
 | `pi-token-burden` | Token burden display |
 | `@gotgenes/pi-subagents` | Subagent execution |
 | `@estebanforge/pi-go-review` | Go review (100 Go Mistakes checklist) |
@@ -261,7 +259,16 @@ Pi packages installed in this instance (27 total, verified via `pi list`). Canon
 | `@estebanforge/pi-glm-tweaks` | GLM provider tweaks (`+extensions/index.ts`) |
 | `@estebanforge/pi-ts-review` | TypeScript / React review |
 | `@estebanforge/pi-js-review` | JavaScript review |
+| `@estebanforge/pi-codegraph-enhanced` | Local code knowledge graph |
 | `@estebanforge/pi-asana` | Asana tasks/projects/comments (native extension) |
+| `@estebanforge/pi-ask-antigravity` | Delegate to Gemini/Antigravity (agy) peer agent |
+| `@estebanforge/pi-ask-codex` | Delegate to OpenAI Codex (GPT) peer agent |
+| `@estebanforge/pi-slack-me` | Slack read/post/search as the user (user token) |
+| `@pi-kaush/pi-inline-skill-identifier` | Highlight `$skill` aliases, route inline skill refs |
+| `@mobrienv/pi-tidy-tools` | Compact, reason-first tool output with layouts/diffs |
+| `git:jnsahaj/pi-agent-browser-screenshot` | Inline headless-browser screenshots in the TUI |
+| `git:tmustier/pi-queue-steer` | Visible steering/follow-up queues with inline editing |
+| `@estebanforge/pi-token-cost-ledger` | Token cost ledger (replaces `@ctogg/pi-cost-counter`) |
 
 ## License
 
