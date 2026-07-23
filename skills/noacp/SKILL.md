@@ -81,21 +81,21 @@ agy supports model selection via `--model "<name>"`. The exact strings live in `
 | User says | Agent alias | Effective `--model` |
 |-----------|-------------|----------------------|
 | `agy` (no flavor) | `agy` | agy's own default (no `--model` injected) |
-| `agy flash` / `agy 3.5 flash` | `agy-flash` | `Gemini 3.5 Flash (Medium)` |
-| `agy flash high` / quality-priority flash | `agy-flash-high` | `Gemini 3.5 Flash (High)` |
-| `agy flash low` / cheap flash | `agy-flash-low` | `Gemini 3.5 Flash (Low)` |
+| `agy flash` / `agy 3.6 flash` | `agy-flash` | `Gemini 3.6 Flash (Medium)` |
+| `agy flash high` / quality-priority flash | `agy-flash-high` | `Gemini 3.6 Flash (High)` |
+| `agy flash low` / cheap flash | `agy-flash-low` | `Gemini 3.6 Flash (Low)` |
 | `agy pro` / `agy 3.1 pro` | `agy-pro` | `Gemini 3.1 Pro (High)` |
 | `agy pro low` / cheap pro | `agy-pro-low` | `Gemini 3.1 Pro (Low)` |
 | `agy claude` / `agy sonnet` | `agy-claude` | `Claude Sonnet 4.6 (Thinking)` |
 | `agy opus` / strongest claude | `agy-opus` | `Claude Opus 4.6 (Thinking)` |
 
-If the user names the version and tier explicitly (`agy 3.1 pro low`, `agy 3.5 flash high`), use the matching suffix entry. Bare `agy flash` and bare `agy pro` map to the Medium / High defaults respectively (best price/perf). `agy claude` maps to Sonnet, the cheaper Claude tier that still uses the Claude quota.
+If the user names the version and tier explicitly (`agy 3.1 pro low`, `agy 3.6 flash high`), use the matching suffix entry. Bare `agy flash` and bare `agy pro` map to the Medium / High defaults respectively (best price/perf). `agy claude` maps to Sonnet, the cheaper Claude tier that still uses the Claude quota.
 
 ### Quota and cost
 
 - **Claude models** (`agy-claude`, `agy-opus`) draw from the **Claude quota** in your Antigravity plan -- a separate bucket from Gemini. Use them only when reasoning style matters (Claude's edit behavior, instruction following). Opus is the most expensive of all options.
-- **Gemini 3.1 Pro** is slower and pricier than 3.5 Flash but stronger on multi-step reasoning.
-- **Gemini 3.5 Flash (Low)** is the cheapest. Use it for trivial / throwaway prompts.
+- **Gemini 3.1 Pro** is slower and pricier than 3.6 Flash but stronger on multi-step reasoning.
+- **Gemini 3.6 Flash (Low)** is the cheapest. Use it for trivial / throwaway prompts.
 - **Default `agy`** lets the CLI pick. Prefer an explicit alias if the user named one.
 
 ### Discovery
