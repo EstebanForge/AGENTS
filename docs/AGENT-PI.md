@@ -150,7 +150,7 @@ Disabled but available: `chrome-devtools`, `playwright`, `sequential-thinking`, 
 
 ## Extensions (`settings.json`)
 
-Installed packages (all active, 27 total). Verified via `pi list`. Canonical source: [`../configs/settings.json`](../configs/settings.json).
+Installed packages (all active, 37 total). Verified via `pi list`. Canonical source: [`../configs/settings.json`](../configs/settings.json).
 
 ```json
 "packages": [
@@ -160,7 +160,7 @@ Installed packages (all active, 27 total). Verified via `pi list`. Canonical sou
   "npm:pi-context-usage",
   "git:github.com/code-yeongyu/pi-nested-agents-md",
   "npm:pi-init",
-  "npm:@ff-labs/pi-fff",
+  { "source": "npm:@ff-labs/pi-fff", "extensions": [] },
   "npm:@upstash/context7-pi",
   "npm:@estebanforge/pi-agentmemory",
   "npm:@mcowger/pi-better-messages-cache",
@@ -168,7 +168,6 @@ Installed packages (all active, 27 total). Verified via `pi list`. Canonical sou
   "npm:pi-token-speed",
   "npm:pi-diff-review",
   "npm:@juicesharp/rpiv-ask-user-question",
-  "npm:@ctogg/pi-cost-counter",
   "npm:pi-token-burden",
   "npm:@gotgenes/pi-subagents",
   "npm:@estebanforge/pi-go-review",
@@ -180,9 +179,21 @@ Installed packages (all active, 27 total). Verified via `pi list`. Canonical sou
   "npm:@estebanforge/pi-js-review",
   "npm:@estebanforge/pi-codegraph-enhanced",
   "npm:pi-rtk-optimizer",
-  "npm:@estebanforge/pi-asana"
+  "npm:@estebanforge/pi-asana",
+  "npm:@estebanforge/pi-ask-antigravity",
+  "npm:@estebanforge/pi-ask-codex",
+  "npm:@estebanforge/pi-slack-me",
+  "npm:@pi-kaush/pi-inline-skill-identifier",
+  "npm:@mobrienv/pi-tidy-tools",
+  "git:github.com/jnsahaj/pi-agent-browser-screenshot",
+  "git:github.com/tmustier/pi-queue-steer",
+  "npm:@estebanforge/pi-token-cost-ledger",
+  "npm:pi-unified-exec",
+  "npm:pi-continue",
+  "npm:@tmustier/pi-session-recap"
 ]
 ```
 
-> `@ctogg/pi-cost-counter` writes the spend ledger consumed by the token cost
-> tracker. Full setup + scripts + installer: [AGENT-PI-cost-tracking.md](AGENT-PI-cost-tracking.md).
+> `@estebanforge/pi-token-cost-ledger` writes the spend ledger consumed by
+> the token cost tracker (replaces the deprecated `@ctogg/pi-cost-counter`).
+> Full setup + scripts + installer: [AGENT-PI-cost-tracking.md](AGENT-PI-cost-tracking.md).

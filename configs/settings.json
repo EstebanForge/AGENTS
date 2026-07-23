@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "0.80.10",
+  "lastChangelogVersion": "0.81.1",
   "defaultProvider": "zai",
   "defaultModel": "glm-5.2",
   "packages": [
@@ -44,7 +44,10 @@
     "npm:@mobrienv/pi-tidy-tools",
     "git:github.com/jnsahaj/pi-agent-browser-screenshot",
     "git:github.com/tmustier/pi-queue-steer",
-    "npm:@estebanforge/pi-token-cost-ledger"
+    "npm:@estebanforge/pi-token-cost-ledger",
+    "npm:pi-unified-exec",
+    "npm:pi-continue",
+    "npm:@tmustier/pi-session-recap"
   ],
   "treeFilterMode": "default",
   "defaultThinkingLevel": "high",
@@ -75,6 +78,8 @@
   "tokenSpeed": {
     "display": "full",
     "useProviderTokens": false,
-    "countStrategy": "estimate"
-  }
+    "countStrategy": "direct",
+    "endTpsBehavior": "average"
+  },
+  "showCacheMissNotices": true
 }

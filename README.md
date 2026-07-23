@@ -225,13 +225,13 @@ description: One-line description used by agents.
 The `configs/` directory holds portable agent configuration used to reproduce the full setup on another machine. Currently:
 
 - `configs/settings.json` — Pi agent settings (provider, model, packages, UI). Mirrors `~/.pi/agent/settings.json`.
-- `configs/mcp_servers.json` — Pi MCP server registry. Mirrors `~/.pi/agent/mcp_servers.json`.
+- `configs/mcp_servers.json` — Pi MCP server registry. Mirrors `~/.pi/agent/mcp.json` (live file is intentionally empty; servers are provisioned from this repo).
 
 Detailed Pi configuration reference: [docs/AGENT-PI.md](docs/AGENT-PI.md).
 
 ### Pi Extensions
 
-Pi packages installed in this instance (34 total, verified via `pi list`). Canonical list tracked in [`configs/settings.json`](configs/settings.json).
+Pi packages installed in this instance (37 total, verified via `pi list`). Canonical list tracked in [`configs/settings.json`](configs/settings.json).
 
 | Package | Purpose |
 |---------|---------|
@@ -269,6 +269,9 @@ Pi packages installed in this instance (34 total, verified via `pi list`). Canon
 | `git:jnsahaj/pi-agent-browser-screenshot` | Inline headless-browser screenshots in the TUI |
 | `git:tmustier/pi-queue-steer` | Visible steering/follow-up queues with inline editing |
 | `@estebanforge/pi-token-cost-ledger` | Token cost ledger (replaces `@ctogg/pi-cost-counter`) |
+| `npm:pi-unified-exec` | Unified exec backend (sessions, long-running, set_on_exit) |
+| `npm:pi-continue` | Resume previous sessions by id |
+| `npm:@tmustier/pi-session-recap` | Session recap (turn budget, state) |
 
 ## License
 
