@@ -135,13 +135,14 @@ peer_routing_protocol:
   principle: "Match task shape to your tools, FIRST-MATCH wins. Never deliberate. Probe your toolset first: native delegation tools (pi's AskClaude, AskAntigravity, AskCodex) are pi-only; claude/codex/others lack them"
   self_check: "If you ARE the target peer (e.g. you are claude), act directly. Do not delegate to yourself"
   matrix[5]{task,have_native_deleg,use}:
-    "1-shot read review / 2nd-opinion of files on disk",yes,"Ask{Agent} mode=read isolated"
+    "1-shot read review / 2nd-opinion of files on disk",yes,"Ask{Agent}"
     "1-shot read review / 2nd-opinion",no,"acpx <peer> exec"
-    "1-shot exec/modify/run",yes,"Ask{Agent} mode=full"
+    "1-shot exec/modify/run",yes,"Ask{Agent}"
     "1-shot exec/modify/run",no,"acpx exec | self"
     "multi-turn / persistent peer session",any,acpx (session)
   askagent_model_rule: "Claude default model=sonnet. Agy default model=flash. Override only when user requests (pro, flash, opus, haiku, others)"
-  bias_guard: "Want a challenge not a rubber-stamp: isolated=true + name exact file paths, so it does not inherit your self-assessment"
+  param_rule: "Ask tools have DIFFERENT param names (mode vs sandbox vs skipPermissions; isolated vs sessionId vs conversationId). Read the chosen tool's own description for its read-only + continuity flags. Never assume a name across tools"
+  bias_guard: "Want a challenge not a rubber-stamp: run the peer isolated (no inherited context) + name exact file paths, so it does not inherit your self-assessment"
 
 technical_standards_definition:
   principles: "DRY, KISS, YAGNI, LoD, LOB (Locality of Behaviour). NO SOLID"
