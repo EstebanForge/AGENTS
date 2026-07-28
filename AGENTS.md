@@ -114,6 +114,7 @@ tool_protocol:
   - "Native tools > CLI"
   - "Privilege rg (ripgrep) over grep (system-wide)"
   - "Command Output: Protect context usage. Byte-cap verbose commands (e.g., command 2>&1 | head -c 4000 || true)"
+  - "Subagents: Delegate broad tasks where only the final result matters (exploration, multi-file research/synthesis, deep-doc/schema lookup, large-output summarization, refactor impact survey). Returns distilled answer; keeps main context lean"
 
 codegraph_protocol:
   priority: "codegraph > fd/rg/sg when .codegraph/ exists. Don't re-scan with grep"
