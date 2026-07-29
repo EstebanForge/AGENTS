@@ -2,6 +2,7 @@
 skills/.system/
 skills/work/
 /skills/esteban-voice
+/skills/wicket-*
 
 # Dunk review comments (local)
 .dunk/
