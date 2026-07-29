@@ -19,7 +19,8 @@ This skill will be invoked when the user wants to create a refactor request. You
 
 7. Break the implementation into a plan of tiny commits. Remember Martin Fowler's advice to "make each refactoring step as small as possible, so that you can always see the program working."
 
-8. Create a GitHub issue with the refactor plan. Use the following template for the issue description:
+8. **Human-output gate (hard).** Render the full issue title and body exactly as they will be posted, the body in a fenced block, then STOP. Do not run `gh issue create` until the user approves, amends, or cancels. Re-render after any amendment and wait again. Silence is a cancel. Full rules in [`../_templates/human-output-gate.md`](../_templates/human-output-gate.md).
+9. Create a GitHub issue with the refactor plan. Use the following template for the issue description:
 
 <refactor-plan-template>
 
@@ -66,6 +67,10 @@ A description of the things that are out of scope for this refactor.
 Any further notes about the refactor.
 
 </refactor-plan-template>
+
+## Hard rules
+
+- **Gate the issue before posting (hard).** Never auto-create. Render the full title and body to the user, then STOP and wait for approve / amend / cancel. See [`../_templates/human-output-gate.md`](../_templates/human-output-gate.md).
 
 ## Notes
 

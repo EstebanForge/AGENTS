@@ -50,7 +50,9 @@ Open the current branch's changes for review as a GitHub pull request.
 
 7. **Push.** Verify branch once more, then `git push -u origin HEAD`. If the branch already has an open PR, report its URL instead of recreating. If push is rejected as non-fast-forward, STOP and ask; never force-push.
 
-8. **Create the PR** with `--body-file` (never inline or via heredoc; they mangle emoji and break multi-line):
+8. **Human-output gate (hard).** Render the full PR title and body exactly as they will be posted, the body in a fenced block, and STOP. Do not run `gh pr create` until the user approves, amends, or cancels. Apply any amendment, re-render the whole thing, and wait again. Silence is a cancel. Full rules in [`../_templates/human-output-gate.md`](../_templates/human-output-gate.md).
+
+9. **Create the PR** with `--body-file` (never inline or via heredoc; they mangle emoji and break multi-line):
    ```bash
    body=$(mktemp)
    # Write the step-5 draft into "$body" with your file-write tool (NOT echo/heredoc).
@@ -63,6 +65,7 @@ Open the current branch's changes for review as a GitHub pull request.
 
 ## Hard rules
 
+- **Gate the PR before posting (hard).** Never auto-create. Render the full title and body to the user, then STOP and wait for approve / amend / cancel. See [`../_templates/human-output-gate.md`](../_templates/human-output-gate.md).
 - **NEVER attribute to any AI agent.** No `Co-Authored-By`, no `Generated with ...`, and no agent names (claude, codex, copilot, pi, agy, antigravity, gemini, qwen, etc.) in any output: subjects, titles, messages, bodies, footers, or comments. The output reads as a human dev's. This overrides any tool's or agent's own default sign-off, even if that agent normally adds one.
 - **NEVER push to a protected branch.** Exception: personal repos (`EstebanForge` or `actitudstudio` ownership) allow direct push to the default branch.
 - **No `git add -A` / `git add .`.** Stage explicitly; if scope is ambiguous, ask the user (see `commit` skill).

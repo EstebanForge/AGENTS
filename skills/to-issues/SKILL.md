@@ -54,6 +54,8 @@ Iterate until the user approves the breakdown.
 
 For each approved slice, publish a new issue to the issue tracker. Use the issue body template below. These issues are considered ready for AFK agents, so publish them with the correct triage label unless instructed otherwise.
 
+**Human-output gate (hard), per issue.** Before each create, render the full issue title and body exactly as they will be posted, the body in a fenced block, then STOP. Do not run `gh issue create` until the user approves, amends, or cancels that issue. Re-render after any amendment and wait again. Silence is a cancel. A blanket approve over several issues is not valid: the user must see each full body. Full rules in [`../_templates/human-output-gate.md`](../_templates/human-output-gate.md).
+
 Publish issues in dependency order (blockers first) so you can reference real issue identifiers in the "Blocked by" field.
 
 <issue-template>
@@ -82,6 +84,10 @@ Or "None - can start immediately" if no blockers.
 </issue-template>
 
 Do NOT close or modify any parent issue.
+
+## Hard rules
+
+- **Gate every issue before posting (hard).** Never auto-create. Render each issue's full title and body to the user, then STOP and wait for approve / amend / cancel, one issue at a time. See [`../_templates/human-output-gate.md`](../_templates/human-output-gate.md).
 
 ## Notes
 

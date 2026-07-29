@@ -15,6 +15,7 @@ Create a git commit for the current changes using a concise Conventional Commits
 
 ## Notes
 
+- **Gate the commit message before posting (hard).** Never auto-commit. Render the full subject and body to the user, then STOP and wait for approve / amend / cancel. See [`../_templates/human-output-gate.md`](../_templates/human-output-gate.md).
 - Body is OPTIONAL. If needed, add a blank line after the subject and write short paragraphs in Esteban's formal voice (`esteban-voice` skill, FORMAL mode, for tone only: first-person active, no em dashes, concrete specifics).
 - Do NOT add footers (put issue links like `Closes #N` in the PR, not the commit). Use a breaking-change marker (`type(scope)!:`) only when the change is genuinely backwards-incompatible.
 - Do NOT add sign-offs (no `Signed-off-by`).
@@ -34,4 +35,5 @@ Create a git commit for the current changes using a concise Conventional Commits
 3. (Optional) Run `git log -n 50 --pretty=format:%s` to see commonly used scopes.
 4. If there are ambiguous extra files, ask the user for clarification before committing.
 5. Stage only the intended files explicitly with `git add -- <paths>`. NEVER `git add -A` / `git add .`. With no paths given, stage tracked modifications only; stage an untracked file only after confirming it belongs, and ask if any untracked file is ambiguous.
-6. Run `git commit -m "..."` (and `-m "..."` if needed).
+6. **Human-output gate (hard).** Before committing, render the full commit message, subject and any body, exactly as it will be written, in a fenced block. Then STOP and wait for the user to approve, amend, or cancel. Do not run `git commit` until approved. Silence is a cancel. Full rules in [`../_templates/human-output-gate.md`](../_templates/human-output-gate.md).
+7. Run `git commit -m "..."` (and `-m "..."` if needed).
