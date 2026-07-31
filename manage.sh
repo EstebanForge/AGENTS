@@ -149,20 +149,22 @@ backup_path() {
     return 1
 }
 
-# --- Per-skill synchronization helpers ---
-# Skills are synced at per-skill granularity so third-party skills installed by
-# other tools coexist with centrally-managed ones. A manifest file inside each
-# target records which skill names this script owns, enabling clean removal and
-# reconciliation when central skills are renamed or removed.
+# --- Per-entry synchronization engine (skills + prompts) ---
+# A category dir (skills/ or prompts/) is synced at per-entry granularity so
+# files installed by other tools coexist with centrally-managed ones. A manifest
+# file inside each target records which entry names this script owns, enabling
+# clean removal and reconciliation when central entries are renamed or removed.
+# Applies to BOTH standard agents (per-entry symlinks) and construct-cli sandbox
+# paths (per-entry copy without --delete).
 MANIFEST_NAME=".agents-central-managed"
 
-# Emit the direct children names of the central skills dir (files + dirs,
-# including dotfiles), one per line. This is the canonical "managed set".
-central_skill_names() {
-    local entry
-    for entry in "${CENTRAL_SKILLS}"/* "${CENTRAL_SKILLS}"/.[!.]*; do
+# Emit the direct children names of a source dir (files + dirs, including
+# dotfiles), one per line. This is the canonical "managed set".
+managed_entry_names() {
+    local src=$1 entry
+    for entry in "${src}"/* "${src}"/.[!.]*; do
         [[ -e "${entry}" || -L "${entry}" ]] || continue
-        printf '%s\n' "${entry#"${CENTRAL_SKILLS}/"}"
+        printf '%s\n' "${entry#"${src}/"}"
     done
 }
 
@@ -180,23 +182,24 @@ write_manifest() {
     fi
 }
 
-# Standard mode: symlink each central skill into a real skills directory.
-sync_skills_symlink() {
-    local name=$1 target=$2 force=${3:-0}
+# Standard mode: symlink each central entry into a real category directory.
+# Args: $1=kind (skills|prompts) $2=name $3=src $4=target $5=force
+sync_dir_symlink() {
+    local kind=$1 name=$2 src=$3 target=$4 force=${5:-0}
 
     # Migrate a legacy whole-directory symlink into a merged real directory.
     if [[ -L "${target}" ]]; then
-        if [[ "$(readlink "${target}")" == "${CENTRAL_SKILLS}" ]]; then
+        if [[ "$(readlink "${target}")" == "${src}" ]]; then
             rm "${target}"; mkdir -p "${target}"
-            log_info "${name}: Converted legacy skills symlink to merged dir"
+            log_info "${name}: Converted legacy ${kind} symlink to merged dir"
         else
-            log_warning "${name}: skills symlink points elsewhere, skipping"
+            log_warning "${name}: ${kind} symlink points elsewhere, skipping"
             return 0
         fi
     else
         local ancestor; ancestor="$(find_existing_ancestor "${target}")"
         if [[ "${ancestor}" == "${HOME}" || "${ancestor}" == "/" ]]; then
-            log_info "${name}: Agent not installed (skipped skills)"; return 0
+            log_info "${name}: Agent not installed (skipped ${kind})"; return 0
         fi
         [[ -L "${target}" && ! -e "${target}" ]] && rm -f "${target}"   # dangling
         mkdir -p "${target}"
@@ -210,38 +213,39 @@ sync_skills_symlink() {
     while IFS= read -r s; do
         [[ -z "$s" ]] && continue
         new_set["$s"]=1
-        local src="${CENTRAL_SKILLS}/${s}" dst="${target}/${s}"
-        if [[ -L "${dst}" && "$(readlink "${dst}")" == "${src}" ]]; then
-            if [[ "${force}" == "1" ]]; then rm "${dst}"; ln -s "${src}" "${dst}"; updated=$((updated+1)); fi
+        local src_entry="${src}/${s}" dst="${target}/${s}"
+        if [[ -L "${dst}" && "$(readlink "${dst}")" == "${src_entry}" ]]; then
+            if [[ "${force}" == "1" ]]; then rm "${dst}"; ln -s "${src_entry}" "${dst}"; updated=$((updated+1)); fi
             continue
         fi
         if [[ -L "${dst}" ]]; then
             rm "${dst}"                         # stale/foreign symlink: replace
         elif [[ -e "${dst}" ]]; then
-            backup_path "${dst}"               # third-party real skill collision
+            backup_path "${dst}"               # third-party real entry collision
         fi
-        ln -s "${src}" "${dst}"; updated=$((updated+1))
-    done < <(central_skill_names)
+        ln -s "${src_entry}" "${dst}"; updated=$((updated+1))
+    done < <(managed_entry_names "${src}")
 
-    # Reconcile: drop managed links whose skill left central.
+    # Reconcile: drop managed links whose entry left central.
     for s in "${!old_set[@]}"; do
         if [[ -z "${new_set[$s]+isset}" ]]; then
             local dst="${target}/${s}"
-            if [[ -L "${dst}" ]]; then rm "${dst}"; log_info "${name}: Removed stale skill link ${s}"; fi
+            if [[ -L "${dst}" ]]; then rm "${dst}"; log_info "${name}: Removed stale ${kind} link ${s}"; fi
         fi
     done
 
     write_manifest "${target}" "${!new_set[@]}"
-    log_success "${name}: Synchronized skills (${updated} link(s))"
+    log_success "${name}: Synchronized ${kind} (${updated} link(s))"
 }
 
-# Construct mode: copy central skills without --delete; reconcile via manifest
-# so dropped central skills are removed but third-party skills survive.
-sync_skills_copy() {
-    local name=$1 target=$2
+# Construct mode: copy central entries without --delete; reconcile via manifest
+# so dropped central entries are removed but third-party entries survive.
+# Args: $1=kind $2=name $3=src $4=target
+sync_dir_copy() {
+    local kind=$1 name=$2 src=$3 target=$4
 
     if [[ "${target}" == "${HOME}/.config/construct-cli/home/.agents/"* ]]; then
-        log_info "${name}: Skills are source"; return 0
+        log_info "${name}: ${kind^} are source"; return 0
     fi
     [[ -L "${target}" && ! -e "${target}" ]] && rm -f "${target}"
     mkdir -p "${target}"
@@ -249,29 +253,30 @@ sync_skills_copy() {
     local -A old_set=() new_set=()
     local s
     while IFS= read -r s; do [[ -n "$s" ]] && old_set["$s"]=1; done < <(read_manifest "${target}")
-    while IFS= read -r s; do [[ -n "$s" ]] && new_set["$s"]=1; done < <(central_skill_names)
+    while IFS= read -r s; do [[ -n "$s" ]] && new_set["$s"]=1; done < <(managed_entry_names "${src}")
 
     for s in "${!old_set[@]}"; do
         if [[ -z "${new_set[$s]+isset}" && -e "${target}/${s}" ]]; then
-            rm -rf "${target:?}/${s}"; log_info "${name}: Removed stale skill ${s}"
+            rm -rf "${target:?}/${s}"; log_info "${name}: Removed stale ${kind} ${s}"
         fi
     done
 
     if command -v rsync >/dev/null 2>&1; then
-        rsync -a "${CENTRAL_SKILLS}/" "${target}/"
+        rsync -a "${src}/" "${target}/"
     else
-        cp -r "${CENTRAL_SKILLS}/." "${target}/"
+        cp -r "${src}/." "${target}/"
     fi
 
     write_manifest "${target}" "${!new_set[@]}"
-    log_success "${name}: Synchronized skills"
+    log_success "${name}: Synchronized ${kind}"
 }
 
-# Reverse of sync_skills_symlink: remove only managed links + manifest.
-unsync_skills_symlink() {
-    local name=$1 target=$2
+# Reverse of sync_dir_symlink: remove only managed links + manifest.
+# Args: $1=kind $2=name $3=target
+unsync_dir_symlink() {
+    local kind=$1 name=$2 target=$3
     if [[ -L "${target}" ]]; then
-        rm "${target}"; log_success "${name}: Removed skills symlink"
+        rm "${target}"; log_success "${name}: Removed ${kind} symlink"
         local backup; backup="$(find "$(dirname "${target}")" -maxdepth 1 -name "$(basename "${target}").backup.*" 2>/dev/null | sort -r | head -n1)"
         [[ -n "${backup}" ]] && { mv "${backup}" "${target}"; log_info "  ↳ Restored backup"; }
         return 0
@@ -288,12 +293,13 @@ unsync_skills_symlink() {
         fi
     done < <(read_manifest "${target}")
     rm -f "${target}/${MANIFEST_NAME}"
-    log_success "${name}: Removed managed skill links"
+    log_success "${name}: Removed managed ${kind} links"
 }
 
-# Reverse of sync_skills_copy.
-unsync_skills_copy() {
-    local name=$1 target=$2
+# Reverse of sync_dir_copy.
+# Args: $1=kind $2=name $3=target
+unsync_dir_copy() {
+    local kind=$1 name=$2 target=$3
     [[ -d "${target}" ]] || return 0
     local s
     while IFS= read -r s; do
@@ -301,7 +307,7 @@ unsync_skills_copy() {
         rm -rf "${target:?}/${s}"
     done < <(read_manifest "${target}")
     rm -f "${target}/${MANIFEST_NAME}"
-    log_success "${name}: Removed managed skills"
+    log_success "${name}: Removed managed ${kind}"
 }
 
 # Unified Link/Copy operation
@@ -340,47 +346,23 @@ manage_agent() {
         fi
     fi
 
-    # --- Skills (per-skill granularity: coexist with third-party skills) ---
+    # --- Skills (per-entry granularity: coexist with third-party skills) ---
     if [[ "${skills_path}" != "-" ]]; then
         if [[ "${name}" == construct_* ]]; then
-            sync_skills_copy "${name}" "${skills_path}"
+            sync_dir_copy "skills" "${name}" "${CENTRAL_SKILLS}" "${skills_path}"
         else
-            sync_skills_symlink "${name}" "${skills_path}" "${force}"
+            sync_dir_symlink "skills" "${name}" "${CENTRAL_SKILLS}" "${skills_path}" "${force}"
         fi
     fi
 }
 
-# Prompts management (mirrors skills logic)
+# Prompts management (same per-entry engine as skills)
 manage_prompts() {
     local name=$1; local target=$2; local force=${3:-0}
     if [[ "${name}" == construct_* ]]; then
-        if [[ "${target}" != "${HOME}/.config/construct-cli/home/.agents/"* ]]; then
-            [[ -L "${target}" && ! -e "${target}" ]] && rm -f "${target}"
-            mkdir -p "${target}"
-            if command -v rsync >/dev/null 2>&1; then
-                rsync -a --delete "${CENTRAL_PROMPTS}/" "${target}/"
-            else
-                rm -rf "${target}" && cp -r "${CENTRAL_PROMPTS}" "${target}"
-            fi
-            log_success "${name}: Synchronized prompts"
-        else
-            log_info "${name}: Prompts are source"
-        fi
+        sync_dir_copy "prompts" "${name}" "${CENTRAL_PROMPTS}" "${target}"
     else
-        local ancestor; ancestor="$(find_existing_ancestor "${target}")"
-        if [[ "${ancestor}" != "${HOME}" && "${ancestor}" != "/" ]]; then
-            local needs_link=1
-            if [[ -L "${target}" ]]; then
-                if [[ "$(readlink "${target}")" == "${CENTRAL_PROMPTS}" ]]; then
-                    if [[ "${force}" == "1" ]]; then rm "${target}"; else needs_link=0; log_warning "${name}: Prompts already linked"; fi
-                else rm "${target}"; fi
-            elif [[ -d "${target}" ]]; then backup_path "${target}"; fi
-
-            if [[ "${needs_link}" == "1" ]]; then
-                mkdir -p "$(dirname "${target}")"; ln -s "${CENTRAL_PROMPTS}" "${target}"
-                log_success "${name}: Linked prompts"
-            fi
-        else log_info "${name}: Agent not installed (skipped prompts)"; fi
+        sync_dir_symlink "prompts" "${name}" "${CENTRAL_PROMPTS}" "${target}" "${force}"
     fi
 }
 
@@ -407,9 +389,9 @@ unmanage_agent() {
         if [[ "${name}" == construct_* && "${skills_path}" == "${HOME}/.config/construct-cli/home/.agents/"* ]]; then
             :
         elif [[ "${name}" == construct_* ]]; then
-            unsync_skills_copy "${name}" "${skills_path}"
+            unsync_dir_copy "skills" "${name}" "${skills_path}"
         else
-            unsync_skills_symlink "${name}" "${skills_path}"
+            unsync_dir_symlink "skills" "${name}" "${skills_path}"
         fi
     fi
 }
@@ -417,15 +399,10 @@ unmanage_agent() {
 unmanage_prompts() {
     local name=$1; local target=$2
     if [[ "${name}" == construct_* && "${target}" == "${HOME}/.config/construct-cli/home/.agents/"* ]]; then return 0; fi
-
-    if [[ -L "${target}" ]]; then
-        rm "${target}"
-        log_success "${name}: Removed symlink $(basename "${target}")"
-        local backup; backup="$(find "$(dirname "${target}")" -maxdepth 1 -name "$(basename "${target}").backup.*" 2>/dev/null | sort -r | head -n1)"
-        if [[ -n "${backup}" ]]; then mv "${backup}" "${target}"; log_info "  ↳ Restored backup"; fi
-    elif [[ -e "${target}" && "${name}" == construct_* ]]; then
-        rm -rf "${target}"
-        log_success "${name}: Removed copy $(basename "${target}")"
+    if [[ "${name}" == construct_* ]]; then
+        unsync_dir_copy "prompts" "${name}" "${target}"
+    else
+        unsync_dir_symlink "prompts" "${name}" "${target}"
     fi
 }
 
@@ -444,7 +421,7 @@ cmd_link() {
     local force=${1:-0}
     detect_extra_agents; detect_construct_agents
 
-    log_info "Managing Agent Configuration & Skills..."
+    log_info "Syncing central skills, prompts & instructions (per-entry)..."
 
     # Migration: Pi now supports ~/.agents/skills natively
     unmanage_agent "Pi" "-|${HOME}/.pi/agent/skills"
@@ -461,7 +438,7 @@ cmd_link() {
 
 cmd_unlink() {
     detect_extra_agents; detect_construct_agents
-    log_info "Unlinking and restoring original states..."
+    log_info "Removing central-managed entries (backups restored if present)..."
     for name in $(get_sorted_agents); do
         unmanage_agent "${name}" "${AGENTS[$name]}"
         if [[ -n "${PROMPTS[$name]+isset}" ]]; then
@@ -498,8 +475,16 @@ cmd_status() {
         fi
         if [[ -n "${PROMPTS[$name]+isset}" ]]; then
             local pr="${PROMPTS[$name]}"
-            if [[ -L "${pr}" ]]; then pr_s="${GREEN}Linked${NC}"; elif [[ -d "${pr}" ]]; then pr_s="${YELLOW}Dir${NC}"; else pr_s="Missing"; fi
-            if [[ "${name}" == construct_* && ! -L "${pr}" && -d "${pr}" ]]; then pr_s="${GREEN}Copied${NC}"; fi
+            if [[ -L "${pr}" ]]; then
+                pr_s="${YELLOW}Legacy-link${NC}"
+            elif [[ -d "${pr}" && -f "${pr}/${MANIFEST_NAME}" ]]; then
+                local m; m="$(wc -l < "${pr}/${MANIFEST_NAME}" 2>/dev/null)"; m="${m//[[:space:]]/}"
+                pr_s="${GREEN}Managed(${m})${NC}"
+            elif [[ -d "${pr}" ]]; then
+                pr_s="${YELLOW}Dir${NC}"
+            else
+                pr_s="Missing"
+            fi
         fi
         printf "  %-20s %-30b %-30b %-30b
 " "${name}" "${md_s}" "${sk_s}" "${pr_s}"
@@ -517,20 +502,78 @@ cmd_fuse_agents() {
     "${script}" "${action}"
 }
 
+# --- Purge: remove ALL skills + prompts (managed, third-party, backups) ---
+# Leaves empty directories. NEVER touches instruction files or .md backups.
+# Covers machine + construct-cli paths (driven by the AGENTS/PROMPTS maps).
+purge_one() {
+    local p=$1
+    case "$p" in "$HOME"/*) ;; *) log_warning "REFUSE (outside HOME): $p"; return 0 ;; esac
+    [[ -e "$p" || -L "$p" ]] || return 0
+    local base par b
+    base="$(basename "$p")"; par="$(dirname "$p")"
+    # Remove only <skills|prompts>.backup.* siblings (never *.md backups).
+    while IFS= read -r b; do
+        [[ -z "$b" ]] && continue
+        rm -rf "${b:?}"; log_info "  backup removed: ${b#"$HOME"/}"
+    done < <(find "$par" -maxdepth 1 -name "${base}.backup.*" 2>/dev/null)
+    if [[ -L "$p" ]]; then
+        rm "$p"; mkdir -p "$p"; log_info "  symlink -> empty dir: ${p#"$HOME"/}"
+    elif [[ -d "$p" ]]; then
+        find "$p" -mindepth 1 -maxdepth 1 -exec rm -rf {} +
+        log_info "  emptied: ${p#"$HOME"/}"
+    fi
+}
+
+cmd_purge() {
+    detect_extra_agents; detect_construct_agents
+    log_warning "PURGE: removing ALL skills + prompts (managed, third-party, backups)."
+    log_warning "Instruction files (AGENTS.md / CLAUDE.md / etc.) and .md backups are NOT touched."
+    local name paths_str sk p count=0
+    local -A seen=()
+    for name in "${!AGENTS[@]}"; do
+        paths_str="${AGENTS[$name]}"; sk="${paths_str#*|}"
+        [[ "$sk" == "-" || -n "${seen[$sk]+isset}" ]] && continue
+        seen["$sk"]=1; purge_one "$sk"; count=$((count+1))
+    done
+    for name in "${!PROMPTS[@]}"; do
+        p="${PROMPTS[$name]}"
+        [[ -n "${seen[$p]+isset}" ]] && continue
+        seen["$p"]=1; purge_one "$p"; count=$((count+1))
+    done
+    log_success "Purge complete: ${count} skills/prompts paths processed (now empty)."
+}
+
+# Double confirmation for interactive use (type PURGE, then yes).
+confirm_purge() {
+    echo
+    log_warning "NUCLEAR OPTION: removes ALL skills + prompts from machine AND construct-cli."
+    log_warning "Deletes third-party skills/prompts AND their backups. Not reversible."
+    log_warning "Instruction files (AGENTS.md etc.) are kept."
+    echo
+    local a b
+    read -rp "Type exactly PURGE to continue: " a || a=""
+    [[ "$a" == "PURGE" ]] || { echo "Aborted."; return 1; }
+    read -rp "Final confirmation - type yes: " b || b=""
+    [[ "$b" == "yes" ]] || { echo "Aborted."; return 1; }
+    return 0
+}
+
 # Interactive Menu
 interactive_menu() {
     echo -e "${BLUE}=== Agents Centralization Manager ===${NC}"
-    echo "Please choose an action:"
-    options=("Sync (Smart)" "Force Sync (Overwrite All)" "Restore (Unlink)" "Status" "Install fuse-agents plugin" "Uninstall fuse-agents plugin" "Quit")
+    echo "Per-entry sync: central skills/prompts/instructions coexist with third-party ones."
+    echo "Choose an action:"
+    options=("Sync (add/update central)" "Force re-link central" "Unlink (remove central only)" "Status" "Install fuse-agents plugin" "Uninstall fuse-agents plugin" "Purge all skills/prompts (nuclear)" "Quit")
     COLUMNS=1
     select opt in "${options[@]}"; do
         case $opt in
-            "Sync (Smart)") cmd_link 0; break ;;
-            "Force Sync (Overwrite All)") cmd_link 1; break ;;
-            "Restore (Unlink)") cmd_unlink; break ;;
+            "Sync (add/update central)") cmd_link 0; break ;;
+            "Force re-link central") cmd_link 1; break ;;
+            "Unlink (remove central only)") cmd_unlink; break ;;
             "Status") cmd_status; break ;;
             "Install fuse-agents plugin") cmd_fuse_agents install; break ;;
             "Uninstall fuse-agents plugin") cmd_fuse_agents uninstall; break ;;
+            "Purge all skills/prompts (nuclear)") if confirm_purge; then cmd_purge; fi; break ;;
             "Quit") exit 0 ;;
             *) echo "Invalid option $REPLY" ;;
         esac
@@ -541,12 +584,12 @@ interactive_menu() {
 if [[ $# -eq 0 ]]; then
     interactive_menu
 else
-    FORCE=0
-    COMMAND=""
+    FORCE=0; YES=0; COMMAND=""
     for arg in "$@"; do
         case $arg in
             -f|--force) FORCE=1 ;;
-            link|unlink|status) COMMAND=$arg ;;
+            --yes) YES=1 ;;
+            link|unlink|status|purge) COMMAND=$arg ;;
         esac
     done
 
@@ -554,7 +597,14 @@ else
         link) cmd_link $FORCE ;;
         unlink) cmd_unlink ;;
         status) cmd_status ;;
-        *) echo "Usage: $0 {link|unlink|status} [-f|--force]"; exit 1 ;;
+        purge)
+            if [[ "$YES" == "1" ]]; then
+                cmd_purge
+            else
+                echo "Purge is destructive. Confirm with: $0 purge --yes"; exit 1
+            fi
+            ;;
+        *) echo "Usage: $0 {link|unlink|status|purge} [-f|--force] [--yes]"; exit 1 ;;
     esac
 fi
 
