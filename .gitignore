@@ -10,3 +10,7 @@ skills/work/
 
 # Gemini local config
 .gemini/
+
+# Python bytecode
+__pycache__/
+*.pyc
