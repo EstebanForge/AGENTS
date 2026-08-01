@@ -231,7 +231,7 @@ Detailed Pi configuration reference: [docs/AGENT-PI.md](docs/AGENT-PI.md).
 
 ### Pi Extensions
 
-Pi packages installed in this instance (37 total, verified via `pi list`). Canonical list tracked in [`configs/settings.json`](configs/settings.json).
+Pi packages installed in this instance (43 total, verified via `pi list`). Canonical list tracked in [`configs/settings.json`](configs/settings.json).
 
 | Package | Purpose |
 |---------|---------|
@@ -245,8 +245,7 @@ Pi packages installed in this instance (37 total, verified via `pi list`). Canon
 | `@ff-labs/pi-fff` | Fuzzy file finder / grep (extensions filtered) |
 | `@upstash/context7-pi` | Library docs + snippets |
 | `@estebanforge/pi-agentmemory` | Cross-session memory (native extension) |
-| `@mcowger/pi-better-messages-cache` | Improved message caching |
-| `glm-vision` | GLM vision (image input) |
+| `pi-vision-handoff` | Vision-model handoff for image input (replaces glm-vision) |
 | `pi-token-speed` | Token speed display |
 | `pi-diff-review` | Diff review |
 | `@juicesharp/rpiv-ask-user-question` | Structured user-question tool |
@@ -261,7 +260,7 @@ Pi packages installed in this instance (37 total, verified via `pi list`). Canon
 | `@estebanforge/pi-js-review` | JavaScript review |
 | `@estebanforge/pi-codegraph-enhanced` | Local code knowledge graph |
 | `@estebanforge/pi-asana` | Asana tasks/projects/comments (native extension) |
-| `@estebanforge/pi-ask-antigravity` | Delegate to Gemini/Antigravity (agy) peer agent |
+| `@estebanforge/pi-antigravity-bridge` | Native Antigravity (Gemini) bridge (replaces ask-antigravity) |
 | `@estebanforge/pi-ask-codex` | Delegate to OpenAI Codex (GPT) peer agent |
 | `@estebanforge/pi-slack-me` | Slack read/post/search as the user (user token) |
 | `@pi-kaush/pi-inline-skill-identifier` | Highlight `$skill` aliases, route inline skill refs |
@@ -272,6 +271,13 @@ Pi packages installed in this instance (37 total, verified via `pi list`). Canon
 | `npm:pi-unified-exec` | Unified exec backend (sessions, long-running, set_on_exit) |
 | `npm:pi-continue` | Resume previous sessions by id |
 | `npm:@tmustier/pi-session-recap` | Session recap (turn budget, state) |
+| `@thurstonsand/pi-librarian` | Multi-repo codebase research and synthesis |
+| `pi-agent-browser-native` | Native headless browser automation (open, click, fill, snapshot, eval) |
+| `pi-visualize-code-changes` | Mermaid before/after/diff diagrams of code changes |
+| `git:github.com/earendil-works/pi-review-loop` | Iterative automated code review loop |
+| `pi-qmd-adaptive-search` | Local semantic file discovery (qmd-indexed, adaptive) |
+| `@pi-stef/atlassian` | Jira + Confluence (issues, stories, pages) |
+| `@estebanforge/pi-git-me` | Git/GitHub writes as the user (commit, PR, review via gh) |
 
 ## License
 

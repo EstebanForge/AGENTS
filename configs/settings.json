@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "0.81.1",
+  "lastChangelogVersion": "0.83.0",
   "defaultProvider": "zai",
   "defaultModel": "glm-5.2",
   "packages": [
@@ -15,8 +15,6 @@
     },
     "npm:@upstash/context7-pi",
     "npm:@estebanforge/pi-agentmemory",
-    "npm:@mcowger/pi-better-messages-cache",
-    "npm:glm-vision",
     "npm:pi-token-speed",
     "npm:pi-diff-review",
     "npm:@juicesharp/rpiv-ask-user-question",
@@ -37,7 +35,6 @@
     "npm:@estebanforge/pi-codegraph-enhanced",
     "npm:pi-rtk-optimizer",
     "npm:@estebanforge/pi-asana",
-    "npm:@estebanforge/pi-ask-antigravity",
     "npm:@estebanforge/pi-ask-codex",
     "npm:@estebanforge/pi-slack-me",
     "npm:@pi-kaush/pi-inline-skill-identifier",
@@ -47,26 +44,36 @@
     "npm:@estebanforge/pi-token-cost-ledger",
     "npm:pi-unified-exec",
     "npm:pi-continue",
-    "npm:@tmustier/pi-session-recap"
+    "npm:@tmustier/pi-session-recap",
+    "npm:pi-qmd-adaptive-search",
+    "npm:pi-vision-handoff",
+    "npm:@thurstonsand/pi-librarian",
+    "npm:pi-agent-browser-native",
+    "npm:pi-visualize-code-changes",
+    "git:github.com/earendil-works/pi-review-loop",
+    "npm:@estebanforge/pi-antigravity-bridge",
+    "npm:@pi-stef/atlassian",
+    "npm:@estebanforge/pi-git-me"
   ],
   "treeFilterMode": "default",
   "defaultThinkingLevel": "high",
   "transport": "auto",
   "editorPaddingX": 2,
   "enabledModels": [
-    "google/gemini-2.5-flash",
-    "google/gemini-3.1-flash-lite",
-    "google/gemini-3.5-flash",
     "deepseek/deepseek-v4-flash",
     "deepseek/deepseek-v4-pro",
+    "google/gemini-3.6-flash",
     "minimax/MiniMax-M3",
     "zai/glm-5.2",
-    "claude-bridge/claude-opus-4-8",
-    "claude-bridge/claude-haiku-4-5",
+    "claude-bridge/claude-fable-5",
+    "claude-bridge/claude-opus-5",
     "claude-bridge/claude-sonnet-5",
-    "google/gemini-3.1-pro-preview"
+    "antigravity/gemini-3-6-flash",
+    "antigravity/gemini-3-1-pro",
+    "antigravity/claude-sonnet-4-6",
+    "antigravity/claude-opus-4-6-thinking"
   ],
-  "steeringMode": "one-at-a-time",
+  "steeringMode": "all",
   "followUpMode": "one-at-a-time",
   "compaction": {
     "enabled": true
@@ -81,5 +88,9 @@
     "countStrategy": "direct",
     "endTpsBehavior": "average"
   },
-  "showCacheMissNotices": true
+  "showCacheMissNotices": true,
+  "terminal": {
+    "imageWidthCells": 80
+  },
+  "outputPad": 1
 }
