@@ -91,10 +91,13 @@ detect_construct_agents() {
     local construct_home="$HOME/.config/construct-cli/home"
     local construct_agents_dir="$construct_home/.agents"
 
-    # 1. Surgical synchronization: only delete central components, not the whole folder
+    # 1. Surgical synchronization: refresh central components only, never the
+    #    whole folder. skills/ is intentionally NOT wiped: under construct-cli
+    #    it is an open shared target that other tools/apps also write their own
+    #    skills (and prompts) into. Wiping it destroys third-party entries.
+    #    sync_dir_copy reconciles only our own entries via the manifest.
     mkdir -p "$construct_agents_dir"
     rm -f "$construct_agents_dir/AGENTS.md"
-    rm -rf "$construct_agents_dir/skills"
 
     # 2. COPY contents from the repo (except .git) to the mounted home
     # Note: We don't use --delete here to preserve extra data in the target folder
@@ -244,9 +247,11 @@ sync_dir_symlink() {
 sync_dir_copy() {
     local kind=$1 name=$2 src=$3 target=$4
 
-    if [[ "${target}" == "${HOME}/.config/construct-cli/home/.agents/"* ]]; then
-        log_info "${name}: ${kind^} are source"; return 0
-    fi
+    # No early-return for the construct-cli .agents path. skills/ (and prompts/)
+    # there are open shared targets that other tools/apps also write their own
+    # entries into. Running the per-entry reconcile here keeps our managed
+    # entries correct via the manifest while leaving third-party entries intact,
+    # instead of treating the dir as a pure source mirror.
     [[ -L "${target}" && ! -e "${target}" ]] && rm -f "${target}"
     mkdir -p "${target}"
 
