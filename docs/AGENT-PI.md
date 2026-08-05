@@ -4,7 +4,7 @@
 
 ## Settings (`~/.pi/agent/settings.json`)
 
-Canonical source in this repo: [`../configs/settings.json`](../configs/settings.json). Key fields:
+Source of truth: the construct-cli sandbox config at `~/.config/construct-cli/home/.pi/agent/settings.json`; this repo's [`../configs/settings.json`](../configs/settings.json) mirrors it. On a bare-metal pi install the file lives at `~/.pi/agent/settings.json`. Key fields:
 
 ```json
 {
@@ -12,24 +12,25 @@ Canonical source in this repo: [`../configs/settings.json`](../configs/settings.
   "defaultModel": "glm-5.2",
   "defaultThinkingLevel": "high",
   "enabledModels": [
-    "google/gemini-2.5-flash",
-    "google/gemini-3.1-flash-lite",
-    "google/gemini-3.5-flash",
     "deepseek/deepseek-v4-flash",
     "deepseek/deepseek-v4-pro",
+    "google/gemini-3.6-flash",
     "minimax/MiniMax-M3",
     "zai/glm-5.2",
-    "claude-bridge/claude-opus-4-8",
-    "claude-bridge/claude-haiku-4-5",
+    "claude-bridge/claude-fable-5",
+    "claude-bridge/claude-opus-5",
     "claude-bridge/claude-sonnet-5",
-    "google/gemini-3.1-pro-preview"
+    "antigravity/gemini-3-6-flash",
+    "antigravity/gemini-3-1-pro",
+    "antigravity/claude-sonnet-4-6",
+    "antigravity/claude-opus-4-6-thinking"
   ]
 }
 ```
 
 ## Custom Providers (`~/.pi/agent/models.json`)
 
-Mirrors the live file. `deepseek` and `lmstudio` are custom; `zai` is custom (GLM-5.2 via the Anthropic-style endpoint). Other providers in `enabledModels` (`google`, `minimax`, `claude-bridge`) use pi's built-in provider registry.
+Mirrors the live file. `deepseek` and `lmstudio` are custom; `zai` is custom (GLM-5.2 via the Anthropic-style endpoint). Other providers in `enabledModels` (`google`, `minimax`, `claude-bridge`) use pi's built-in provider registry. The `antigravity/*` models are exposed by the `@estebanforge/pi-antigravity-bridge` extension.
 
 ```json
 {
@@ -135,7 +136,7 @@ Mirrors the live file. `deepseek` and `lmstudio` are custom; `zai` is custom (GL
 
 ## MCP Servers
 
-Canonical registry in this repo: [`../configs/mcp_servers.json`](../configs/mcp_servers.json). The live `~/.pi/agent/mcp.json` is empty; servers are provisioned from the repo registry.
+Canonical registry in this repo: [`../configs/mcp_servers.json`](../configs/mcp_servers.json). The live sandbox `mcp.json` (`~/.config/construct-cli/home/.pi/agent/mcp.json`) is intentionally empty; servers are provisioned from the repo registry.
 
 Enabled servers:
 
@@ -150,7 +151,7 @@ Disabled but available: `chrome-devtools`, `playwright`, `sequential-thinking`, 
 
 ## Extensions (`settings.json`)
 
-Installed packages (all active, 37 total). Verified via `pi list`. Canonical source: [`../configs/settings.json`](../configs/settings.json).
+Installed packages (all active, 45 total). Verified via `pi list`. Canonical source: [`../configs/settings.json`](../configs/settings.json).
 
 ```json
 "packages": [
@@ -163,8 +164,6 @@ Installed packages (all active, 37 total). Verified via `pi list`. Canonical sou
   { "source": "npm:@ff-labs/pi-fff", "extensions": [] },
   "npm:@upstash/context7-pi",
   "npm:@estebanforge/pi-agentmemory",
-  "npm:@mcowger/pi-better-messages-cache",
-  "npm:glm-vision",
   "npm:pi-token-speed",
   "npm:pi-diff-review",
   "npm:@juicesharp/rpiv-ask-user-question",
@@ -179,8 +178,6 @@ Installed packages (all active, 37 total). Verified via `pi list`. Canonical sou
   "npm:@estebanforge/pi-js-review",
   "npm:@estebanforge/pi-codegraph-enhanced",
   "npm:pi-rtk-optimizer",
-  "npm:@estebanforge/pi-asana",
-  "npm:@estebanforge/pi-ask-antigravity",
   "npm:@estebanforge/pi-ask-codex",
   "npm:@estebanforge/pi-slack-me",
   "npm:@pi-kaush/pi-inline-skill-identifier",
@@ -190,7 +187,19 @@ Installed packages (all active, 37 total). Verified via `pi list`. Canonical sou
   "npm:@estebanforge/pi-token-cost-ledger",
   "npm:pi-unified-exec",
   "npm:pi-continue",
-  "npm:@tmustier/pi-session-recap"
+  "npm:@tmustier/pi-session-recap",
+  "npm:pi-qmd-adaptive-search",
+  "npm:pi-vision-handoff",
+  "npm:@thurstonsand/pi-librarian",
+  "npm:pi-agent-browser-native",
+  "npm:pi-visualize-code-changes",
+  "git:github.com/earendil-works/pi-review-loop",
+  "npm:@estebanforge/pi-antigravity-bridge",
+  "npm:@pi-stef/atlassian",
+  "npm:@estebanforge/pi-git-me",
+  "npm:@tmustier/pi-tab-status",
+  "git:github.com/dodo-reach/pi-clarify",
+  "npm:@estebanforge/pi-asana-me"
 ]
 ```
 

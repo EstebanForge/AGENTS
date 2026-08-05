@@ -224,14 +224,14 @@ description: One-line description used by agents.
 
 The `configs/` directory holds portable agent configuration used to reproduce the full setup on another machine. Currently:
 
-- `configs/settings.json` — Pi agent settings (provider, model, packages, UI). Mirrors `~/.pi/agent/settings.json`.
-- `configs/mcp_servers.json` — Pi MCP server registry. Mirrors `~/.pi/agent/mcp.json` (live file is intentionally empty; servers are provisioned from this repo).
+- `configs/settings.json` — Pi agent settings (provider, model, packages, UI). Source of truth: construct-cli sandbox (`~/.config/construct-cli/home/.pi/agent/settings.json`); this repo mirrors it. On a bare-metal pi install the file lives at `~/.pi/agent/settings.json`.
+- `configs/mcp_servers.json` — Pi MCP server registry. Source of truth for the server set; the live sandbox `mcp.json` (`~/.config/construct-cli/home/.pi/agent/mcp.json`) is intentionally empty, with servers provisioned from this repo.
 
 Detailed Pi configuration reference: [docs/AGENT-PI.md](docs/AGENT-PI.md).
 
 ### Pi Extensions
 
-Pi packages installed in this instance (43 total, verified via `pi list`). Canonical list tracked in [`configs/settings.json`](configs/settings.json).
+Pi packages installed in this instance (45 total, verified via `pi list`). Canonical list tracked in [`configs/settings.json`](configs/settings.json).
 
 | Package | Purpose |
 |---------|---------|
@@ -259,7 +259,6 @@ Pi packages installed in this instance (43 total, verified via `pi list`). Canon
 | `@estebanforge/pi-ts-review` | TypeScript / React review |
 | `@estebanforge/pi-js-review` | JavaScript review |
 | `@estebanforge/pi-codegraph-enhanced` | Local code knowledge graph |
-| `@estebanforge/pi-asana` | Asana tasks/projects/comments (native extension) |
 | `@estebanforge/pi-antigravity-bridge` | Native Antigravity (Gemini) bridge (replaces ask-antigravity) |
 | `@estebanforge/pi-ask-codex` | Delegate to OpenAI Codex (GPT) peer agent |
 | `@estebanforge/pi-slack-me` | Slack read/post/search as the user (user token) |
@@ -278,6 +277,9 @@ Pi packages installed in this instance (43 total, verified via `pi list`). Canon
 | `pi-qmd-adaptive-search` | Local semantic file discovery (qmd-indexed, adaptive) |
 | `@pi-stef/atlassian` | Jira + Confluence (issues, stories, pages) |
 | `@estebanforge/pi-git-me` | Git/GitHub writes as the user (commit, PR, review via gh) |
+| `@tmustier/pi-tab-status` | Terminal tab status indicators for Pi sessions |
+| `git:dodo-reach/pi-clarify` | Rewrites rough prompts into precise technical prompts before sending |
+| `@estebanforge/pi-asana-me` | Asana tasks/projects/comments over REST (replaces pi-asana) |
 
 ## License
 

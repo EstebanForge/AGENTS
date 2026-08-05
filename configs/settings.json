@@ -34,7 +34,6 @@
     "npm:@estebanforge/pi-js-review",
     "npm:@estebanforge/pi-codegraph-enhanced",
     "npm:pi-rtk-optimizer",
-    "npm:@estebanforge/pi-asana",
     "npm:@estebanforge/pi-ask-codex",
     "npm:@estebanforge/pi-slack-me",
     "npm:@pi-kaush/pi-inline-skill-identifier",
@@ -53,7 +52,10 @@
     "git:github.com/earendil-works/pi-review-loop",
     "npm:@estebanforge/pi-antigravity-bridge",
     "npm:@pi-stef/atlassian",
-    "npm:@estebanforge/pi-git-me"
+    "npm:@estebanforge/pi-git-me",
+    "npm:@tmustier/pi-tab-status",
+    "git:github.com/dodo-reach/pi-clarify",
+    "npm:@estebanforge/pi-asana-me"
   ],
   "treeFilterMode": "default",
   "defaultThinkingLevel": "high",
