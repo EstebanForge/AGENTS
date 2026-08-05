@@ -1,7 +1,7 @@
 # ste-lint.py — heuristic anti-slop linter, the machine-checkable subset of STE.
 #
 # Source: https://github.com/woosal1337/blog/blob/main/videos/ep01-the-cure-for-ai-slop/ste-lint.py
-# License: MIT, Copyright (c) 2026 Ege Çelebi (see ORIGIN.md).
+# License: MIT, Copyright (c) 2026 Ege Çelebi (see META.md).
 #
 # Score is violations per 100 words. Lint a draft, apply the ste-writing skill,
 # then lint again. The delta between the two scores is the signal.

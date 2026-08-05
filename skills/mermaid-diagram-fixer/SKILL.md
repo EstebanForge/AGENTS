@@ -1,5 +1,5 @@
 ---
-name: mermaid-diagrams
+name: mermaid-diagram-fixer
 description: Validate and fix Mermaid diagrams by rendering them with the official mermaid-cli (mmdc). Use when the user asks to validate/check/fix/lint Mermaid, reports a diagram is broken/not rendering, edits .mmd files or ```mermaid fenced blocks, or wants CI-style diagram checks. mmdc has no lint mode; a render that exits 0 is the only correctness signal.
 ---
 

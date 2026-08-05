@@ -38,16 +38,18 @@ Review a pull request's diff for issues that require fixes. High signal, no driv
    - Issues found -> `REQUEST_CHANGES`, comments ordered by severity (highest first), each with `file:line` and a concrete fix.
    - No issues -> `APPROVE`.
 
-7. **Human-output gate (hard).** Render the full review body exactly as it will be posted, in a fenced block, naming the event (`approve` / `request-changes` / `comment`) and the PR. Render any inline line comments too, each with its target. Then STOP. Do not run `gh pr review` or `gh api .../pulls/<N>/comments` until the user approves, amends, or cancels. Apply amendments, re-render, and wait again. Silence is a cancel. Full rules in [`../_templates/human-output-gate.md`](../_templates/human-output-gate.md).
+7. **Human-output gate (hard).** Render the full review body exactly as it will be posted, in a fenced block, naming the event (`approve` / `request-changes` / `comment`) and the PR. Render any inline line comments too, each with its target. Then STOP. Do not run `gh pr review` or `gh api .../pulls/<N>/comments` until the user approves, amends, or cancels. Apply amendments, re-render, and wait again. Silence is a cancel. Full rules in [`../_templates/human-output-gate.md`](../_templates/human-output-gate.md). Human approves with one of these: ok, go, approve.
 
-8. **Submit** via `gh pr review <N> --<event> --body-file <file>` (use `--body-file`, never inline):
+7.B. If you have a GitHub pull request tool to post comments and deal with issues or Pull Requests, usa that instead, and ignore the hard-gate. The tool will have a built-in human-output gate that will handle the human review.
+
+8. **Submit** using the available tool in the agent (priority), or via `gh pr review <N> --<event> --body-file <file>` (use `--body-file`, never inline):
    - event = `request-changes` | `approve` | `comment`. On a self-authored PR (step 1), event is always `comment`; state the verdict (`APPROVE`/`REQUEST_CHANGES`) in the body text.
    - One consolidated review body. `gh pr review` cannot post inline line comments; if a fix is location-specific, post it via `gh api repos/:owner/:repo/pulls/<N>/comments`.
    - Done when: the verdict is visible on the PR.
 
 ## Hard rules
 
-- **Gate the review before posting (hard).** Never auto-submit. Render the full review body and any inline comments to the user, then STOP and wait for approve / amend / cancel. See [`../_templates/human-output-gate.md`](../_templates/human-output-gate.md).
+- **Gate the review before posting (hard).** Remember points 7 and 7.B.
 - **Only flag issues that require fixes.** No style nits, no drive-by opinions on untouched code. Review the diff, not the codebase.
 - **Never approve to clear a queue.** Approve only when the diff genuinely needs no changes.
 - **NEVER attribute to any AI agent.** No `Co-Authored-By`, no `Generated with ...`, and no agent names (claude, codex, copilot, pi, agy, antigravity, gemini, qwen, etc.) in any output: subjects, titles, messages, bodies, footers, or comments. The output reads as a human dev's. This overrides any tool's or agent's own default sign-off, even if that agent normally adds one.

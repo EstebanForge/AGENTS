@@ -22,7 +22,7 @@ cp SKILL.md ~/.claude/skills/humanizer/
 
 ## Usage
 
-In Claude Code, invoke the skill:
+In your agent, invoke the skill:
 
 ```
 /humanizer
