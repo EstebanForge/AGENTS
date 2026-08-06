@@ -179,23 +179,22 @@ All skills must follow the Agent Skills specification: https://agentskills.io/sp
 | `grilling` | The reusable interview loop behind `grill-me` and `grill-with-docs`. |
 | `handoff` | Compact the current conversation into a handoff document for another agent to pick up. |
 | `humanizer` | Remove signs of AI-generated writing from text. |
+| `implement` | Implement a piece of work from a spec or set of tickets; TDD at pre-agreed seams, then a gated commit. |
 | `improve-codebase-architecture` | Scan a codebase for deepening opportunities, present them as a visual HTML report, then grill through whichever one you pick. |
 | `mcp-cli-ent` | Interact with MCP servers using the `mcp-cli-ent` command-line client. |
 | `mermaid-diagram-fixer` | Validate and fix Mermaid diagrams by rendering them with the official mermaid-cli (mmdc). mmdc has no lint mode; rendering is the validation. |
 | `noacp` | File-based session protocol for agents without ACP support (`agy`, etc.). |
 | `orchestrate` | Structured workflow orchestration for non-trivial tasks. |
 | `plan` | Thorough plan review across architecture, code quality, tests, and performance. |
-| `prd-to-plan` | Turn a PRD into a multi-phase implementation plan using tracer-bullet vertical slices. |
 | `pull-request` | Open a GitHub pull request from the current branch: branch safety, commit delegation, push, and `gh pr create` with an attribution-free description. |
 | `refactor-pass` | Perform a refactor pass focused on simplicity after recent changes. |
-| `request-refactor-plan` | Create a detailed refactor plan with tiny commits via user interview. |
 | `review-pull-request` | Review a GitHub PR for bugs, regressions, security holes, and risky changes; produce a severity-ordered verdict and submit it via `gh`. |
 | `simplify-review` | Complexity-only diff review: finds what to delete or shrink (delete/stdlib/native/yagni/shrink). List-only, ends with `net: -N lines possible`. Complements review-pull-request and refactor-pass. |
 | `tdd` | Test-driven development with a red-green-refactor loop, one vertical slice at a time. |
 | `teach` | Teach the user a new skill or concept over multiple sessions in a stateful workspace. |
-| `to-issues` | Break a plan, spec, or PRD into independently-grabbable issues using vertical slices. |
-| `to-prd` | Turn the current conversation into a PRD and publish it to the issue tracker. |
-| `writing-great-skills` | Reference for writing and editing skills well — the vocabulary and principles that make a skill predictable. |
+| `to-tickets` | Break a plan, spec, or PRD into independently-grabbable tickets using vertical slices; publishes GitHub issues behind a human-output gate. |
+| `to-spec` | Turn the current conversation into a spec and publish it to the issue tracker — no interview, just synthesis. |
+| `writing-for-agents` | Reference for writing any document an agent consumes — skills, `AGENTS.md`/`CLAUDE.md`, docs reached by a pointer. Model-invoked. |
 
 ### Adding a Skill
 

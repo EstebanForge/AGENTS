@@ -1,0 +1,94 @@
+---
+name: to-tickets
+description: Break a plan, spec, or PRD into independently-grabbable tickets on the project issue tracker using tracer-bullet vertical slices.
+disable-model-invocation: true
+---
+
+# To Tickets
+
+Break a plan into independently-grabbable tickets using vertical slices (tracer bullets).
+
+The issue tracker and triage label vocabulary are defined in [`../_templates/issue-tracker.md`](../_templates/issue-tracker.md) and [`../_templates/triage-labels.md`](../_templates/triage-labels.md).
+
+## Process
+
+### 1. Gather context
+
+Work from whatever is already in the conversation context. If the user passes an issue reference (issue number, URL, or path) as an argument, fetch it from the issue tracker and read its full body and comments.
+
+### 2. Explore the codebase (optional)
+
+If you have not already explored the codebase, do so to understand the current state of the code. Ticket titles and descriptions should use the project's domain glossary vocabulary, and respect ADRs in the area you're touching.
+
+Look for opportunities to prefactor the code to make the implementation easier. "Make the change easy, then make the easy change."
+
+### 3. Draft vertical slices
+
+Break the plan into **tracer bullet** tickets. Each ticket is a thin vertical slice that cuts through ALL integration layers end-to-end, NOT a horizontal slice of one layer.
+
+<vertical-slice-rules>
+
+- Each slice delivers a narrow but COMPLETE path through every layer (schema, API, UI, tests)
+- A completed slice is demoable or verifiable on its own
+- Any prefactoring should be done first
+
+</vertical-slice-rules>
+
+### 4. Quiz the user
+
+Present the proposed breakdown as a numbered list. For each ticket, show:
+
+- **Title**: short descriptive name
+- **Blocked by**: which other tickets (if any) must complete first
+- **User stories covered**: which user stories this addresses (if the source material has them)
+
+Ask the user:
+
+- Does the granularity feel right? (too coarse / too fine)
+- Are the dependency relationships correct?
+- Should any slices be merged or split further?
+
+Iterate until the user approves the breakdown.
+
+### 5. Publish the tickets to the issue tracker
+
+For each approved slice, publish a new ticket to the issue tracker (a GitHub issue). Use the ticket body template below. These tickets are considered ready for AFK agents, so publish them with the correct triage label unless instructed otherwise.
+
+**Human-output gate (hard), per ticket.** Before each create, render the full ticket title and body exactly as they will be posted, the body in a fenced block, then STOP. Do not run `gh issue create` until the user approves, amends, or cancels that ticket. Re-render after any amendment and wait again. Silence is a cancel. A blanket approve over several tickets is not valid: the user must see each full body. Full rules in [`../_templates/human-output-gate.md`](../_templates/human-output-gate.md).
+
+Publish tickets in dependency order (blockers first) so you can reference real issue identifiers in the "Blocked by" field.
+
+<ticket-template>
+## Parent
+
+A reference to the parent issue on the issue tracker (if the source was an existing issue, otherwise omit this section).
+
+## What to build
+
+A concise description of this vertical slice. Describe the end-to-end behavior, not layer-by-layer implementation.
+
+Avoid specific file paths or code snippets — they go stale fast. Exception: if a prototype produced a snippet that encodes a decision more precisely than prose can (state machine, reducer, schema, type shape), inline it here and note briefly that it came from a prototype. Trim to the decision-rich parts — not a working demo, just the important bits.
+
+## Acceptance criteria
+
+- [ ] Criterion 1
+- [ ] Criterion 2
+- [ ] Criterion 3
+
+## Blocked by
+
+- A reference to the blocking ticket (if any)
+
+Or "None - can start immediately" if no blockers.
+
+</ticket-template>
+
+Do NOT close or modify any parent issue.
+
+## Hard rules
+
+- **Gate every ticket before posting (hard).** Never auto-create. Render each ticket's full title and body to the user, then STOP and wait for approve / amend / cancel, one ticket at a time. See [`../_templates/human-output-gate.md`](../_templates/human-output-gate.md).
+
+## Notes
+
+- Write ticket titles and bodies in Esteban's formal voice (`esteban-voice` skill, FORMAL mode, for tone only: first-person active, no em dashes, concrete specifics). Keep the ticket template structure from step 5.
