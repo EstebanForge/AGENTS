@@ -168,7 +168,6 @@ Installed packages (all active, 45 total). Verified via `pi list`. Canonical sou
   "npm:pi-diff-review",
   "npm:@juicesharp/rpiv-ask-user-question",
   "npm:pi-token-burden",
-  "npm:@gotgenes/pi-subagents",
   "npm:@estebanforge/pi-go-review",
   "npm:@estebanforge/pi-rust-review",
   "npm:pi-claude-bridge",
@@ -199,7 +198,8 @@ Installed packages (all active, 45 total). Verified via `pi list`. Canonical sou
   "npm:@estebanforge/pi-git-me",
   "npm:@tmustier/pi-tab-status",
   "git:github.com/dodo-reach/pi-clarify",
-  "npm:@estebanforge/pi-asana-me"
+  "npm:@estebanforge/pi-asana-me",
+  "npm:@tintinweb/pi-subagents"
 ]
 ```
 

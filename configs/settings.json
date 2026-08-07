@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "0.83.0",
+  "lastChangelogVersion": "0.84.0",
   "defaultProvider": "zai",
   "defaultModel": "glm-5.2",
   "packages": [
@@ -19,7 +19,6 @@
     "npm:pi-diff-review",
     "npm:@juicesharp/rpiv-ask-user-question",
     "npm:pi-token-burden",
-    "npm:@gotgenes/pi-subagents",
     "npm:@estebanforge/pi-go-review",
     "npm:@estebanforge/pi-rust-review",
     "npm:pi-claude-bridge",
@@ -55,7 +54,8 @@
     "npm:@estebanforge/pi-git-me",
     "npm:@tmustier/pi-tab-status",
     "git:github.com/dodo-reach/pi-clarify",
-    "npm:@estebanforge/pi-asana-me"
+    "npm:@estebanforge/pi-asana-me",
+    "npm:@tintinweb/pi-subagents"
   ],
   "treeFilterMode": "default",
   "defaultThinkingLevel": "high",
@@ -92,7 +92,9 @@
   },
   "showCacheMissNotices": true,
   "terminal": {
-    "imageWidthCells": 80
+    "imageWidthCells": 80,
+    "showTerminalProgress": true
   },
-  "outputPad": 1
+  "outputPad": 1,
+  "tuiMode": "fullscreen"
 }

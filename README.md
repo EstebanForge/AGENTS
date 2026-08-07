@@ -249,7 +249,7 @@ Pi packages installed in this instance (45 total, verified via `pi list`). Canon
 | `pi-diff-review` | Diff review |
 | `@juicesharp/rpiv-ask-user-question` | Structured user-question tool |
 | `pi-token-burden` | Token burden display |
-| `@gotgenes/pi-subagents` | Subagent execution |
+| `@tintinweb/pi-subagents` | Subagent execution (replaces `@gotgenes/pi-subagents`) |
 | `@estebanforge/pi-go-review` | Go review (100 Go Mistakes checklist) |
 | `@estebanforge/pi-rust-review` | Rust review (code smells guide) |
 | `pi-claude-bridge` | Bridge to Claude models |
