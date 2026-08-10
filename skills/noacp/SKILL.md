@@ -78,16 +78,16 @@ agy supports model selection via `--model "<name>"`. The exact strings live in `
 
 ### Phrase -> alias
 
-| User says | Agent alias | Effective `--model` |
-|-----------|-------------|----------------------|
+| User says | Agent alias | Effective `--model` (slug) |
+|-----------|-------------|----------------------------|
 | `agy` (no flavor) | `agy` | agy's own default (no `--model` injected) |
-| `agy flash` / `agy 3.6 flash` | `agy-flash` | `Gemini 3.6 Flash (Medium)` |
-| `agy flash high` / quality-priority flash | `agy-flash-high` | `Gemini 3.6 Flash (High)` |
-| `agy flash low` / cheap flash | `agy-flash-low` | `Gemini 3.6 Flash (Low)` |
-| `agy pro` / `agy 3.1 pro` | `agy-pro` | `Gemini 3.1 Pro (High)` |
-| `agy pro low` / cheap pro | `agy-pro-low` | `Gemini 3.1 Pro (Low)` |
-| `agy claude` / `agy sonnet` | `agy-claude` | `Claude Sonnet 4.6 (Thinking)` |
-| `agy opus` / strongest claude | `agy-opus` | `Claude Opus 4.6 (Thinking)` |
+| `agy flash` / `agy 3.6 flash` | `agy-flash` | `gemini-3.6-flash-medium` |
+| `agy flash high` / quality-priority flash | `agy-flash-high` | `gemini-3.6-flash-high` |
+| `agy flash low` / cheap flash | `agy-flash-low` | `gemini-3.6-flash-low` |
+| `agy pro` / `agy 3.1 pro` | `agy-pro` | `gemini-3.1-pro-high` |
+| `agy pro low` / cheap pro | `agy-pro-low` | `gemini-3.1-pro-low` |
+| `agy claude` / `agy sonnet` | `agy-claude` | `claude-sonnet-4-6` |
+| `agy opus` / strongest claude | `agy-opus` | `claude-opus-4-6-thinking` |
 
 If the user names the version and tier explicitly (`agy 3.1 pro low`, `agy 3.6 flash high`), use the matching suffix entry. Bare `agy flash` and bare `agy pro` map to the Medium / High defaults respectively (best price/perf). `agy claude` maps to Sonnet, the cheaper Claude tier that still uses the Claude quota.
 
@@ -100,7 +100,9 @@ If the user names the version and tier explicitly (`agy 3.1 pro low`, `agy 3.6 f
 
 ### Discovery
 
-Model names change between agy releases. Verify with `agy models` before relying on any name in this table. Add a new alias to `agents.json` with the verbatim string from that command, plus a matching `timeout_default` (Claude/Pro need higher defaults -- see existing entries).
+Model names change between agy releases. Verify with `agy models` before relying on any name in this table. Add a new alias to `agents.json` with the verbatim **slug** from that command (the first column, e.g. `gemini-3.6-flash-medium` -- never the display name with parens), plus a matching `timeout_default` (Claude/Pro need higher defaults -- see existing entries).
+
+agy also offers `--effort low|medium|high` as an alternative to per-tier slugs. `session.sh` does not inject it; the aliases above cover every tier via dedicated slugs instead.
 
 ### Worked example
 
@@ -119,7 +121,7 @@ bash skills/noacp/scripts/session.sh prompt /tmp/noacp/<id>.xml --file "$PROMPT"
 rm -f "$PROMPT"
 ```
 
-Picking `agy-pro` ensures `--model "Gemini 3.1 Pro (High)"` is injected by `session.sh` automatically -- you do not need to add the flag yourself.
+Picking `agy-pro` ensures `--model "gemini-3.1-pro-high"` is injected by `session.sh` automatically -- you do not need to add the flag yourself.
 
 ## Prefer file input for multi-line prompts
 

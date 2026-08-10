@@ -12,31 +12,31 @@
     "print_flag": "-p",
     "input_mode": "flag",
     "timeout_default": 120,
-    "model": "Gemini 3.5 Flash (Medium)",
-    "notes": "Default for 'agy flash' / 'agy 3.5 flash'. Medium = balanced price/perf. Claude quota NOT used."
+    "model": "gemini-3.6-flash-medium",
+    "notes": "Default for 'agy flash' / 'agy 3.6 flash'. Medium = balanced price/perf. Claude quota NOT used."
   },
   "agy-flash-high": {
     "command": "agy",
     "print_flag": "-p",
     "input_mode": "flag",
     "timeout_default": 120,
-    "model": "Gemini 3.5 Flash (High)",
-    "notes": "Highest reasoning depth for 3.5 Flash."
+    "model": "gemini-3.6-flash-high",
+    "notes": "Highest reasoning depth for 3.6 Flash."
   },
   "agy-flash-low": {
     "command": "agy",
     "print_flag": "-p",
     "input_mode": "flag",
     "timeout_default": 90,
-    "model": "Gemini 3.5 Flash (Low)",
-    "notes": "Cheapest 3.5 Flash tier. Use for trivial prompts."
+    "model": "gemini-3.6-flash-low",
+    "notes": "Cheapest 3.6 Flash tier. Use for trivial prompts."
   },
   "agy-pro": {
     "command": "agy",
     "print_flag": "-p",
     "input_mode": "flag",
     "timeout_default": 240,
-    "model": "Gemini 3.1 Pro (High)",
+    "model": "gemini-3.1-pro-high",
     "notes": "Default for 'agy pro' / 'agy 3.1 pro'. Slower than Flash, stronger reasoning. Claude quota NOT used."
   },
   "agy-pro-low": {
@@ -44,7 +44,7 @@
     "print_flag": "-p",
     "input_mode": "flag",
     "timeout_default": 180,
-    "model": "Gemini 3.1 Pro (Low)",
+    "model": "gemini-3.1-pro-low",
     "notes": "3.1 Pro on lower reasoning effort. Cheaper than agy-pro."
   },
   "agy-claude": {
@@ -52,7 +52,7 @@
     "print_flag": "-p",
     "input_mode": "flag",
     "timeout_default": 240,
-    "model": "Claude Sonnet 4.6 (Thinking)",
+    "model": "claude-sonnet-4-6",
     "notes": "Default for 'agy claude'. Counts against the Claude quota, not the Gemini one."
   },
   "agy-opus": {
@@ -60,7 +60,7 @@
     "print_flag": "-p",
     "input_mode": "flag",
     "timeout_default": 360,
-    "model": "Claude Opus 4.6 (Thinking)",
-    "notes": "Claude Opus. Counts against the Claude quota. Most expensive option."
+    "model": "claude-opus-4-6-thinking",
+    "notes": "Claude Opus. Counts against the Claude quota. Most expensive option. Slug carries the -thinking suffix."
   }
 }
