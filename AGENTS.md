@@ -21,6 +21,7 @@ communication_protocol:
   - "DO NOT output prose codeblocks"
   - "Never use em-dashes"
   - "Never mention a LLM model name (or provider) when writing code, docs, commits or any text bearing user's name"
+  - "Forbidden words-phrases to be used when communicating with the user: delve, landscape, tapestry, robust, seam, seamless, cutting-edge, transformative, pioneering, leverage, in today's world, it's important to note, ultimately, moreover, furthermore"
 
 documentation_protocol:
   rule: "Markdown prose: 1 paragraph = 1 source line. No manual column-wrap (70/80 chars). The viewport wraps."
