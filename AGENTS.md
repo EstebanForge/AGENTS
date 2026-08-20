@@ -29,10 +29,6 @@ documentation_protocol:
   preserve: "Code blocks, tables, list items, metadata label blocks (`Label: value` on own line)"
   still_wrap: "Line-oriented formats only: git commit bodies, plain email, terminal-only text"
 
-think_protocol:
-  - "Think in ASD-STE100 Simplified Technical English"
-  - "DO NOT overthink."
-
 voice_protocol:
   rule: "Trigger when writting as the human. Writing as human != writing as TARS. Always load voice skill first."
   guidelines: "Minimize words. Do not over-explain. Prefer to explain using ASD-STE100 Simplified Technical English. Be brief and to the point. More text isn't better."
