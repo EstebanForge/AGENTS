@@ -4,26 +4,27 @@
 
 ## Settings (`~/.pi/agent/settings.json`)
 
-Source of truth: the construct-cli sandbox config at `~/.config/construct-cli/home/.pi/agent/settings.json`; this repo's [`../configs/settings.json`](../configs/settings.json) mirrors it. On a bare-metal pi install the file lives at `~/.pi/agent/settings.json`. Key fields:
+Source of truth: the live config on this machine (`~/.pi/agent/settings.json`); this repo's [`../configs/settings.json`](../configs/settings.json) mirrors it. Other machines (construct-cli sandbox included) consume from this repo. Key fields:
 
 ```json
 {
   "defaultProvider": "zai",
-  "defaultModel": "glm-5.2",
-  "defaultThinkingLevel": "high",
+  "defaultModel": "glm-5.3",
+  "defaultThinkingLevel": "low",
   "enabledModels": [
     "deepseek/deepseek-v4-flash",
     "deepseek/deepseek-v4-pro",
     "google/gemini-3.6-flash",
     "minimax/MiniMax-M3",
-    "zai/glm-5.2",
     "claude-bridge/claude-fable-5",
     "claude-bridge/claude-opus-5",
     "claude-bridge/claude-sonnet-5",
     "antigravity/gemini-3-6-flash",
     "antigravity/gemini-3-1-pro",
     "antigravity/claude-sonnet-4-6",
-    "antigravity/claude-opus-4-6-thinking"
+    "antigravity/claude-opus-4-6-thinking",
+    "zai/glm-5.3",
+    "zai/glm-5.2"
   ]
 }
 ```
@@ -136,7 +137,7 @@ Mirrors the live file. `deepseek` and `lmstudio` are custom; `zai` is custom (GL
 
 ## MCP Servers
 
-Canonical registry in this repo: [`../configs/mcp_servers.json`](../configs/mcp_servers.json). The live sandbox `mcp.json` (`~/.config/construct-cli/home/.pi/agent/mcp.json`) is intentionally empty; servers are provisioned from the repo registry.
+Canonical registry in this repo: [`../configs/mcp_servers.json`](../configs/mcp_servers.json). The live `mcp.json` on this machine is intentionally empty (MCP servers replaced by pi packages: context7, agentmemory, codegraph); machines that still use MCP servers provision from the repo registry.
 
 Enabled servers:
 
@@ -151,7 +152,7 @@ Disabled but available: `chrome-devtools`, `playwright`, `sequential-thinking`, 
 
 ## Extensions (`settings.json`)
 
-Installed packages (all active, 45 total). Verified via `pi list`. Canonical source: [`../configs/settings.json`](../configs/settings.json).
+Installed packages (all active, 47 total). Verified via `pi list`. Canonical source: [`../configs/settings.json`](../configs/settings.json).
 
 ```json
 "packages": [
@@ -161,7 +162,7 @@ Installed packages (all active, 45 total). Verified via `pi list`. Canonical sou
   "npm:pi-context-usage",
   "git:github.com/code-yeongyu/pi-nested-agents-md",
   "npm:pi-init",
-  { "source": "npm:@ff-labs/pi-fff", "extensions": [] },
+  "npm:@ff-labs/pi-fff",
   "npm:@upstash/context7-pi",
   "npm:@estebanforge/pi-agentmemory",
   "npm:pi-token-speed",
@@ -185,7 +186,6 @@ Installed packages (all active, 45 total). Verified via `pi list`. Canonical sou
   "git:github.com/tmustier/pi-queue-steer",
   "npm:@estebanforge/pi-token-cost-ledger",
   "npm:pi-unified-exec",
-  "npm:pi-continue",
   "npm:@tmustier/pi-session-recap",
   "npm:pi-qmd-adaptive-search",
   "npm:pi-vision-handoff",
@@ -199,7 +199,10 @@ Installed packages (all active, 45 total). Verified via `pi list`. Canonical sou
   "npm:@tmustier/pi-tab-status",
   "git:github.com/dodo-reach/pi-clarify",
   "npm:@estebanforge/pi-asana-me",
-  "npm:@tintinweb/pi-subagents"
+  "npm:@tintinweb/pi-subagents",
+  "npm:@estebanforge/pi-show-me-the-meat",
+  "npm:@estebanforge/pi-ask-claude",
+  "npm:@estebanforge/pi-hostname"
 ]
 ```
 

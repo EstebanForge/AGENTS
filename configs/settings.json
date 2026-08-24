@@ -1,7 +1,7 @@
 {
-  "lastChangelogVersion": "0.84.0",
+  "lastChangelogVersion": "0.84.3",
   "defaultProvider": "zai",
-  "defaultModel": "glm-5.2",
+  "defaultModel": "glm-5.3",
   "packages": [
     "git:github.com/ferologics/pi-notify",
     "npm:pi-web-providers",
@@ -9,10 +9,7 @@
     "npm:pi-context-usage",
     "git:github.com/code-yeongyu/pi-nested-agents-md",
     "npm:pi-init",
-    {
-      "source": "npm:@ff-labs/pi-fff",
-      "extensions": []
-    },
+    "npm:@ff-labs/pi-fff",
     "npm:@upstash/context7-pi",
     "npm:@estebanforge/pi-agentmemory",
     "npm:pi-token-speed",
@@ -41,7 +38,6 @@
     "git:github.com/tmustier/pi-queue-steer",
     "npm:@estebanforge/pi-token-cost-ledger",
     "npm:pi-unified-exec",
-    "npm:pi-continue",
     "npm:@tmustier/pi-session-recap",
     "npm:pi-qmd-adaptive-search",
     "npm:pi-vision-handoff",
@@ -55,10 +51,13 @@
     "npm:@tmustier/pi-tab-status",
     "git:github.com/dodo-reach/pi-clarify",
     "npm:@estebanforge/pi-asana-me",
-    "npm:@tintinweb/pi-subagents"
+    "npm:@tintinweb/pi-subagents",
+    "npm:@estebanforge/pi-show-me-the-meat",
+    "npm:@estebanforge/pi-ask-claude",
+    "npm:@estebanforge/pi-hostname"
   ],
   "treeFilterMode": "default",
-  "defaultThinkingLevel": "high",
+  "defaultThinkingLevel": "low",
   "transport": "auto",
   "editorPaddingX": 2,
   "enabledModels": [
@@ -66,14 +65,15 @@
     "deepseek/deepseek-v4-pro",
     "google/gemini-3.6-flash",
     "minimax/MiniMax-M3",
-    "zai/glm-5.2",
     "claude-bridge/claude-fable-5",
     "claude-bridge/claude-opus-5",
     "claude-bridge/claude-sonnet-5",
     "antigravity/gemini-3-6-flash",
     "antigravity/gemini-3-1-pro",
     "antigravity/claude-sonnet-4-6",
-    "antigravity/claude-opus-4-6-thinking"
+    "antigravity/claude-opus-4-6-thinking",
+    "zai/glm-5.3",
+    "zai/glm-5.2"
   ],
   "steeringMode": "all",
   "followUpMode": "one-at-a-time",
@@ -96,5 +96,5 @@
     "showTerminalProgress": true
   },
   "outputPad": 1,
-  "tuiMode": "fullscreen"
+  "tuiMode": "regular"
 }

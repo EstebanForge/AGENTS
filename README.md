@@ -223,14 +223,14 @@ description: One-line description used by agents.
 
 The `configs/` directory holds portable agent configuration used to reproduce the full setup on another machine. Currently:
 
-- `configs/settings.json` — Pi agent settings (provider, model, packages, UI). Source of truth: construct-cli sandbox (`~/.config/construct-cli/home/.pi/agent/settings.json`); this repo mirrors it. On a bare-metal pi install the file lives at `~/.pi/agent/settings.json`.
-- `configs/mcp_servers.json` — Pi MCP server registry. Source of truth for the server set; the live sandbox `mcp.json` (`~/.config/construct-cli/home/.pi/agent/mcp.json`) is intentionally empty, with servers provisioned from this repo.
+- `configs/settings.json` — Pi agent settings (provider, model, packages, UI). Source of truth: the live config on this machine (`~/.pi/agent/settings.json`); this repo mirrors it. The construct-cli sandbox and other machines consume from this repo.
+- `configs/mcp_servers.json` — Pi MCP server registry. Source of truth for the server set. The live `mcp.json` on this machine is intentionally empty (MCP servers replaced by pi packages: context7, agentmemory, codegraph); machines that still use MCP servers provision from this registry.
 
 Detailed Pi configuration reference: [docs/AGENT-PI.md](docs/AGENT-PI.md).
 
 ### Pi Extensions
 
-Pi packages installed in this instance (45 total, verified via `pi list`). Canonical list tracked in [`configs/settings.json`](configs/settings.json).
+Pi packages installed in this instance (47 total, verified via `pi list`). Canonical list tracked in [`configs/settings.json`](configs/settings.json).
 
 | Package | Purpose |
 |---------|---------|
@@ -267,7 +267,6 @@ Pi packages installed in this instance (45 total, verified via `pi list`). Canon
 | `git:tmustier/pi-queue-steer` | Visible steering/follow-up queues with inline editing |
 | `@estebanforge/pi-token-cost-ledger` | Token cost ledger (replaces `@ctogg/pi-cost-counter`) |
 | `npm:pi-unified-exec` | Unified exec backend (sessions, long-running, set_on_exit) |
-| `npm:pi-continue` | Resume previous sessions by id |
 | `npm:@tmustier/pi-session-recap` | Session recap (turn budget, state) |
 | `@thurstonsand/pi-librarian` | Multi-repo codebase research and synthesis |
 | `pi-agent-browser-native` | Native headless browser automation (open, click, fill, snapshot, eval) |
@@ -279,6 +278,9 @@ Pi packages installed in this instance (45 total, verified via `pi list`). Canon
 | `@tmustier/pi-tab-status` | Terminal tab status indicators for Pi sessions |
 | `git:dodo-reach/pi-clarify` | Rewrites rough prompts into precise technical prompts before sending |
 | `@estebanforge/pi-asana-me` | Asana tasks/projects/comments over REST (replaces pi-asana) |
+| `@estebanforge/pi-show-me-the-meat` | Abridge diffs to the lines that carry the change |
+| `@estebanforge/pi-ask-claude` | Delegate to Claude peer agent (isolated or continued session) |
+| `@estebanforge/pi-hostname` | Show hostname context in sessions |
 
 ## License
 
