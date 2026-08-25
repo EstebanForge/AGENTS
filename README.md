@@ -67,8 +67,8 @@ The unified manager for both instructions (`AGENTS.md`) and skills.
 - **construct-cli Mode:** Uses surgical direct copies (files and folders) for Docker compatibility.
 - Automatically detects VSCode, Windsurf, and construct-cli environments.
 - Creates parent directories if missing.
-- Backs up existing real files/directories before linking.
-- `unlink` restores the most recent backup automatically.
+- Backs up existing instruction files (e.g. a pre-existing `CLAUDE.md`) before linking. Skill entries are never backed up: on a name collision the central copy replaces the local one, and git history is the backup.
+- `unlink` restores instruction-file backups automatically.
 - Sorting: Displays regular agents first, followed by `construct_` agents.
 - Also drives the **fuse-agents** shell plugin install/uninstall (see below).
 

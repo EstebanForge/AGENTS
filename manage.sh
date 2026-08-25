@@ -224,7 +224,8 @@ sync_dir_symlink() {
         if [[ -L "${dst}" ]]; then
             rm "${dst}"                         # stale/foreign symlink: replace
         elif [[ -e "${dst}" ]]; then
-            backup_path "${dst}"               # third-party real entry collision
+            rm -rf "${dst}"                    # real entry collision: central replaces it (no backups, git is the safety net)
+            log_info "${name}: Replaced existing ${kind} entry ${s}"
         fi
         ln -s "${src_entry}" "${dst}"; updated=$((updated+1))
     done < <(managed_entry_names "${src}")
@@ -291,11 +292,7 @@ unsync_dir_symlink() {
     while IFS= read -r s; do
         [[ -z "$s" ]] && continue
         local dst="${target}/${s}"
-        if [[ -L "${dst}" ]]; then
-            rm "${dst}"
-            local b; b="$(find "${target}" -maxdepth 1 -name "${s}.backup.*" 2>/dev/null | sort -r | head -n1)"
-            [[ -n "${b}" ]] && mv "${b}" "${dst}"
-        fi
+        [[ -L "${dst}" ]] && rm "${dst}"
     done < <(read_manifest "${target}")
     rm -f "${target}/${MANIFEST_NAME}"
     log_success "${name}: Removed managed ${kind} links"
