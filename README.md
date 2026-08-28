@@ -188,6 +188,11 @@ All skills must follow the Agent Skills specification: https://agentskills.io/sp
 | `plan` | Thorough plan review across architecture, code quality, tests, and performance. |
 | `pull-request` | Open a GitHub pull request from the current branch: branch safety, commit delegation, push, and `gh pr create` with an attribution-free description. |
 | `refactor-pass` | Perform a refactor pass focused on simplicity after recent changes. |
+| `review-my-go` | Review Go changes against the 100 Go Mistakes checklist; findings cite mistake numbers, ends with a verdict. |
+| `review-my-javascript` | Review JavaScript changes against the JS flaws rubric (semantic + security gaps Biome/ESLint miss); ends with a verdict. |
+| `review-my-php` | Review PHP changes against the PHP 8.2+ anti-patterns rubric; findings cite entry numbers, ends with a verdict. |
+| `review-my-rust` | Review Rust changes against the Rust Code Smells guide; findings name anti-patterns + idiomatic fixes, ends with a verdict. |
+| `review-my-typescript` | Review TypeScript / React changes against the TS + React rubric (semantic gaps typescript-eslint misses); ends with a verdict. |
 | `review-pull-request` | Review a GitHub PR for bugs, regressions, security holes, and risky changes; produce a severity-ordered verdict and submit it via `gh`. |
 | `simplify-review` | Complexity-only diff review: finds what to delete or shrink (delete/stdlib/native/yagni/shrink). List-only, ends with `net: -N lines possible`. Complements review-pull-request and refactor-pass. |
 | `tdd` | Test-driven development with a red-green-refactor loop, one vertical slice at a time. |
@@ -250,13 +255,8 @@ Pi packages installed in this instance (47 total, verified via `pi list`). Canon
 | `@juicesharp/rpiv-ask-user-question` | Structured user-question tool |
 | `pi-token-burden` | Token burden display |
 | `@tintinweb/pi-subagents` | Subagent execution (replaces `@gotgenes/pi-subagents`) |
-| `@estebanforge/pi-go-review` | Go review (100 Go Mistakes checklist) |
-| `@estebanforge/pi-rust-review` | Rust review (code smells guide) |
 | `pi-claude-bridge` | Bridge to Claude models |
-| `@estebanforge/pi-php-review` | PHP review (8.2+ anti-patterns) |
 | `@estebanforge/pi-glm-tweaks` | GLM provider tweaks (`+extensions/index.ts`) |
-| `@estebanforge/pi-ts-review` | TypeScript / React review |
-| `@estebanforge/pi-js-review` | JavaScript review |
 | `@estebanforge/pi-codegraph-enhanced` | Local code knowledge graph |
 | `@estebanforge/pi-antigravity-bridge` | Native Antigravity (Gemini) bridge (replaces ask-antigravity) |
 | `@estebanforge/pi-ask-codex` | Delegate to OpenAI Codex (GPT) peer agent |
