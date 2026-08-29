@@ -1,6 +1,6 @@
 # Skill mechanics
 
-The skill-specific branch of [`writing-for-agents`](SKILL.md): what changes when the document is a skill — frontmatter, the invocation choice, and router skills. Everything else about writing it is the universal reference in `SKILL.md`.
+The skill-specific branch of [`writing-for-agents`](SKILL.md): what changes when the document is a skill — frontmatter, the invocation choice, router skills, and the pattern notes beside the file. Everything else about writing it is the universal reference in `SKILL.md`.
 
 ## Invocation
 
@@ -20,3 +20,27 @@ The invocation cut of splitting (the sequence cut lives in `SKILL.md`): split of
 ## Router skills
 
 When user-invoked skills multiply past what you can remember, that piled-up cognitive load is cured by a **router skill**: one user-invoked skill that names the others and when to reach for each, so the human has one skill to remember instead of many. It can only hint, never fire them: user-invoked skills have no description, so nothing but the human can reach them.
+
+## Pattern notes
+
+A skill serves two audiences, and they read different files. The **executor** loads `SKILL.md` at runtime; the **editor** maintains it across sessions. The executor needs procedure — steps, rules, completion criteria. The editor needs history — what failed, what worked, what was already tried and turned down. Mixing the two bloats the runtime path and scatters the history.
+
+Keep the history in `patterns.md`, a sibling of `SKILL.md`, one entry per pattern — a recurring failure mode or winning strategy:
+
+```
+## <pattern name>
+
+Observed: <what happened, on what task, when>
+Rule: <the workaround or strategy, one line>
+Executor: <all | <executor name>>
+Status: active | rejected (<why, date>) | promoted (<SKILL.md section, date>)
+```
+
+The file is editor-only disclosed reference: the executor never loads it at runtime, so it costs zero context load. Two triggers keep the loop closed: the editor reads `patterns.md` before touching `SKILL.md`, and writes an entry after any run where the skill misled the executor — same session, while the evidence is fresh.
+
+The `rejected` entries are the point: "tried X, rejected because Y" stops a future editor from re-proposing it. Prune `active` entries that stop firing, and retire a `rejected` entry when the tool or environment it describes is gone; every other `rejected` entry stays — it is the cheapest insurance in the file. A promoted entry becomes a tombstone (`Status: promoted`) pointing at its new home, so `SKILL.md` stays the single source of truth for procedure while the evidence trail survives.
+
+Two boundary rules:
+
+- **Executor-agnostic procedure.** A rule in `SKILL.md` states the universal procedure. A step that exists only because one executor mishandles it goes in `patterns.md`, labeled with the executor — never inlined into the procedure, where it constrains every other executor. A weak executor's crutch can break a strong one.
+- **Promote on stability.** A pattern reached on nearly every edit is procedure trying to escape: move the rule into `SKILL.md` and mark the entry `promoted`. Evidence still gathering stays put.
