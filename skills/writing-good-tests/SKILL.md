@@ -1,6 +1,6 @@
 ---
 name: writing-good-tests
-description: "Test-quality reference: what makes a test worth keeping. Use when writing or changing tests, adding mocks or test helpers, deciding whether a test earns its place, or reviewing existing tests for change detectors, mirror assertions, source-text assertions, or mock abuse. Works with or without the TDD loop."
+description: "Test-quality reference: what makes a test worth keeping. Use when writing or changing tests, adding mocks or test helpers, deciding whether a test earns its place, or reviewing existing tests for change detectors, mirror assertions, source-text assertions, or mock abuse. Works with or without a test-driven development loop."
 ---
 
 # Writing Good Tests
@@ -12,25 +12,16 @@ A test exists to catch a specific break. Two principles govern everything here:
 2. Every test exercises the real thing
 ```
 
-Strict TDD produces both naturally: a test written first and watched
-failing against real code has already proven it can fail, and only earns
-a mock when the real dependency proves slow or external. Process lives in
-the `tdd` skill; this skill judges the tests the loop produces.
+A test written first and watched failing against real code proves it can fail, and earns a mock only when a dependency is slow or external. This skill defines how to write and evaluate tests in any workflow, including test-first development, backfilling coverage, or reviewing existing tests.
 
 ## Principle 1: Name the Break
 
-Before writing the test body, answer: **what production change should
-make this test fail — and is that change a bug or a decision?** A test
-earns its place by catching a wrong branch, missing side effect, wrong
-argument, boundary case, or broken contract.
+Before writing the test body, answer: **what production change should make this test fail, and is that change a bug or a decision?** A test earns its place by catching a wrong branch, missing side effect, wrong argument, boundary case, or broken contract.
 
-**Derive expectations independently.** Use literals and hand-checked
-fixtures; table-driven tests with literal `want` values are the preferred
-shape. An expectation computed by the code under test — or its helpers —
-passes no matter what that code does:
+**Derive expectations independently.** Use literals and hand-checked fixtures; table-driven tests with literal `want` values are the preferred shape. An expectation computed by the code under test (or its helpers) passes no matter what that code does:
 
 ```typescript
-// ❌ Mirror assertion: the same builder computes both sides — always true
+// ❌ Mirror assertion: the same builder computes both sides: always true
 const expected = buildSearchQuery({ tag: 'urgent' });
 expect(buildSearchQuery({ tag: 'urgent' })).toBe(expected);
 
@@ -38,28 +29,11 @@ expect(buildSearchQuery({ tag: 'urgent' })).toBe(expected);
 expect(buildSearchQuery({ tag: 'urgent' })).toBe('tag:"urgent"');
 ```
 
-**No change detectors.** If only intentional decisions can fail a test —
-a constant's value, exact message wording, private structure — it fires
-on redesign and sleeps through bugs. Test the behavior that depends on
-the decision: not `expect(MAX_RETRIES).toBe(5)` but "a failing call is
-retried 5 times and the 6th attempt never happens."
+**No change detectors.** If only intentional decisions can fail a test (a constant value, exact message wording, private structure), it fires on redesign and sleeps through bugs. Test the behavior that depends on the decision: not `expect(MAX_RETRIES).toBe(5)` but "a failing call is retried 5 times and the 6th attempt never happens."
 
-**Behavior, not text.** Asserting that a script, config, or source file
-contains an exact line proves only that the source is the source. Run
-the artifact against controlled inputs and assert outputs, side effects,
-or exit codes. Documents that instruct agents are tested by the
-consuming agent's behavior; prose for humans earns no test at all.
+**Behavior, not text.** Asserting that a script, config, or source file contains an exact line proves only that the source is the source. Run the artifact against controlled inputs and assert outputs, side effects, or exit codes. Documents that instruct agents are tested by the consuming agent behavior; prose for humans earns no test at all.
 
-**Your code, not the framework.** Test the contract your code makes at
-its boundaries — the route you register, the query you emit, the payload
-you produce. Upstream mechanics are their maintainers' tests to write
-(the classic: asserting your router invokes a registered handler — that
-is the framework's test, not yours). When upstream behavior genuinely
-surprised you, write one narrow characterization test naming the
-assumption. The same boundary applies inside your code: constructors,
-getters, constants, and trivial forwarding earn tests only when they
-validate, normalize, default, derive, enforce, or cause side effects —
-otherwise assert the first consumer-visible result that depends on them.
+**Your code, not the framework.** Test the contract your code makes at its boundaries: the route you register, the query you emit, the payload you produce. Upstream mechanics are their maintainers' tests to write (for example: asserting your router invokes a registered handler is the framework test, not yours). When upstream behavior genuinely surprised you, write one narrow characterization test naming the assumption. The same boundary applies inside your code: constructors, getters, constants, and trivial forwarding earn tests only when they validate, normalize, default, derive, enforce, or cause side effects; otherwise assert the first consumer-visible result that depends on them.
 
 ### Gate Function
 
@@ -79,10 +53,7 @@ BEFORE writing the test body:
 
 ## Principle 2: Exercise the Real Thing
 
-**The mock earns no assertions.** A mock assertion passes when the mock
-is present and fails when it is absent — it says nothing about the
-component. Assert the real component's behavior; if the mock is what you
-are checking, unmock it or delete the assertion.
+**The mock earns no assertions.** A mock assertion passes when the mock is present and fails when it is absent; it says nothing about the component. Assert the real component behavior; if the mock is what you are checking, unmock it or delete the assertion.
 
 ```typescript
 // ✅ Real behavior
@@ -94,10 +65,7 @@ expect(screen.getByTestId('sidebar-mock')).toBeInTheDocument();
 
 **The question that catches it:** "Are we testing the behavior of a mock?"
 
-**Mock at the right level.** Learn every side effect of the real method
-before replacing it; mock the slow or external operation and keep what
-the test depends on real. When unsure, run the test against the real
-implementation first and observe what actually needs to happen.
+**Mock at the right level.** Learn every side effect of the real method before replacing it; mock the slow or external operation and keep what the test depends on real. When unsure, run the test against the real implementation first and observe what actually needs to happen.
 
 ```typescript
 // ❌ The mock swallows the config write that duplicate detection reads
@@ -109,35 +77,22 @@ vi.mock('ToolCatalog', () => ({
 vi.mock('MCPServerManager');
 ```
 
-**Make doubles specific.** When arguments, call counts, or ordering are
-part of the contract, assert them — a fake that accepts anything verifies
-nothing. Give each branch (success, error, malformed) its own fixture or
-spy, so the wrong branch cannot satisfy the expectation.
+**Mock at system boundaries only.** Mock external systems you do not control: external APIs, third-party network services, time/clock providers, or random number generators. Do not mock internal classes, internal modules, or anything under your direct control. Use dependency injection to pass external clients in, and prefer specific typed interface functions over generic fetchers.
 
-**Mirror contract structures accurately.** Mock the complete structure
-as it exists in reality — all fields the boundary type specifies — not
-just the ones your test reads. Partial mocks fail silently when
-downstream code reads an omitted field: the test passes while
-integration breaks. Mock boundary principles: see
-[mocking.md](../tdd/mocking.md) in the `tdd` skill.
+**Make doubles specific.** When arguments, call counts, or ordering are part of the contract, assert them; a fake that accepts anything verifies nothing. Give each branch (success, error, malformed) its own fixture or spy, so the wrong branch cannot satisfy the expectation.
 
-**Production classes carry production methods only.** Cleanup that only
-tests need lives in test utilities, never as a `destroy()` on the
-production class. Ask: is this method called only from tests? Does this
-class own this resource's lifecycle? Wrong answers → test utility.
+**Mirror contract structures accurately.** Mock the complete structure as it exists in reality (all fields the boundary type specifies), not just the ones your test reads. Partial mocks fail silently when downstream code reads an omitted field: the test passes while integration breaks.
 
-**Prefer real components over complex mocks.** When mock setup outgrows
-the test logic, mocks miss methods the real components have, or tests
-break when the mock changes, switch to an integration test with real
-components. **The question that catches it:** "Do we need to be using a
-mock here?"
+**Production classes carry production methods only.** Cleanup that only tests need lives in test utilities, never as a `destroy()` on the production class. Ask: is this method called only from tests? Does this class own this resource lifecycle? Wrong answers point to test utilities.
+
+**Prefer real components over complex mocks.** When mock setup outgrows the test logic, mocks miss methods the real components have, or tests break when the mock changes, switch to an integration test with real components. **The question that catches it:** "Do we need to be using a mock here?"
 
 ### Gate Function
 
 ```
 BEFORE adding a mock or test helper:
   List the real method's side effects; keep the ones the test
-  depends on real — mock the slow/external level below them.
+  depends on real; mock the slow/external level below them.
 
   Mock responses mirror the complete real structure.
 
@@ -149,17 +104,11 @@ BEFORE adding a mock or test helper:
 
 ## Tests Ship With the Implementation
 
-The TDD cycle — failing test, minimal implementation — is what
-"complete" means. Ship the tests the behavior needs and only those:
-trivial code and human prose earn none, and a test written to satisfy
-process costs maintenance forever. When adding tests outside a loop —
-reviewing existing code, backfilling coverage — the same bar applies:
-ship the tests the behavior needs, only those.
+A failing test followed by minimal implementation is what complete means. Ship the tests the behavior needs and only those: trivial code and human prose earn none, and a test written to satisfy process costs maintenance forever. When adding tests outside a loop (reviewing existing code, backfilling coverage), the same bar applies: ship the tests the behavior needs, only those.
 
 ## The Mutation Check
 
-Before finishing, mentally mutate the production code; at least one test
-should fail for each realistic mutation:
+Before finishing, mentally mutate the production code; at least one test should fail for each realistic mutation:
 
 - Wrong constant or argument
 - Wrong branch handler
@@ -167,19 +116,18 @@ should fail for each realistic mutation:
 - Empty or default return
 - Missing validation for zero, empty, nil, unauthorized, or malformed input
 
-A mutation nothing catches marks the behavior as unprotected — or the
-test as tautological.
+A mutation nothing catches marks the behavior as unprotected, or the test as tautological.
 
 ## Quick Reference
 
 | When you... | Do |
 |-------------|-----|
-| Write any test | Name the break it catches — a bug, not a decision |
+| Write any test | Name the break it catches; a bug, not a decision |
 | Build an expected value | Derive it by hand; never with the code under test |
-| Test a script or document | Run it / pressure-test its consumer; never grep its text |
+| Test a script or document | Run it or pressure-test its consumer; never grep its text |
 | Reach for a dependency test | Test your boundary contract, not their documented mechanics |
 | Want to assert on a mocked element | Test the real component, or unmock it |
-| Are about to mock a method | Learn its side effects; mock the slow/external level |
+| Are about to mock a method | Learn its side effects; mock the slow or external level |
 | Build a mock response | Mirror the real structure completely |
 | Need cleanup only tests use | Put it in test utilities |
 | Watch mock setup balloon | Switch to an integration test with real components |
