@@ -26,4 +26,12 @@ are upstream's, near-verbatim (upstream punctuation preserved).
   partner's correction/question" devices reworded as standing challenge
   questions.
 - **Local bindings.** Intro binds process to the local `tdd` skill;
-  mock-shape guidance points at `tdd/mocking.md`.
+  mock boundary principles point at `tdd/mocking.md`.
+- **Aligned with local `tdd` skill (peer review, 2026-08-28).**
+  Upstream's "failing test, minimal implementation, refactor" loop
+  definition drops "refactor" — local `tdd` keeps refactoring in the
+  review stage, not the loop. Mirroring rule scoped to the boundary
+  type's fields (upstream's "all documented fields" bloats on large
+  real-world payloads). Added a suite-coupling warning sign (pass in
+  isolation, fail in the full suite). Added a sentence covering tests
+  added outside a loop (reviews, backfilled coverage).

@@ -114,11 +114,12 @@ part of the contract, assert them — a fake that accepts anything verifies
 nothing. Give each branch (success, error, malformed) its own fixture or
 spy, so the wrong branch cannot satisfy the expectation.
 
-**Mirror real data completely.** Mock the complete structure as it exists
-in reality — all documented fields — not just the ones your test reads.
-Partial mocks fail silently when downstream code reads an omitted field:
-the test passes while integration breaks. Stack-specific double shapes:
-see [mocking.md](../tdd/mocking.md) in the `tdd` skill.
+**Mirror contract structures accurately.** Mock the complete structure
+as it exists in reality — all fields the boundary type specifies — not
+just the ones your test reads. Partial mocks fail silently when
+downstream code reads an omitted field: the test passes while
+integration breaks. Mock boundary principles: see
+[mocking.md](../tdd/mocking.md) in the `tdd` skill.
 
 **Production classes carry production methods only.** Cleanup that only
 tests need lives in test utilities, never as a `destroy()` on the
@@ -148,10 +149,12 @@ BEFORE adding a mock or test helper:
 
 ## Tests Ship With the Implementation
 
-The TDD cycle — failing test, minimal implementation, refactor — is what
+The TDD cycle — failing test, minimal implementation — is what
 "complete" means. Ship the tests the behavior needs and only those:
 trivial code and human prose earn none, and a test written to satisfy
-process costs maintenance forever.
+process costs maintenance forever. When adding tests outside a loop —
+reviewing existing code, backfilling coverage — the same bar applies:
+ship the tests the behavior needs, only those.
 
 ## The Mutation Check
 
@@ -187,6 +190,7 @@ test as tautological.
 - Setup and assertion share the same object, guaranteeing equality
 - The test can fail only through a panic, crash, or missing selector
 - The test fails on every intentional change, never on accidental breakage
+- Tests pass in isolation but fail in the full suite (shared mutable state or uncleaned globals)
 - Expected values are hidden behind loops, builders, or helpers
 - The test greps source text, or asserts a removed symbol stays removed
 - The test would still matter if only the framework remained
