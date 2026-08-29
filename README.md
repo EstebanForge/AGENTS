@@ -161,46 +161,7 @@ Skills are shared agent capabilities stored in `./skills/`. Each skill is a subd
 
 All skills must follow the Agent Skills specification: https://agentskills.io/specification
 
-### Available Skills
-
-| Skill | Description |
-|-------|-------------|
-| `acpx` | Use acpx as a headless ACP CLI for agent-to-agent communication. |
-| `agent-browser` | Browser automation CLI for AI agents — navigate, click, fill forms, screenshot, scrape, and test web apps. |
-| `code-review` | Two-axis diff review against a fixed point: Standards (repo-documented standards + Fowler smell baseline) and Spec (fidelity to the originating issue), run as parallel sub-agents. |
-| `codebase-design` | Shared vocabulary for designing deep modules — interface, depth, seam, adapter. |
-| `commit` | Read this skill before making git commits. |
-| `datastar` | Build reactive hypermedia-driven web apps using Datastar. Signals, data-* attributes, SSE backend events, actions, and patterns like CQRS, active search, infinite scroll. |
-| `deferred-debt` | Harvest every `DEBT:` comment into a ledger so deliberate shortcuts get tracked instead of rotting. Marker names a shortcut's ceiling and upgrade trigger. |
-| `design-taste-frontend` | Senior UI/UX Engineer. Architect digital interfaces overriding default LLM biases. |
-| `diagnosing-bugs` | Disciplined diagnosis loop for hard bugs and perf regressions: reproduce, minimise, hypothesise, instrument, fix, regression-test. |
-| `domain-modeling` | Build and sharpen a project's domain model; maintain `CONTEXT.md` and ADRs inline. |
-| `grill-me` | Relentless interview to sharpen a plan or design (user-invoked wrapper for `/grilling`). |
-| `grill-with-docs` | Relentless interview that also builds the domain model (glossary + ADRs) as you go. |
-| `grilling` | The reusable interview loop behind `grill-me` and `grill-with-docs`. |
-| `handoff` | Compact the current conversation into a handoff document for another agent to pick up. |
-| `humanizer` | Remove signs of AI-generated writing from text. |
-| `implement` | Implement a piece of work from a spec or set of tickets; TDD at pre-agreed seams, then a gated commit. |
-| `improve-codebase-architecture` | Scan a codebase for deepening opportunities, present them as a visual HTML report, then grill through whichever one you pick. |
-| `mcp-cli-ent` | Interact with MCP servers using the `mcp-cli-ent` command-line client. |
-| `mermaid-diagram-fixer` | Validate and fix Mermaid diagrams by rendering them with the official mermaid-cli (mmdc). mmdc has no lint mode; rendering is the validation. |
-| `noacp` | File-based session protocol for agents without ACP support (`agy`, etc.). |
-| `orchestrate` | Structured workflow orchestration for non-trivial tasks. |
-| `plan` | Thorough plan review across architecture, code quality, tests, and performance. |
-| `pull-request` | Open a GitHub pull request from the current branch: branch safety, commit delegation, push, and `gh pr create` with an attribution-free description. |
-| `refactor-pass` | Perform a refactor pass focused on simplicity after recent changes. |
-| `review-my-go` | Review Go changes against the 100 Go Mistakes checklist; findings cite mistake numbers, ends with a verdict. |
-| `review-my-javascript` | Review JavaScript changes against the JS flaws rubric (semantic + security gaps Biome/ESLint miss); ends with a verdict. |
-| `review-my-php` | Review PHP changes against the PHP 8.2+ anti-patterns rubric; findings cite entry numbers, ends with a verdict. |
-| `review-my-rust` | Review Rust changes against the Rust Code Smells guide; findings name anti-patterns + idiomatic fixes, ends with a verdict. |
-| `review-my-typescript` | Review TypeScript / React changes against the TS + React rubric (semantic gaps typescript-eslint misses); ends with a verdict. |
-| `review-pull-request` | Review a GitHub PR for bugs, regressions, security holes, and risky changes; produce a severity-ordered verdict and submit it via `gh`. |
-| `simplify-review` | Complexity-only diff review: finds what to delete or shrink (delete/stdlib/native/yagni/shrink). List-only, ends with `net: -N lines possible`. Complements review-pull-request and refactor-pass. |
-| `tdd` | Test-driven development with a red-green-refactor loop, one vertical slice at a time. |
-| `teach` | Teach the user a new skill or concept over multiple sessions in a stateful workspace. |
-| `to-tickets` | Break a plan, spec, or PRD into independently-grabbable tickets using vertical slices; publishes GitHub issues behind a human-output gate. |
-| `to-spec` | Turn the current conversation into a spec and publish it to the issue tracker — no interview, just synthesis. |
-| `writing-for-agents` | Reference for writing any document an agent consumes — skills, `AGENTS.md`/`CLAUDE.md`, docs reached by a pointer. Model-invoked. |
+Browse `./skills/` for the current set; each `SKILL.md` frontmatter carries the description, and vendored skills carry a `META.md` recording their upstream source and local deltas.
 
 ### Adding a Skill
 
