@@ -167,6 +167,7 @@ All skills must follow the Agent Skills specification: https://agentskills.io/sp
 |-------|-------------|
 | `acpx` | Use acpx as a headless ACP CLI for agent-to-agent communication. |
 | `agent-browser` | Browser automation CLI for AI agents — navigate, click, fill forms, screenshot, scrape, and test web apps. |
+| `code-review` | Two-axis diff review against a fixed point: Standards (repo-documented standards + Fowler smell baseline) and Spec (fidelity to the originating issue), run as parallel sub-agents. |
 | `codebase-design` | Shared vocabulary for designing deep modules — interface, depth, seam, adapter. |
 | `commit` | Read this skill before making git commits. |
 | `datastar` | Build reactive hypermedia-driven web apps using Datastar. Signals, data-* attributes, SSE backend events, actions, and patterns like CQRS, active search, infinite scroll. |

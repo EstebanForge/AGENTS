@@ -16,7 +16,5 @@ final commit step is bound to this project's human-output gate and the
 ## References to sibling skills
 
 - `/tdd` — vendored locally (`skills/tdd`).
-- `/code-review` — referenced upstream but **not** vendored here. The
-  implement loop's review step points at a skill this tree does not yet
-  carry; flag for a future add, or substitute `review-pull-request` /
-  `simplify-review` per context.
+- `/code-review` — vendored locally (`skills/code-review`, 2026-08-28). The
+  implement loop's closing review step now resolves.
