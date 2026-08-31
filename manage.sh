@@ -185,6 +185,52 @@ write_manifest() {
     fi
 }
 
+# --- Ever-managed names (rename/delete propagation beyond the manifest) ---
+# The target manifest only knows the present. Names that left central before a
+# target gained a manifest are invisible to manifest reconcile forever. The
+# committed seed file (.${kind}-managed-names at repo root) plus the repo's own
+# git history form the "ever managed" set per kind. Third-party skills never
+# appear in either source, so they stay untouchable by construction.
+historical_managed_names() {
+    local kind=$1
+    local seed="${SCRIPT_DIR}/.${kind}-managed-names"
+    [[ -f "${seed}" ]] && cat "${seed}"
+    if command -v git >/dev/null 2>&1 \
+        && git -C "${SCRIPT_DIR}" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+        if [[ "$(git -C "${SCRIPT_DIR}" rev-parse --is-shallow-repository 2>/dev/null)" == "true" ]]; then
+            log_warning "manage.sh: shallow clone; rename/delete history may be incomplete"
+        fi
+        git -C "${SCRIPT_DIR}" log --format= --name-only -- "${kind}/" 2>/dev/null \
+            | sed -nE "s#^${kind}/([^/]+)/.*#\1#p; s#^${kind}/([^/]+)$#\1#p"
+    fi
+}
+
+# True when a leftover entry's SKILL.md matches a blob the repo history ever
+# recorded for that name. Guards against same-name third-party skills.
+entry_content_ours() {
+    local kind=$1 h=$2 dst=$3
+    local probe="${dst}/SKILL.md"
+    [[ -f "${probe}" ]] || return 1
+    command -v git >/dev/null 2>&1 || return 1
+    local bh; bh="$(git -C "${SCRIPT_DIR}" hash-object -- "${probe}" 2>/dev/null)" || return 1
+    [[ -n "${bh}" ]] || return 1
+    [[ -n "$(git -C "${SCRIPT_DIR}" log --format=%h --find-object="${bh}" -- "${kind}/${h}/SKILL.md" 2>/dev/null)" ]]
+}
+
+# Remove a pre-manifest orphan we can prove is ours.
+# Args: $1=kind $2=name $3=src $4=target $5=entry
+reconcile_orphan() {
+    local kind=$1 name=$2 src=$3 target=$4 h=$5
+    local dst="${target}/${h}"
+    if [[ -L "${dst}" && "$(readlink "${dst}")" == "${src}"* ]]; then
+        rm "${dst}"; log_info "${name}: Removed pre-manifest orphan ${kind} '${h}' (link into central)"
+    elif entry_content_ours "${kind}" "${h}" "${dst}"; then
+        rm -rf "${dst}"; log_info "${name}: Removed pre-manifest orphan ${kind} '${h}' (content match)"
+    else
+        log_warning "${name}: '${h}' matches a once-managed name but is not provably ours; left untouched"
+    fi
+}
+
 # Standard mode: symlink each central entry into a real category directory.
 # Args: $1=kind (skills|prompts) $2=name $3=src $4=target $5=force
 sync_dir_symlink() {
@@ -238,6 +284,14 @@ sync_dir_symlink() {
         fi
     done
 
+    # Pre-manifest reconcile: entries we owned before this target had a manifest.
+    local h
+    while IFS= read -r h; do
+        [[ -z "${h}" || "${new_set[${h}]+isset}" || "${old_set[${h}]+isset}" ]] && continue
+        [[ -L "${target}/${h}" || -e "${target}/${h}" ]] || continue
+        reconcile_orphan "${kind}" "${name}" "${src}" "${target}" "${h}"
+    done < <(historical_managed_names "${kind}")
+
     write_manifest "${target}" "${!new_set[@]}"
     log_success "${name}: Synchronized ${kind} (${updated} link(s))"
 }
@@ -266,6 +320,14 @@ sync_dir_copy() {
             rm -rf "${target:?}/${s}"; log_info "${name}: Removed stale ${kind} ${s}"
         fi
     done
+
+    # Pre-manifest reconcile: entries we owned before this target had a manifest.
+    local h
+    while IFS= read -r h; do
+        [[ -z "${h}" || "${new_set[${h}]+isset}" || "${old_set[${h}]+isset}" ]] && continue
+        [[ -L "${target}/${h}" || -e "${target}/${h}" ]] || continue
+        reconcile_orphan "${kind}" "${name}" "${src}" "${target}" "${h}"
+    done < <(historical_managed_names "${kind}")
 
     if command -v rsync >/dev/null 2>&1; then
         rsync -a "${src}/" "${target}/"
