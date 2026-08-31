@@ -191,30 +191,49 @@ write_manifest() {
 # committed seed file (.${kind}-managed-names at repo root) plus the repo's own
 # git history form the "ever managed" set per kind. Third-party skills never
 # appear in either source, so they stay untouchable by construction.
+declare -A _HIST_CACHE=()
 historical_managed_names() {
     local kind=$1
-    local seed="${SCRIPT_DIR}/.${kind}-managed-names"
-    [[ -f "${seed}" ]] && cat "${seed}"
-    if command -v git >/dev/null 2>&1 \
-        && git -C "${SCRIPT_DIR}" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-        if [[ "$(git -C "${SCRIPT_DIR}" rev-parse --is-shallow-repository 2>/dev/null)" == "true" ]]; then
-            log_warning "manage.sh: shallow clone; rename/delete history may be incomplete"
+    if [[ -z "${_HIST_CACHE[${kind}]+isset}" ]]; then
+        local names=""
+        local seed="${SCRIPT_DIR}/.${kind}-managed-names"
+        [[ -f "${seed}" ]] && names="$(grep -vE '^\s*#|^\s*$' "${seed}" 2>/dev/null)"
+        if command -v git >/dev/null 2>&1 \
+            && git -C "${SCRIPT_DIR}" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+            if [[ "$(git -C "${SCRIPT_DIR}" rev-parse --is-shallow-repository 2>/dev/null)" == "true" ]]; then
+                log_warning "manage.sh: shallow clone; rename/delete history may be incomplete"
+            fi
+            names+="$(git -C "${SCRIPT_DIR}" -c core.quotePath=false log --format= --name-only -- "${kind}/" 2>/dev/null \
+                | sed -nE "s#^${kind}/([^/]+)/.*#\1#p; s#^${kind}/([^/]+)\$#\1#p")"
         fi
-        git -C "${SCRIPT_DIR}" log --format= --name-only -- "${kind}/" 2>/dev/null \
-            | sed -nE "s#^${kind}/([^/]+)/.*#\1#p; s#^${kind}/([^/]+)$#\1#p"
+        _HIST_CACHE[${kind}]="$(printf '%s\n' "${names}" | sort -u)"
     fi
+    printf '%s\n' "${_HIST_CACHE[${kind}]}"
 }
 
-# True when a leftover entry's SKILL.md matches a blob the repo history ever
-# recorded for that name. Guards against same-name third-party skills.
+# True when a leftover entry is provably ours by content: EVERY file it
+# contains must hash to a blob the repo history ever recorded under that
+# entry's path. Handles prompt files (entry is a file) and skill dirs
+# (checked file-by-file, so a fork with a matching SKILL.md but foreign extra
+# files is NOT provably ours and gets a warning instead of a deletion).
 entry_content_ours() {
-    local kind=$1 h=$2 dst=$3
-    local probe="${dst}/SKILL.md"
-    [[ -f "${probe}" ]] || return 1
+    local kind=$1 h=$2 dst=$3 rel bh
     command -v git >/dev/null 2>&1 || return 1
-    local bh; bh="$(git -C "${SCRIPT_DIR}" hash-object -- "${probe}" 2>/dev/null)" || return 1
-    [[ -n "${bh}" ]] || return 1
-    [[ -n "$(git -C "${SCRIPT_DIR}" log --format=%h --find-object="${bh}" -- "${kind}/${h}/SKILL.md" 2>/dev/null)" ]]
+    if [[ -f "${dst}" ]]; then
+        bh="$(git -C "${SCRIPT_DIR}" hash-object -- "${dst}" 2>/dev/null)" || return 1
+        [[ -n "${bh}" ]] || return 1
+        [[ -n "$(git -C "${SCRIPT_DIR}" log --format=%h --find-object="${bh}" -- "${kind}/${h}" 2>/dev/null)" ]]
+        return
+    fi
+    [[ -d "${dst}" ]] || return 1
+    local any=0
+    while IFS= read -r rel; do
+        [[ -n "${rel}" ]] || continue
+        any=1
+        bh="$(git -C "${SCRIPT_DIR}" hash-object -- "${dst}/${rel}" 2>/dev/null)" || return 1
+        [[ -n "$(git -C "${SCRIPT_DIR}" log --format=%h --find-object="${bh}" -- "${kind}/${h}/${rel}" 2>/dev/null)" ]] || return 1
+    done < <(cd "${dst}" && find . -type f -print 2>/dev/null | sed 's|^\./||')
+    (( any ))
 }
 
 # Remove a pre-manifest orphan we can prove is ours.
@@ -222,13 +241,31 @@ entry_content_ours() {
 reconcile_orphan() {
     local kind=$1 name=$2 src=$3 target=$4 h=$5
     local dst="${target}/${h}"
-    if [[ -L "${dst}" && "$(readlink "${dst}")" == "${src}"* ]]; then
+    if [[ -L "${dst}" && "$(readlink "${dst}")" == "${src}/${h}" ]]; then
         rm "${dst}"; log_info "${name}: Removed pre-manifest orphan ${kind} '${h}' (link into central)"
     elif entry_content_ours "${kind}" "${h}" "${dst}"; then
         rm -rf "${dst}"; log_info "${name}: Removed pre-manifest orphan ${kind} '${h}' (content match)"
     else
         log_warning "${name}: '${h}' matches a once-managed name but is not provably ours; left untouched"
     fi
+}
+
+# Regenerate the ever-managed seed files from git history + the current tree.
+# Run after pulling on any machine; seeds are the fallback for machines whose
+# clone cannot provide full history (shallow clones). Commit the result.
+cmd_regen_seeds() {
+    local kind count
+    for kind in skills prompts; do
+        {
+            echo "# Ever-managed ${kind} names: current tree + git history."
+            echo "# Regenerate with: ${BASH_SOURCE[0]} regen-seeds (commit the result)."
+            managed_entry_names "${SCRIPT_DIR}/${kind}" 2>/dev/null
+            git -C "${SCRIPT_DIR}" -c core.quotePath=false log --format= --name-only -- "${kind}/" 2>/dev/null \
+                | sed -nE "s#^${kind}/([^/]+)/.*#\1#p; s#^${kind}/([^/]+)\$#\1#p"
+        } | sort -u > "${SCRIPT_DIR}/.${kind}-managed-names"
+        count="$(grep -cvE '^\s*#|^\s*$' "${SCRIPT_DIR}/.${kind}-managed-names")"
+        log_success "Seeded .${kind}-managed-names (${count} names)"
+    done
 }
 
 # Standard mode: symlink each central entry into a real category directory.
@@ -653,7 +690,7 @@ else
         case $arg in
             -f|--force) FORCE=1 ;;
             --yes) YES=1 ;;
-            link|unlink|status|purge) COMMAND=$arg ;;
+            link|unlink|status|purge|regen-seeds) COMMAND=$arg ;;
         esac
     done
 
@@ -668,7 +705,8 @@ else
                 echo "Purge is destructive. Confirm with: $0 purge --yes"; exit 1
             fi
             ;;
-        *) echo "Usage: $0 {link|unlink|status|purge} [-f|--force] [--yes]"; exit 1 ;;
+        regen-seeds) cmd_regen_seeds ;;
+        *) echo "Usage: $0 {link|unlink|status|purge|regen-seeds} [-f|--force] [--yes]"; exit 1 ;;
     esac
 fi
 

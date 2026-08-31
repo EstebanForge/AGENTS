@@ -12,6 +12,7 @@ diagnosing-bugs
 domain-modeling
 dunk-review
 esteban-voice
+# Ever-managed skills names: current tree + git history.
 facts
 flint-chart-author
 .gitkeep
@@ -38,6 +39,7 @@ plan
 prd-to-plan
 pull-request
 refactor-pass
+# Regenerate with: ./manage.sh regen-seeds (commit the result).
 request-refactor-plan
 review-my-go
 review-my-javascript
