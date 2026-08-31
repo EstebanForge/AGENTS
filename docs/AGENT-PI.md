@@ -9,8 +9,8 @@ Source of truth: the live config on this machine (`~/.pi/agent/settings.json`); 
 ```json
 {
   "defaultProvider": "zai",
-  "defaultModel": "glm-5.3",
-  "defaultThinkingLevel": "low",
+  "defaultModel": "glm-5.3-flash",
+  "defaultThinkingLevel": "high",
   "enabledModels": [
     "deepseek/deepseek-v4-flash",
     "deepseek/deepseek-v4-pro",
@@ -26,89 +26,6 @@ Source of truth: the live config on this machine (`~/.pi/agent/settings.json`); 
     "zai/glm-5.3",
     "zai/glm-5.2"
   ]
-}
-```
-
-## Custom Providers (`~/.pi/agent/models.json`)
-
-Mirrors the live file. `deepseek` and `lmstudio` are custom; `zai` is custom (GLM-5.2 via the Anthropic-style endpoint). Other providers in `enabledModels` (`google`, `minimax`, `claude-bridge`) use pi's built-in provider registry. The `antigravity/*` models are exposed by the `@estebanforge/pi-antigravity-bridge` extension.
-
-```json
-{
-  "providers": {
-    "lmstudio": {
-      "baseUrl": "http://192.168.10.44:1234/v1",
-      "api": "openai-completions",
-      "apiKey": "lmstudio",
-      "compat": {
-        "supportsDeveloperRole": false,
-        "supportsReasoningEffort": false
-      },
-      "models": [
-        { "id": "google/gemma-4-12b", "name": "Gemma 4 12B (LMStudio)", "input": ["text", "image"], "contextWindow": 131072 },
-        { "id": "qwen/qwen3.5-35b-a3b", "name": "Qwen 3.5 35B A3B (LMStudio)", "input": ["text"], "contextWindow": 131072 },
-        { "id": "qwen/qwen3.5-9b", "name": "Qwen 3.5 9B (LMStudio)", "input": ["text"], "contextWindow": 131072 },
-        { "id": "microsoft/phi-4", "name": "Phi-4 (LMStudio)", "input": ["text"], "contextWindow": 16384 },
-        { "id": "microsoft/phi-4-reasoning-plus", "name": "Phi-4 Reasoning+ (LMStudio)", "reasoning": true, "input": ["text"], "contextWindow": 16384 },
-        { "id": "openai/gpt-oss-20b", "name": "GPT-OSS 20B (LMStudio)", "input": ["text"], "contextWindow": 131072 },
-        { "id": "qwen/qwen3-coder-30b", "name": "Qwen3 Coder 30B (LMStudio)", "input": ["text"], "contextWindow": 131072 },
-        { "id": "mistralai/ministral-3-14b-reasoning", "name": "Ministral 3 14B Reasoning (LMStudio)", "reasoning": true, "input": ["text"], "contextWindow": 131072 }
-      ]
-    },
-    "deepseek": {
-      "baseUrl": "https://api.deepseek.com",
-      "api": "openai-completions",
-      "apiKey": "$DEEPSEEK_API_KEY",
-      "models": [
-        {
-          "id": "deepseek-v4-pro",
-          "name": "DeepSeek V4 Pro",
-          "contextWindow": 1000000,
-          "maxTokens": 384000,
-          "input": ["text"],
-          "reasoning": true,
-          "cost": { "input": 1.74, "output": 3.48, "cacheRead": 0.145, "cacheWrite": 0 },
-          "compat": {
-            "requiresReasoningContentOnAssistantMessages": true,
-            "thinkingFormat": "deepseek",
-            "reasoningEffortMap": {
-              "minimal": "high", "low": "high", "medium": "high", "high": "high", "xhigh": "max"
-            }
-          }
-        },
-        {
-          "id": "deepseek-v4-flash",
-          "name": "DeepSeek V4 Flash",
-          "contextWindow": 1000000,
-          "maxTokens": 384000,
-          "input": ["text"],
-          "reasoning": true,
-          "cost": { "input": 0.14, "output": 0.28, "cacheRead": 0.028, "cacheWrite": 0 },
-          "compat": {
-            "requiresReasoningContentOnAssistantMessages": true,
-            "thinkingFormat": "deepseek",
-            "reasoningEffortMap": {
-              "minimal": "high", "low": "high", "medium": "high", "high": "high", "xhigh": "max"
-            }
-          }
-        }
-      ]
-    },
-    "zai": {
-      "baseUrl": "https://api.z.ai/api/anthropic",
-      "api": "anthropic-messages",
-      "models": [
-        {
-          "id": "glm-5.2",
-          "name": "GLM-5.2",
-          "reasoning": true,
-          "input": ["text"],
-          "contextWindow": 1000000,
-          "maxTokens": 131072
-        }
-      ]
-    }
-  }
 }
 ```
 
@@ -137,6 +54,7 @@ Mirrors the live file. `deepseek` and `lmstudio` are custom; `zai` is custom (GL
 
 ## MCP Servers
 
+We use `mcp-cli-ent` cli tool, to avoid native MCP context pollution on Pi. So no Pi extension for MCP servers is required.
 Canonical registry in this repo: [`../configs/mcp_servers.json`](../configs/mcp_servers.json). The live `mcp.json` on this machine is intentionally empty (MCP servers replaced by pi packages: context7, agentmemory, codegraph); machines that still use MCP servers provision from the repo registry.
 
 Enabled servers:
