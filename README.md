@@ -190,14 +190,13 @@ description: One-line description used by agents.
 
 The `configs/` directory holds portable agent configuration used to reproduce the full setup on another machine. Currently:
 
-- `configs/settings.json` — Pi agent settings (provider, model, packages, UI). Source of truth: the live config on this machine (`~/.pi/agent/settings.json`); this repo mirrors it. The construct-cli sandbox and other machines consume from this repo.
-- `configs/mcp_servers.json` — Pi MCP server registry. Source of truth for the server set. The live `mcp.json` on this machine is intentionally empty (MCP servers replaced by pi packages: context7, agentmemory, codegraph); machines that still use MCP servers provision from this registry.
+- `configs/mcp_servers.json` — MCP server registry for the `mcp-cli-ent` CLI (per-machine config: `~/.config/mcp-cli-ent/mcp_servers.json`). This repo copy is the portable source of truth; machines provision from it. Pi itself has no MCP layer; its docs, memory, and codegraph needs run on native pi extensions.
 
 Detailed Pi configuration reference: [docs/AGENT-PI.md](docs/AGENT-PI.md).
 
 ### Pi Extensions
 
-Pi packages installed in this instance (47 total, verified via `pi list`). Canonical list tracked in [`configs/settings.json`](configs/settings.json).
+Pi packages installed in this instance (47 total, verified via `pi list`).
 
 | Package | Purpose |
 |---------|---------|

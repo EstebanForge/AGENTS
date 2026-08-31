@@ -2,33 +2,6 @@
 
 > Reproduce this pi setup on a fresh machine. Prompts are symlinked from the repo; skills are synced via `manage.sh`.
 
-## Settings (`~/.pi/agent/settings.json`)
-
-Source of truth: the live config on this machine (`~/.pi/agent/settings.json`); this repo's [`../configs/settings.json`](../configs/settings.json) mirrors it. Other machines (construct-cli sandbox included) consume from this repo. Key fields:
-
-```json
-{
-  "defaultProvider": "zai",
-  "defaultModel": "glm-5.3-flash",
-  "defaultThinkingLevel": "high",
-  "enabledModels": [
-    "deepseek/deepseek-v4-flash",
-    "deepseek/deepseek-v4-pro",
-    "google/gemini-3.6-flash",
-    "minimax/MiniMax-M3",
-    "claude-bridge/claude-fable-5",
-    "claude-bridge/claude-opus-5",
-    "claude-bridge/claude-sonnet-5",
-    "antigravity/gemini-3-6-flash",
-    "antigravity/gemini-3-1-pro",
-    "antigravity/claude-sonnet-4-6",
-    "antigravity/claude-opus-4-6-thinking",
-    "zai/glm-5.3",
-    "zai/glm-5.2"
-  ]
-}
-```
-
 ## Web Providers (`~/.pi/agent/web-providers.json`)
 
 ```json
@@ -54,8 +27,7 @@ Source of truth: the live config on this machine (`~/.pi/agent/settings.json`); 
 
 ## MCP Servers
 
-We use `mcp-cli-ent` cli tool, to avoid native MCP context pollution on Pi. So no Pi extension for MCP servers is required.
-Canonical registry in this repo: [`../configs/mcp_servers.json`](../configs/mcp_servers.json). The live `mcp.json` on this machine is intentionally empty (MCP servers replaced by pi packages: context7, agentmemory, codegraph); machines that still use MCP servers provision from the repo registry.
+Pi has no native MCP support. MCP servers run through the `mcp-cli-ent` CLI instead; each machine keeps its config at `~/.config/mcp-cli-ent/mcp_servers.json`, provisioned from the canonical registry in this repo: [`../configs/mcp_servers.json`](../configs/mcp_servers.json). Docs, memory, and codegraph are covered by native pi extensions, so no MCP servers are wired into Pi itself.
 
 Enabled servers:
 
@@ -68,9 +40,9 @@ Enabled servers:
 
 Disabled but available: `chrome-devtools`, `playwright`, `sequential-thinking`, `time`, `cipher`.
 
-## Extensions (`settings.json`)
+## Extensions
 
-Installed packages (all active, 47 total). Verified via `pi list`. Canonical source: [`../configs/settings.json`](../configs/settings.json).
+Installed packages (all active, 47 total). Verified via `pi list`.
 
 ```json
 "packages": [

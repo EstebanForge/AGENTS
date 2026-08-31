@@ -184,7 +184,6 @@ Paths where MCP servers are configured per agent. Format and location vary.
 
 | Agent | Config path | Format |
 |---|---|---|
-| **Pi** | `~/.pi/agent/mcp.json` | JSON (`mcpServers`) |
 | **Antigravity** | `~/.gemini/antigravity/mcp_config.json` | JSON (`mcpServers`) |
 | **Antigravity CLI** | `~/.gemini/antigravity-cli/mcp_config.json` | JSON (`mcpServers`) |
 | **Antigravity IDE** | `~/.gemini/antigravity-ide/mcp_config.json` | JSON (`mcpServers`) |
@@ -200,6 +199,7 @@ Paths where MCP servers are configured per agent. Format and location vary.
 | **Cline** | `~/.cline/data/settings/cline_mcp_settings.json` | JSON (`mcpServers`) |
 | **VS Code** | `~/Library/Application Support/Code/User/mcp.json` | JSON |
 
+Pi has no native MCP support. It reaches MCP servers through the `mcp-cli-ent` CLI; config lives at `~/.config/mcp-cli-ent/mcp_servers.json`.
 
 ### Construct-cli variants
 
@@ -211,7 +211,6 @@ Paths where MCP servers are configured per agent. Format and location vary.
 | **Claude Code** | `~/.config/construct-cli/home/.claude.json` |
 | **Codex** | `~/.config/construct-cli/home/.codex/config.toml` |
 | **Opencode** | `~/.config/construct-cli/home/.config/opencode/opencode.json` |
-| **Pi** | `~/.config/construct-cli/home/.pi/agent/mcp.json` |
 | **Qwen** | `~/.config/construct-cli/home/.qwen/settings.json` |
 | **Amp** | `~/.config/construct-cli/home/.config/amp/settings.json` |
 | **Copilot** | `~/.config/construct-cli/home/.copilot/mcp-config.json` |
@@ -224,7 +223,7 @@ Paths where MCP servers are configured per agent. Format and location vary.
 
 Not all agents use the same JSON schema. Key differences:
 
-- **Pi, Antigravity, Claude, Copilot, Factory, Cline, Qwen**: `{ "mcpServers": { "name": { "command": "...", "args": [...] } } }`
+- **Antigravity, Claude, Copilot, Factory, Cline, Qwen**: `{ "mcpServers": { "name": { "command": "...", "args": [...] } } }`
 - **Codex**: TOML. `[mcp_servers.name]` with `command = "..."`, `args = [...]`, `[mcp_servers.name.env]`
 - **Opencode**: `{ "mcp": { "name": { "command": "...", "args": [...] } } }` (note: `mcp` not `mcpServers`)
 - **Goose**: YAML `extensions` list. Each entry has `name`, `transport.type`, `transport.command`, `transport.args`, `env`
