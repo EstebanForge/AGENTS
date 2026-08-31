@@ -42,7 +42,7 @@ Disabled but available: `chrome-devtools`, `playwright`, `sequential-thinking`, 
 
 ## Extensions
 
-Installed packages (all active, 47 total). Verified via `pi list`.
+Installed packages (all active, 44 total). Verified via `pi list`.
 
 ```json
 "packages": [
@@ -87,7 +87,9 @@ Installed packages (all active, 47 total). Verified via `pi list`.
   "npm:@tintinweb/pi-subagents",
   "npm:@estebanforge/pi-show-me-the-meat",
   "npm:@estebanforge/pi-ask-claude",
-  "npm:@estebanforge/pi-hostname"
+  "npm:@estebanforge/pi-hostname",
+  "npm:@estebanforge/pi-zendesk-me",
+  "npm:pi-advisor-flow"
 ]
 ```
 

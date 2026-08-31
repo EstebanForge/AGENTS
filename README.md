@@ -196,52 +196,7 @@ Detailed Pi configuration reference: [docs/AGENT-PI.md](docs/AGENT-PI.md).
 
 ### Pi Extensions
 
-Pi packages installed in this instance (47 total, verified via `pi list`).
-
-| Package | Purpose |
-|---------|---------|
-| `pi-rtk-optimizer` | RTK command rewriting + tool-output compaction |
-| `git:ferologics/pi-notify` | Event notifications |
-| `pi-web-providers` | Web search/contents/research/answer providers |
-| `@tintinweb/pi-tasks` | Task management |
-| `pi-context-usage` | Context budget visibility |
-| `git:code-yeongyu/pi-nested-agents-md` | Nested-agent markdown handling |
-| `pi-init` | AGENTS.md initialization |
-| `@ff-labs/pi-fff` | Fuzzy file finder / grep (extensions filtered) |
-| `@upstash/context7-pi` | Library docs + snippets |
-| `@estebanforge/pi-agentmemory` | Cross-session memory (native extension) |
-| `pi-vision-handoff` | Vision-model handoff for image input (replaces glm-vision) |
-| `pi-token-speed` | Token speed display |
-| `pi-diff-review` | Diff review |
-| `@juicesharp/rpiv-ask-user-question` | Structured user-question tool |
-| `pi-token-burden` | Token burden display |
-| `@tintinweb/pi-subagents` | Subagent execution (replaces `@gotgenes/pi-subagents`) |
-| `pi-claude-bridge` | Bridge to Claude models |
-| `@estebanforge/pi-glm-tweaks` | GLM provider tweaks (`+extensions/index.ts`) |
-| `@estebanforge/pi-codegraph-enhanced` | Local code knowledge graph |
-| `@estebanforge/pi-antigravity-bridge` | Native Antigravity (Gemini) bridge (replaces ask-antigravity) |
-| `@estebanforge/pi-ask-codex` | Delegate to OpenAI Codex (GPT) peer agent |
-| `@estebanforge/pi-slack-me` | Slack read/post/search as the user (user token) |
-| `@pi-kaush/pi-inline-skill-identifier` | Highlight `$skill` aliases, route inline skill refs |
-| `@mobrienv/pi-tidy-tools` | Compact, reason-first tool output with layouts/diffs |
-| `git:jnsahaj/pi-agent-browser-screenshot` | Inline headless-browser screenshots in the TUI |
-| `git:tmustier/pi-queue-steer` | Visible steering/follow-up queues with inline editing |
-| `@estebanforge/pi-token-cost-ledger` | Token cost ledger (replaces `@ctogg/pi-cost-counter`) |
-| `npm:pi-unified-exec` | Unified exec backend (sessions, long-running, set_on_exit) |
-| `npm:@tmustier/pi-session-recap` | Session recap (turn budget, state) |
-| `@thurstonsand/pi-librarian` | Multi-repo codebase research and synthesis |
-| `pi-agent-browser-native` | Native headless browser automation (open, click, fill, snapshot, eval) |
-| `pi-visualize-code-changes` | Mermaid before/after/diff diagrams of code changes |
-| `git:github.com/earendil-works/pi-review-loop` | Iterative automated code review loop |
-| `pi-qmd-adaptive-search` | Local semantic file discovery (qmd-indexed, adaptive) |
-| `@pi-stef/atlassian` | Jira + Confluence (issues, stories, pages) |
-| `@estebanforge/pi-git-me` | Git/GitHub writes as the user (commit, PR, review via gh) |
-| `@tmustier/pi-tab-status` | Terminal tab status indicators for Pi sessions |
-| `git:dodo-reach/pi-clarify` | Rewrites rough prompts into precise technical prompts before sending |
-| `@estebanforge/pi-asana-me` | Asana tasks/projects/comments over REST (replaces pi-asana) |
-| `@estebanforge/pi-show-me-the-meat` | Abridge diffs to the lines that carry the change |
-| `@estebanforge/pi-ask-claude` | Delegate to Claude peer agent (isolated or continued session) |
-| `@estebanforge/pi-hostname` | Show hostname context in sessions |
+Pi packages installed in this instance: full list and purposes live in [docs/AGENT-PI.md](docs/AGENT-PI.md#extensions), verified via `pi list`.
 
 ## License
 
