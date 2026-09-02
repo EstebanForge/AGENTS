@@ -52,7 +52,7 @@ Iterate until the user approves the breakdown.
 
 ### 5. Publish the tickets to the issue tracker
 
-For each approved slice, publish a new ticket to the issue tracker (a GitHub issue). Use the ticket body template below. These tickets are considered ready for AFK agents, so publish them with the correct triage label unless instructed otherwise.
+For each approved slice, publish a new ticket to the issue tracker (a GitHub issue). **Repo templates win (hard):** if the repo ships issue templates (`.github/ISSUE_TEMPLATE/`), use the one that fits each ticket instead of the template below. Otherwise use the ticket body template. These tickets are considered ready for AFK agents, so publish them with the correct triage label unless instructed otherwise.
 
 **Human-output gate (hard), per ticket.** Before each create, render the full ticket title and body exactly as they will be posted, the body in a fenced block, then STOP. Do not run `gh issue create` until the user approves, amends, or cancels that ticket. Re-render after any amendment and wait again. Silence is a cancel. A blanket approve over several tickets is not valid: the user must see each full body. Full rules in [`../_templates/human-output-gate.md`](../_templates/human-output-gate.md).
 

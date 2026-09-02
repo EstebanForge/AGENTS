@@ -189,3 +189,7 @@ mcp_protocol:
   rules:
     - "Always discover dynamically using `mcp-cli-ent` instead of assuming server availability"
     - "Select tools semantically based on tool descriptions in the discovery output"
+
+repo_template_priority:
+  rule: "When the target repo ships its own templates for a process, they win over this repo's skills: commit message (.gitmessage / git config commit.template / CONTRIBUTING.md), GitHub issue (.github/ISSUE_TEMPLATE/), pull request (.github/PULL_REQUEST_TEMPLATE*). Skills define the fallback only. Details live in the commit, issue, pull-request, and to-tickets skills."
+  why: "Respect the conventions and wishes of external and third-party maintainers."
