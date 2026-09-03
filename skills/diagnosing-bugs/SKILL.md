@@ -105,6 +105,18 @@ Tool preference:
 
 **Perf branch.** For performance regressions, logs are usually wrong. Instead: establish a baseline measurement (timing harness, `performance.now()`, profiler, query plan), then bisect. Measure first, fix second.
 
+### Explicit Investigation State
+
+Maintain an explicit structured state to prevent repeated tests and context noise:
+- `symptoms`: Exact failure behavior or error message.
+- `current_loop_cmd`: Deterministic command from Phase 1.
+- `tested_hypotheses`: Tested hypotheses with status (`CONFIRMED` or `REFUTED`) and concise evidence.
+- `discovered_facts`: Verified system facts, paths, and values.
+- `active_files`: Files verified to participate in the bug path.
+
+Update this state immediately after each probe. Extract facts into the state, then discard raw terminal telemetry from reasoning. Never test a hypothesis marked `REFUTED` again.
+
+
 ## Phase 5 — Fix + regression test
 
 Write the regression test **before the fix** — but only if there is a **correct seam** for it.

@@ -26,6 +26,14 @@ Every document and pointer you add spends one of two budgets:
 
 Material reached only through a pointer escapes context load at the price of the pointer's own line; material with no pointer at all rides entirely on cognitive load.
 
+## State versus history
+
+For iterative agent loops (test runners, diagnostic loops, crawlers, multi-step refactors), design around **explicit mutable state** rather than conversation history accumulation:
+
+- **The history trap**: Appending raw tool outputs, observations, and thoughts makes prompt size scale as O(t) and total token burn scale quadratically as O(T^2). Historical logs cause attention distraction and anchor the agent on obsolete facts.
+- **State as a sufficient statistic**: Define a structured state schema for the loop (for example: `{ active_task, verified_facts, rejected_paths, current_step }`). Instruct the agent to read current state and latest observation, emit a state patch, and discard intermediate reasoning.
+- **Linear scaling**: Explicit state transitions keep step prompt size bounded at O(1) and total execution cost linear at O(T).
+
 ## Information hierarchy
 
 A document is built from two content types — **steps** (the ordered actions the agent performs) and **reference** (definitions, rules, facts consulted on demand) — that mix freely: all steps (a recipe), all reference (a review's rules, this skill), or both. The core decision is where each piece sits on the **information hierarchy**, a ladder ranked by how immediately the agent needs the material:

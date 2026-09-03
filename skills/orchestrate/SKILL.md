@@ -16,6 +16,8 @@ description: Apply structured workflow orchestration for non-trivial tasks. Cove
 
 - Use subagents liberally to keep main context window clean
 - Offload research, exploration, and parallel analysis to subagents
+- Enforce state-patch contracts: subagents return structured result patches (facts, file paths, status) instead of verbose conversational transcripts
+- Discard intermediate reasoning: after the supervisor incorporates the subagent patch, drop the scratchpad history to keep context bounded
 - For complex problems, throw more compute at it via subagents
 - One task per subagent for focused execution
 
