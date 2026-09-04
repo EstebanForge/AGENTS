@@ -1,5 +1,6 @@
 acpx
 agent-browser
+before-and-after
 bro
 codebase-design
 code-review
@@ -27,6 +28,7 @@ impeccable
 implement
 improve-codebase-architecture
 ip-as-logo
+issue
 logo-generator
 mascot-as-logo
 mcp-cli-ent
@@ -35,8 +37,10 @@ mermaid-diagrams
 noacp
 obscura
 orchestrate
+patch-receipt
 plan
 prd-to-plan
+proof-of-work
 pull-request
 refactor-pass
 # Regenerate with: ./manage.sh regen-seeds (commit the result).
@@ -47,6 +51,7 @@ review-my-php
 review-my-rust
 review-my-typescript
 review-pull-request
+show-me
 simplify-review
 ste-writing
 .system
