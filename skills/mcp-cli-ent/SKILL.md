@@ -1,6 +1,6 @@
 ---
 name: mcp-cli-ent
-description: Interact with Model Context Protocol (MCP) servers using the mcp-cli-ent command-line client. Use when listing servers, checking tool schemas, calling tools, or managing persistent browser sessions.
+description: CLI client for Model Context Protocol (MCP) servers. Use when discovering MCP servers, querying tool schemas, or executing MCP tool calls.
 ---
 
 # MCP CLI-Ent

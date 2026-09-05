@@ -1,6 +1,6 @@
 ---
 name: mascot-as-logo
-description: Generate highly simplified personified IP mascot logos with Flat-first geometry, rounded heavy forms, two IP colors plus one background color by default, and continuous-gradient neo-skeuomorphic micro-volume. Use when creating an animal, creature, robot, ghost, plant, object, or other character as a minimal square logo or app-icon artwork, including when the agent should infer three product-relevant directions and propose six independent candidates for approval.
+description: Design minimal character and mascot logos. Use when creating simplified personified mascots, creature icons, or illustrated character app marks.
 ---
 
 # Mascot as Logo

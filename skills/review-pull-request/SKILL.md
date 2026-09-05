@@ -1,6 +1,6 @@
 ---
 name: review-pull-request
-description: Review a GitHub pull request for bugs, regressions, security holes, and risky changes. Use when the user asks to "review a PR", "code review this", "check PR #N", provides a PR URL, or mentions peer review. Produces a high-signal, severity-ordered verdict and submits it via `gh`.
+description: Conduct a comprehensive code review on a GitHub pull request via gh CLI. Use when reviewing a pull request for bugs, regressions, security risks, or behavior changes.
 ---
 
 # Review Pull Request

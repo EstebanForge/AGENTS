@@ -1,6 +1,6 @@
 ---
 name: review-my-rust
-description: Review Rust changes against the Rust Code Smells guide. Use when the user says "review my Rust", or when a requested code review, diff, commit, or PR audit turns out to contain .rs files. Findings name anti-patterns and end with a verdict.
+description: Review Rust code against idiomatic Rust guidelines and code smell patterns. Use when specifically reviewing Rust source code changes.
 ---
 
 # Review My Rust

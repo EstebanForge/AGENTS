@@ -1,13 +1,6 @@
 ---
 name: simplify-review
-description: >
-  Code review focused exclusively on over-engineering. Finds what to delete or
-  shrink: reinvented standard library, unneeded dependencies, speculative
-  abstractions, dead flexibility. One line per finding: location, what to cut,
-  what replaces it. List-only, does not apply fixes. Use when the user says
-  "is this over-engineered", "what can we delete from this diff", "simplify
-  review", "review for complexity", or invokes /simplify-review. Complements
-  review-pull-request (correctness) and refactor-pass (applies + verifies).
+description: Review code diffs specifically for over-engineering and unnecessary complexity. Use when identifying code to simplify, delete, or replace with standard library alternatives.
 ---
 
 # Simplify Review

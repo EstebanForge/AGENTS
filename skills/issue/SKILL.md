@@ -1,6 +1,6 @@
 ---
 name: issue
-description: Create or manage a standalone GitHub issue using `gh issue`. Use when the user asks to "file an issue", "open a bug report", "create an issue", or to comment on, label, edit, or close an existing issue. For batch ticket breakdown of a plan, use to-tickets instead.
+description: Create or manage GitHub issues using the gh CLI. Use when opening a new issue, filing a bug report, or updating issue status and labels.
 ---
 
 # Issue

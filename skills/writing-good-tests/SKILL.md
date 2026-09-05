@@ -1,6 +1,6 @@
 ---
 name: writing-good-tests
-description: "Test-quality reference: what makes a test worth keeping. Use when writing or changing tests, adding mocks or test helpers, deciding whether a test earns its place, or reviewing existing tests for change detectors, mirror assertions, source-text assertions, or mock abuse. Works with or without a test-driven development loop."
+description: Quality principles and anti-pattern reference for automated tests. Use when authoring new tests, refactoring test suites, evaluating test value, or avoiding fragile assertions and mock abuse.
 ---
 
 # Writing Good Tests

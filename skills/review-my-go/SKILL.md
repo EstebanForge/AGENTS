@@ -1,6 +1,6 @@
 ---
 name: review-my-go
-description: Review Go changes against the 100 Go Mistakes checklist and JetBrains' version-resolved modern-Go guidelines. Use when the user says "review my Go", or when a requested code review, diff, commit, or PR audit turns out to contain .go files. Findings cite mistake numbers or guideline IDs and end with a verdict.
+description: Review Go code against Go idioms, guidelines, and mistake checklists. Use when specifically reviewing Go source files or requested Go code changes.
 ---
 
 # Review My Go

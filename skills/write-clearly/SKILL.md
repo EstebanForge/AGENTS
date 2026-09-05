@@ -1,6 +1,6 @@
 ---
 name: write-clearly
-description: Drafts, revises, and audits reader-first technical and product documentation. Use when working on developer docs, procedures, release notes, technical explanations, help-center content, or UI copy where clarity, source fidelity, accessibility, or global readability matters. Do not auto-apply it to marketing, legal, academic, fictional, or personal writing unless the user explicitly requests this style.
+description: Draft and refine reader-focused technical documentation. Use when editing developer guides, system procedures, technical explanations, or interface copy for clarity and accuracy.
 ---
 
 # NBJ Write Clearly

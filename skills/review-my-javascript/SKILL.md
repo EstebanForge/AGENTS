@@ -1,6 +1,6 @@
 ---
 name: review-my-javascript
-description: Review JavaScript changes against the JS flaws rubric. Use when the user says "review my JavaScript" or "review my JS", or when a requested code review, diff, commit, or PR audit turns out to contain .js, .mjs, or .cjs files. Findings cite entry numbers and end with a verdict.
+description: Review JavaScript code against common language flaws and runtime anti-patterns. Use when specifically reviewing JavaScript (JS/MJS/CJS) source changes.
 ---
 
 # Review My JavaScript

@@ -1,6 +1,6 @@
 ---
 name: facts
-description: Give a capable engineer a concise briefing on the critical facts and implications of an effort before it is built or after it is completed. Use when the human explicitly invokes $facts, and never otherwise; do not invoke this skill automatically.
+description: Concise briefing on the critical facts and implications of a planned or completed effort.
 disable-model-invocation: true
 ---
 

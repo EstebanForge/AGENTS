@@ -1,6 +1,6 @@
 ---
 name: flint-chart-author
-description: "Use when: the user asks to make or render charts with flint-chart, visualize tabular data, generate a ChartAssemblyInput, validate/render through MCP, or add Flint to a JS/TS project. Author the semantic spec, transform data before Flint when needed, install/import Flint only when executable code is needed, and reserve backend-specific style tweaks for after compiling from Flint."
+description: Author semantic chart specifications and render charts using flint-chart. Use when creating, visualizing, or validating data charts in JavaScript/TypeScript projects.
 ---
 
 # flint-chart: authoring and using a chart spec

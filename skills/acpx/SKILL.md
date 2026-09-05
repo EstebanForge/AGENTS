@@ -1,11 +1,7 @@
 ---
 name: acpx
-description: Use acpx as a headless ACP CLI for agent-to-agent communication, including prompt/exec/sessions workflows, session scoping, queueing, permissions, and output formats.
+description: Headless ACP CLI client for agent-to-agent communication. Use when running agents via ACP, managing persistent sessions, or executing cross-agent workflows.
 ---
-
-## When to use this skill
-
-Use this skill when you need to run coding agents through `acpx`, manage persistent ACP sessions, queue prompts, or consume structured agent output from scripts.
 
 ## Antigravity (agy) redirect
 

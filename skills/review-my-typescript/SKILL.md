@@ -1,6 +1,6 @@
 ---
 name: review-my-typescript
-description: Review TypeScript and React changes against the TS + React rubric. Use when the user says "review my TypeScript" or "review my React", or when a requested code review, diff, commit, or PR audit turns out to contain .ts, .tsx, or .jsx files. Findings cite entry numbers and end with a verdict.
+description: Review TypeScript and React code against typing, component, and hook best practices. Use when specifically reviewing TypeScript or TSX source files.
 ---
 
 # Review My TypeScript

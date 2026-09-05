@@ -1,12 +1,6 @@
 ---
 name: deferred-debt
-description: >
-  Harvest every DEBT: comment in the codebase into a debt ledger, so deliberate
-  shortcuts get tracked instead of rotting into "later means never". A DEBT:
-  comment names a shortcut's ceiling and its upgrade trigger. Use when the user
-  says "tech debt", "what did we defer", "list the shortcuts", "debt ledger",
-  "DEBT ledger", "/deferred-debt", or "what's marked to do later". One-shot
-  report, changes nothing.
+description: Scan codebase comments for deferred technical debt and output a structured debt ledger. Use when auditing deferred shortcuts or listing pending technical debt.
 ---
 
 # Deferred Debt

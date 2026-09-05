@@ -1,13 +1,6 @@
 ---
 name: write-discoverable-code
-description: |
-  Rules for writing code that coding agents (and humans) can find and understand through
-  plain-text search. Apply whenever writing or renaming code: functions, types, constants,
-  files, error messages, doc comments.
-
-  Grounded in measurement: agents navigate by plain-text search, not by AST or
-  language server, so every identifier is a search query and every search miss
-  costs wasted reads.
+description: Guidelines for writing searchable, discoverable code and identifiers. Use when naming or structuring functions, types, files, error messages, and documentation for search clarity.
 ---
 
 # Write discoverable code

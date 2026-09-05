@@ -1,6 +1,6 @@
 ---
 name: plan
-description: Perform a thorough plan review across architecture, code quality, tests, and performance. For every issue found, present concrete tradeoffs and options, give an opinionated recommendation, and ask for user input before proceeding.
+description: Review technical plans and execution strategies. Use when evaluating architecture tradeoffs, test plans, or implementation roadmaps before writing code.
 ---
 
 # Plan Mode Review

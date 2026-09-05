@@ -1,6 +1,6 @@
 ---
 name: orchestrate
-description: Apply structured workflow orchestration for non-trivial tasks. Covers plan-first execution, subagent delegation, self-improvement loops, verification gates, elegance checks, and autonomous bug fixing.
+description: Multi-agent orchestration workflows. Use when coordinating complex multi-step tasks across supervisor and subagent roles with structured verification gates.
 ---
 
 # Workflow Orchestration

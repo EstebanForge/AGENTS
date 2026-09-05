@@ -1,6 +1,6 @@
 ---
 name: ste-writing
-description: Rewrite technical prose into ASD-STE100 Simplified Technical English to remove AI slop and ambiguity. Use when the user asks to make docs, READMEs, PR text, error messages, release notes, tool descriptions, or comments clear, plain, or unambiguous. Also use it to enforce a controlled writing style, or to make text safe for a reader who cannot ask a follow-up. Two modes, strict (procedures, safety, error messages) and STE-flavored (general technical prose). STE strips voice on purpose, so route marketing, essays, and anything that needs a voice to the humanizer skill.
+description: Rewrite technical text into ASD-STE100 Simplified Technical English. Use when technical documentation, instructions, procedures, or release notes require clear, unambiguous, controlled language.
 ---
 
 # ste-writing

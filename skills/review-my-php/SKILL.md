@@ -1,6 +1,6 @@
 ---
 name: review-my-php
-description: Review PHP changes against the PHP 8.2+ anti-patterns rubric. Use when the user says "review my PHP", or when a requested code review, diff, commit, or PR audit turns out to contain .php files. Findings cite entry numbers and end with a verdict.
+description: Review PHP code against modern PHP 8.2+ standards and anti-patterns. Use when specifically reviewing PHP source code changes.
 ---
 
 # Review My PHP

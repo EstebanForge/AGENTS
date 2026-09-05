@@ -1,6 +1,6 @@
 ---
 name: noacp
-description: File-based session protocol for agents without ACP support. Wraps any CLI agent (agy, etc.) in persistent multi-turn conversations using shared session files. Use when acpx is unavailable, the target agent lacks ACP, or when user mentions noacp, agy session, file-based agent, or non-ACP agent communication. Supports agy model selection via aliases (agy-flash, agy-pro, agy-claude, etc.).
+description: File-based communication protocol for CLI agents lacking ACP support. Use when managing persistent multi-turn agent sessions through shared session files.
 ---
 
 File-based session protocol. Replaces ACPX for agents that lack ACP adapters.

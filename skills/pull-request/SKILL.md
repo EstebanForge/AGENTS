@@ -1,6 +1,6 @@
 ---
 name: pull-request
-description: Open a GitHub pull request from the current branch. Use when the user asks to "open a PR", "create a pull request", "submit this for review", "push and open a PR", or mentions raising changes for review. Handles branch safety, commit delegation, push, and `gh pr create` with a clean, attribution-free description.
+description: Create and submit a GitHub pull request from the current branch using gh CLI. Use when ready to publish changes, open a PR, and request review.
 ---
 
 # Pull Request

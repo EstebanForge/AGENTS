@@ -1,6 +1,6 @@
 ---
 name: datastar
-description: Build reactive hypermedia-driven web apps using Datastar. Covers signals, data-* attributes, SSE backend events, expressions, actions, and patterns like CQRS, click-to-edit, active search, infinite scroll, and bulk update. Use when working with Datastar framework, data-* attributes, SSE patch events, or backend-driven HTML apps.
+description: Build reactive hypermedia web applications using Datastar. Use when developing frontend interfaces with Datastar data attributes, reactive signals, or Server-Sent Events (SSE).
 ---
 
 # Datastar

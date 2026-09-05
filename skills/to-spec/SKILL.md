@@ -1,10 +1,10 @@
 ---
 name: to-spec
-description: Turn the current conversation into a spec and publish it to the project issue tracker — no interview, just synthesis of what you've already discussed.
+description: Turn conversation context into a technical spec and publish it to the project issue tracker without an interactive interview.
 disable-model-invocation: true
 ---
 
-This skill takes the current conversation context and codebase understanding and produces a spec. Do NOT interview the user — just synthesize what you already know.
+This skill takes the current conversation context and codebase understanding and produces a spec. Do NOT interview the user: synthesize what you already know.
 
 The issue tracker and triage label vocabulary are defined in [`../_templates/issue-tracker.md`](../_templates/issue-tracker.md) and [`../_templates/triage-labels.md`](../_templates/triage-labels.md).
 

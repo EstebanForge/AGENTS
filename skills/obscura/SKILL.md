@@ -1,6 +1,6 @@
 ---
 name: obscura
-description: Lightweight Rust headless fetch/scrape engine (not a full browser). One-shot page reads, bulk parallel scraping, and a CDP/MCP server for Puppeteer/Playwright/MCP automation. User-invoked; reach for it by name.
+description: Lightweight headless web scraping engine for one-shot reads, bulk scraping, and CDP automation.
 allowed-tools: Bash(obscura:*), Bash(obscura-worker:*)
 disable-model-invocation: true
 ---

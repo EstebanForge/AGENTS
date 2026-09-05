@@ -1,6 +1,6 @@
 ---
 name: proof-of-work
-description: Capture, format, and attach proof of work (screenshots, recordings, test runs, CLI output) across GitHub pull requests, Slack messages, Asana tasks, or local notes. Use when demonstrating completed changes, visual previews, terminal evidence, or optional before-and-after comparisons.
+description: Format and attach proof-of-work artifacts (screenshots, CLI output, test logs). Use when compiling verification evidence for pull requests, tickets, or status updates.
 ---
 
 # Proof of Work

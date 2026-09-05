@@ -1,13 +1,11 @@
 ---
 name: headless-ui-screenshot
-description: Screenshot-verify a GUI or webview app (Wails, GTK, Electron) on a headless Linux box when a UI slice must be checked against a wireframe and no display exists. Renders the window under Xvfb and captures it with ffmpeg x11grab.
+description: Capture screenshots of desktop GUI applications on headless Linux systems using Xvfb. Use when visually verifying Linux desktop apps without an active display.
 ---
 
-## When to use this skill
+## Scope
 
-Use this skill when a task must visually verify a desktop app's UI on a machine with no display: shipping a UI slice of Wicket QA Studio (`wicket-qa-studio/app`), checking a layout against a wireframe, or reproducing a rendering bug that needs a picture. Signals: "screenshot the app", "verify the UI", "does the layout match the spec".
-
-For web pages reachable by URL, use agent-browser instead. When DOM or text assertions answer the question, let them; this skill is for what only a picture proves.
+For web pages reachable by URL, use `agent-browser` instead. When DOM or text assertions answer the question, use them; this skill is for visual verification of Linux desktop apps under Xvfb.
 
 ## The recipe
 

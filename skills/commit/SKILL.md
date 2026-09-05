@@ -1,6 +1,6 @@
 ---
 name: commit
-description: "Read this skill before making git commits"
+description: Create git commits with Conventional Commits formatting and human-gate verification. Use when staging changes and committing code.
 ---
 
 Create a git commit for the current changes using a concise Conventional Commits-style subject.

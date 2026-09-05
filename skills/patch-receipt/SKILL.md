@@ -1,6 +1,6 @@
 ---
 name: patch-receipt
-description: Create agent-driven before-and-after proof for software changes using PNG, JPEG, MP4, HTTP/API evidence, browser verification via agent-browser, or Android/iOS app verification without requiring the PatchReceipt CLI. Use when a coding agent should test and capture a web change with agent-browser; verify an Android app through native tests and adb; verify an iOS app through XCTest/XCUITest and Simulator; or normalize, annotate, hash, and summarize visual or backend evidence for a bug fix, feature, regression, end-to-end flow, or pull request.
+description: Create structured before-and-after proof of work for code changes. Use when capturing screenshots, recordings, test output, or API responses to verify bug fixes, features, or pull requests.
 ---
 
 # PatchReceipt
