@@ -1,6 +1,6 @@
 ---
 name: logging-best-practices
-description: Logging best practices focused on wide events (canonical log lines) for powerful debugging and analytics
+description: Wide events (canonical log lines) logging pattern, one context-rich structured event per request per service. Use when writing, reviewing, or planning logging for a service.
 license: MIT
 metadata:
   author: boristane
@@ -8,8 +8,6 @@ metadata:
 ---
 
 # Logging Best Practices Skill
-
-Version: 1.0.0
 
 ## Purpose
 
@@ -94,32 +92,14 @@ Use middleware to handle wide event infrastructure (timing, status, environment,
 5. **Unstructured strings**: `console.log('something happened')` instead of structured data
 6. **Inconsistent schemas**: Different field names across services
 
-## Guidelines
+## Reference Files
 
-### Wide Events (`rules/wide-events.md`)
-- Emit one wide event per service hop
-- Include all relevant context
-- Connect events with request ID
-- Emit at request completion in finally block
+Load on demand:
 
-### Context (`rules/context.md`)
-- Support high cardinality fields (user_id, request_id)
-- Include high dimensionality (many fields)
-- Always include business context
-- Always include environment characteristics (commit_hash, version, region)
-
-### Structure (`rules/structure.md`)
-- Use a single logger throughout the codebase
-- Use middleware for consistent wide events
-- Use JSON format
-- Maintain consistent schema
-- Simplify to info and error levels
-- Never log unstructured strings
-
-### Common Pitfalls (`rules/pitfalls.md`)
-- Avoid multiple log lines per request
-- Design for unknown unknowns
-- Always propagate request IDs across services
+- `rules/wide-events.md` (CRITICAL): the full wide events pattern, request ID propagation, emission in a finally block
+- `rules/context.md` (CRITICAL): cardinality, dimensionality, business context, environment fields
+- `rules/structure.md` (HIGH): single logger, middleware wiring, JSON format, schema consistency, two log levels
+- `rules/pitfalls.md` (MEDIUM): worked examples of scattered logs, known-unknown blindness, missing request correlation
 
 References:
 - [Logging Sucks](https://loggingsucks.com)
