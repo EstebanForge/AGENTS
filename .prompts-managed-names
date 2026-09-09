@@ -3,5 +3,6 @@ bump.md
 changelog.md
 # Ever-managed prompts names: current tree + git history.
 fix-tests.md
+mannered-prose.md
 # Regenerate with: ./manage.sh regen-seeds (commit the result).
 review.md
