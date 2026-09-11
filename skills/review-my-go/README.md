@@ -1,6 +1,6 @@
 # review-my-go
 
-A skill that reviews Go changes (working tree, staged, commit, or range) against the 100 Go Mistakes checklist from [100go.co](https://100go.co/). Findings cite mistake numbers, carry a category (Bug/Critical, Suggestion, Nit), and end in an Approve / Request Changes / Needs Discussion verdict.
+A skill that reviews Go changes (working tree, staged, commit, or range) against the 100 Go Mistakes checklist from [100go.co](https://100go.co/) and the practice checks from [go-recipes](https://github.com/nikolaydubina/go-recipes). Findings cite mistake numbers (`#39`) or recipe names (`recipe:goleak`), carry a category (Bug/Critical, Suggestion, Nit), and end in an Approve / Request Changes / Needs Discussion verdict.
 
 Successor of the `@estebanforge/pi-go-review` pi extension (deprecated 2026).
 

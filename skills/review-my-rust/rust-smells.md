@@ -277,3 +277,27 @@ println!("The first element is: {}", first); // Immutable borrow ends right here
 
 data.push(4); // ✅ Allowed! No overlapping reference conflicts exist anymore
 ```
+
+---
+
+## 5. Async & Concurrency
+
+### ❌ Anti-Pattern: Blocking the Async Runtime Across `.await`
+
+Calling blocking operations inside an `async fn`: `std::fs`, `thread::sleep`, or holding a `std::sync::MutexGuard` across `.await`. The executor thread stalls every task scheduled on it, and a guard held across an await deadlocks or breaks `Send` bounds.
+
+```rust
+// Bad: blocks the worker thread; every task on it waits for the disk
+async fn load(path: &str) -> String {
+    std::fs::read_to_string(path).unwrap()
+}
+```
+
+### ⛵ Idiomatic Fix: Async-Aware Primitives, `spawn_blocking`, Short Lock Scopes
+
+```rust
+// Good: async fs; locks dropped before .await; blocking work off the runtime
+async fn load(path: &str) -> std::io::Result<String> {
+    tokio::fs::read_to_string(path).await
+}
+```
