@@ -36,20 +36,18 @@ Enabled servers:
 - `brave-search` — web search, images, news
 - `codegraph` — local code knowledge graph
 - `context7` — library docs and snippets
-- `deepwiki` — public repository documentation
 
-Disabled but available: `chrome-devtools`, `playwright`, `sequential-thinking`, `time`, `cipher`.
+Disabled but available: `chrome-devtools`, `playwright`, `sequential-thinking`, `deepwiki`, `time`, `cipher`.
 
 ## Extensions
 
-Installed packages (all active, 44 total). Verified via `pi list`.
+Installed packages (all active, 41 total). Verified via `pi list`.
 
 ```json
 "packages": [
   "git:github.com/ferologics/pi-notify",
   "npm:pi-web-providers",
   "npm:@tintinweb/pi-tasks",
-  "npm:pi-context-usage",
   "git:github.com/code-yeongyu/pi-nested-agents-md",
   "npm:pi-init",
   "npm:@ff-labs/pi-fff",
@@ -66,30 +64,28 @@ Installed packages (all active, 44 total). Verified via `pi list`.
   "npm:@estebanforge/pi-ask-codex",
   "npm:@estebanforge/pi-slack-me",
   "npm:@pi-kaush/pi-inline-skill-identifier",
-  "npm:@mobrienv/pi-tidy-tools",
   "git:github.com/jnsahaj/pi-agent-browser-screenshot",
   "git:github.com/tmustier/pi-queue-steer",
   "npm:@estebanforge/pi-token-cost-ledger",
   "npm:pi-unified-exec",
   "npm:@tmustier/pi-session-recap",
-  "npm:pi-qmd-adaptive-search",
   "npm:pi-vision-handoff",
   "npm:@thurstonsand/pi-librarian",
   "npm:pi-agent-browser-native",
   "npm:pi-visualize-code-changes",
   "git:github.com/earendil-works/pi-review-loop",
-  "npm:@estebanforge/pi-antigravity-bridge",
   "npm:@pi-stef/atlassian",
   "npm:@estebanforge/pi-git-me",
   "npm:@tmustier/pi-tab-status",
   "git:github.com/dodo-reach/pi-clarify",
   "npm:@estebanforge/pi-asana-me",
   "npm:@tintinweb/pi-subagents",
-  "npm:@estebanforge/pi-show-me-the-meat",
   "npm:@estebanforge/pi-ask-claude",
   "npm:@estebanforge/pi-hostname",
   "npm:@estebanforge/pi-zendesk-me",
-  "npm:pi-advisor-flow"
+  "npm:@estebanforge/pi-antigravity-bridge",
+  "npm:pi-redact-all",
+  "npm:@mobrienv/pi-tidy-tools"
 ]
 ```
 
