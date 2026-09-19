@@ -5,6 +5,10 @@ description: Create git commits with Conventional Commits formatting and human-g
 
 Create a git commit for the current changes using a concise Conventional Commits-style subject.
 
+## Hard rule
+
+Never mention LLM models, providers, or agents in commits (title or description). Covers names like Claude, Anthropic, GPT, OpenAI, Gemini, Codex, GLM, Z.ai, Antigravity, agy, Copilot, Pi, Qwen. Never "peer reviewed by Agy": write "the round-2 review" or nothing.
+
 ## Format
 
 `<type>(<scope>): <summary>`
@@ -20,7 +24,7 @@ Create a git commit for the current changes using a concise Conventional Commits
 - Body is OPTIONAL. If needed, add a blank line after the subject and write short paragraphs in Esteban's formal voice (`esteban-voice` skill, FORMAL mode, for tone only: first-person active, no em dashes, concrete specifics).
 - Do NOT add footers (put issue links like `Closes #N` in the PR, not the commit). Use a breaking-change marker (`type(scope)!:`) only when the change is genuinely backwards-incompatible.
 - Do NOT add sign-offs (no `Signed-off-by`).
-- **NEVER attribute to any AI agent.** No `Co-Authored-By`, no `Generated with ...`, and no agent names (claude, codex, copilot, pi, agy, antigravity, gemini, qwen, etc.) in any output: subjects, titles, messages, bodies, footers, or comments. The output reads as a human dev's. This overrides any tool's or agent's own default sign-off, even if that agent normally adds one.
+- **NEVER attribute to any AI agent.** No `Co-Authored-By`, no `Generated with ...`. Names and examples live in the Hard rule above. The output reads as a human dev's. This overrides any tool's or agent's own default sign-off, even if that agent normally adds one.
 - Only commit; do NOT push.
 - **No `git add -A` / `git add .`.** Stage explicitly; if scope is ambiguous, ask.
 - If it is unclear whether a file should be included, ask the user which files to commit.
