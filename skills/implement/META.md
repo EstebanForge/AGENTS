@@ -15,6 +15,5 @@ final commit step is bound to this project's human-output gate and the
 
 ## References to sibling skills
 
-- `/tdd` — vendored locally (`skills/tdd`).
 - `/code-review` — vendored locally (`skills/code-review`, 2026-08-28). The
   implement loop's closing review step now resolves.
