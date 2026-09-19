@@ -5,6 +5,8 @@ description: Simplify code and eliminate dead code after recent changes. Use whe
 
 # Refactor Pass
 
+Actively apply the DRY, KISS, and YAGNI principles.
+
 ## Workflow
 
 1. Review the changes just made and identify simplification opportunities.
