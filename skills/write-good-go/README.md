@@ -1,6 +1,6 @@
 # write-good-go
 
-Pre-write companion of [review-my-go](../review-my-go/README.md). Fires before Go code is drafted; the curated rule set prevents the high-frequency mistakes at write time. review-my-go stays the enforcement pass on the diff.
+Pre-write companion of [review-my-go](../review-my-go/README.md). Fires before Go code is drafted; the curated rule set prevents the high-frequency mistakes at write time and adds performance rules distilled from [goperf.dev](https://goperf.dev/) (Go Optimization Guide, CC BY 4.0). review-my-go stays the enforcement pass on the diff.
 
 ## Install
 
