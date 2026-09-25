@@ -86,7 +86,7 @@ Repository documentation from public Git repos.
 
 ```json
 {
-  "enabled": true,
+  "enabled": false,
   "command": "npx",
   "args": ["-y", "mcp-remote", "https://mcp.deepwiki.com/mcp"],
   "persistent": false,
@@ -218,6 +218,7 @@ Pi has no native MCP support. It reaches MCP servers through the `mcp-cli-ent` C
 | **Goose** | `~/.config/construct-cli/home/.config/goose/config.yaml` |
 | **Kilocode** | `~/.config/construct-cli/home/.config/kilo/kilo.jsonc` |
 | **Cline** | `~/.config/construct-cli/home/.cline/data/settings/cline_mcp_settings.json` |
+| **Pi** | `~/.config/construct-cli/home/.config/mcp-cli-ent/mcp_servers.json` |
 
 ## Format notes
 
