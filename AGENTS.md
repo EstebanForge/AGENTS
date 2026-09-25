@@ -94,6 +94,16 @@ verify_protocol:
   - "Fix root cause, not symptom. Find all callers (codegraph else grep). One shared guard > many caller guards"
   - "No ignored failures"
 
+testing_protocol:
+  - "Order: Test-first strictly. Never write unit tests after writing code."
+  - "Priority: Prefer End-to-End (E2E) tests. Use E2E as primary validation for complex features."
+  - "Artifacts: E2E runs must generate inspectable, reproducible output artifacts."
+  - "Isolation: Enumerate failure modes first, write tests, then write code."
+  - "Complexity: Realistic medium-to-high complexity scenarios. Reject trivial happy-path-only tests."
+  - "Anti-tautology: Reject tautological tests that assert self-evident code statements."
+  - "Anti-change-detector: Reject brittle tests that detect code changes instead of behavioral breaks."
+  - "Regressions: Add regression tests for bug fixes only when existing behavior tests leave an actual gap."
+
 security_protocol:
   - "Sanitize/Validate all data"
   - "Escape XSS"
