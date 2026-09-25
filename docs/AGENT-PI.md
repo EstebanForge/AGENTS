@@ -41,7 +41,7 @@ Disabled but available: `chrome-devtools`, `playwright`, `sequential-thinking`, 
 
 ## Extensions
 
-Installed packages (all active, 41 total). Verified via `pi list`.
+Installed packages (all active, 42 total). Verified via `pi list`.
 
 ```json
 "packages": [
@@ -85,10 +85,13 @@ Installed packages (all active, 41 total). Verified via `pi list`.
   "npm:@estebanforge/pi-zendesk-me",
   "npm:@estebanforge/pi-antigravity-bridge",
   "npm:pi-redact-all",
-  "npm:@mobrienv/pi-tidy-tools"
+  "npm:@mobrienv/pi-tidy-tools",
+  "npm:pi-observational-memory"
 ]
 ```
 
-> `@estebanforge/pi-token-cost-ledger` writes the spend ledger consumed by
-> the token cost tracker (replaces the deprecated `@ctogg/pi-cost-counter`).
-> Full setup + scripts + installer: [AGENT-PI-cost-tracking.md](AGENT-PI-cost-tracking.md).
+> `@estebanforge/pi-token-cost-ledger` owns token-spend tracking end to end:
+> a per-day JSONL ledger plus the `/token-usage` report (real USD and
+> API-equivalent USD). It replaces the deprecated `@ctogg/pi-cost-counter`
+> and the old host-side script stack.
+> Full setup: [AGENT-PI-cost-tracking.md](AGENT-PI-cost-tracking.md).
