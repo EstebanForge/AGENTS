@@ -130,12 +130,13 @@ After either action, restart your shell (or `source ~/.zshrc` / `~/.bashrc`).
 | Kilocode | `~/.kilocode/rules/AGENTS.md` | |
 | Cline | `~/Documents/Cline/Rules/AGENTS.md` | |
 | Pi | `~/.pi/agent/AGENTS.md` | |
+| Pig | `~/.pig/agent/AGENTS.md` | Go implementation of Pi; config root `~/.pig`, override with `PIG_HOME` |
 | Zcode | `~/.zcode/AGENTS.md` | |
 
 ### Skills
 
 Agents that natively read `~/.agents/skills/` (covered by **Standard**, no dedicated entry needed):
-- Antigravity, Codex, Opencode.
+- Antigravity, Codex, Opencode, Pi, Pig.
 
 Agents with dedicated synchronization:
 
@@ -150,7 +151,6 @@ Agents with dedicated synchronization:
 | Factory | `~/.factory/skills/` |
 | Goose | `~/.config/goose/skills/` |
 | Kilocode | `~/.kilocode/skills/` |
-| Pi | `~/.pi/agent/skills/` |
 | Zcode | `~/.zcode/skills/` |
 
 ---
@@ -193,6 +193,8 @@ The `configs/` directory holds portable agent configuration used to reproduce th
 - `configs/mcp_servers.json` — MCP server registry for the `mcp-cli-ent` CLI (per-machine config: `~/.config/mcp-cli-ent/mcp_servers.json`). This repo copy is the portable source of truth; machines provision from it. Pi itself has no MCP layer; its docs, memory, and codegraph needs run on native pi extensions.
 
 Detailed Pi configuration reference: [docs/AGENT-PI.md](docs/AGENT-PI.md).
+
+Detailed Pig configuration reference: [docs/AGENT-PIG.md](docs/AGENT-PIG.md).
 
 ### Pi Extensions
 

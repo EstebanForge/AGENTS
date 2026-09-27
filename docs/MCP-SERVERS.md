@@ -201,6 +201,8 @@ Paths where MCP servers are configured per agent. Format and location vary.
 
 Pi has no native MCP support. It reaches MCP servers through the `mcp-cli-ent` CLI; config lives at `~/.config/mcp-cli-ent/mcp_servers.json`.
 
+Pig (Pi's Go implementation) supports MCP definitions natively as package resources (`mcp/` inside a package). None installed yet; current MCP servers stay on `mcp-cli-ent`, shared with Pi.
+
 ### Construct-cli variants
 
 | Agent | Config path |
