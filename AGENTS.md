@@ -82,9 +82,6 @@ simplicity_ladder:
     "6",One line? One line
     "7","Only then: minimum code that works"
 
-session_protocol:
-  - "Context Budget|Session > 35 turns? Suggest compact/summarize to preserve logic"
-
 verify_protocol:
   - "Lint"
   - "Test"
