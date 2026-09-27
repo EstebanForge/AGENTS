@@ -92,14 +92,13 @@ verify_protocol:
   - "No ignored failures"
 
 testing_protocol:
-  - "Order: Test-first strictly. Never write unit tests after writing code."
-  - "Priority: Prefer End-to-End (E2E) tests. Use E2E as primary validation for complex features."
-  - "Artifacts: E2E runs must generate inspectable, reproducible output artifacts."
+  - "Order: Follow test-first strictly. Never write unit tests after code."
+  - "Priority: Use End-to-End (E2E) tests as primary validation for complex features."
+  - "Artifacts: Produce inspectable, reproducible artifacts from E2E runs."
+  - "Skill: Author tests with the writing-good-tests skill; re-evaluate after E2E runs."
   - "Isolation: Enumerate failure modes first, write tests, then write code."
-  - "Complexity: Realistic medium-to-high complexity scenarios. Reject trivial happy-path-only tests."
-  - "Anti-tautology: Reject tautological tests that assert self-evident code statements."
-  - "Anti-change-detector: Reject brittle tests that detect code changes instead of behavioral breaks."
-  - "Regressions: Add regression tests for bug fixes only when existing behavior tests leave an actual gap."
+  - "Complexity: Test realistic medium-to-high complexity scenarios. Reject trivial happy-path-only tests."
+  - "Regressions: Add regression tests only when existing behavior tests leave a gap."
 
 security_protocol:
   - "Sanitize/Validate all data"
