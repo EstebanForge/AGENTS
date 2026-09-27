@@ -1,3 +1,8 @@
+---
+name: human-output-gate
+description: Human approval gate for text published under Esteban's name to external surfaces (commits, PRs, issues). Use before any git commit or gh post command.
+---
+
 # Human-output gate
 
 Applies to any text published under Esteban's name to an external surface: git commit messages, GitHub PR titles and bodies, PR reviews and review comments, and GitHub issue titles and bodies. Once posted, these read as the human's own words. They are never auto-posted.

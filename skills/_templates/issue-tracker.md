@@ -1,3 +1,8 @@
+---
+name: issue-tracker
+description: GitHub issue-tracker conventions for this repo (create, read, label, triage via gh CLI). Use when a skill says publish to or fetch from the issue tracker.
+---
+
 # Issue tracker: GitHub
 
 Issues and PRDs for this repo live as GitHub issues. Use the `gh` CLI for all operations.
