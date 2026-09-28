@@ -43,6 +43,61 @@ Disabled but available: `chrome-devtools`, `playwright`, `sequential-thinking`, 
 
 Installed packages (all active, 42 total). Verified via `pi list`.
 
+### Package sources and install commands
+
+Each package was located in this order: 1. [pi.dev/packages](https://pi.dev/packages), 2. npm registry (keywords `pi-extension`, `pi-package`), 3. GitHub. First match wins. 39 of 42 are in the pi.dev catalog. 3 are GitHub-only.
+
+| Package | Found on | Install command |
+|---|---|---|
+| `pi-notify` | pi.dev/packages | `pi install npm:pi-notify` |
+| `pi-web-providers` | pi.dev/packages | `pi install npm:pi-web-providers` |
+| `@tintinweb/pi-tasks` | pi.dev/packages | `pi install npm:@tintinweb/pi-tasks` |
+| `pi-nested-agents-md` | GitHub | `pi install git:github.com/code-yeongyu/pi-nested-agents-md` |
+| `pi-init` | pi.dev/packages | `pi install npm:pi-init` |
+| `@ff-labs/pi-fff` | pi.dev/packages | `pi install npm:@ff-labs/pi-fff` |
+| `@upstash/context7-pi` | pi.dev/packages | `pi install npm:@upstash/context7-pi` |
+| `@estebanforge/pi-agentmemory` | pi.dev/packages | `pi install npm:@estebanforge/pi-agentmemory` |
+| `pi-token-speed` | pi.dev/packages | `pi install npm:pi-token-speed` |
+| `pi-diff-review` | pi.dev/packages | `pi install npm:pi-diff-review` |
+| `@juicesharp/rpiv-ask-user-question` | pi.dev/packages | `pi install npm:@juicesharp/rpiv-ask-user-question` |
+| `pi-token-burden` | pi.dev/packages | `pi install npm:pi-token-burden` |
+| `pi-claude-bridge` | pi.dev/packages | `pi install npm:pi-claude-bridge` |
+| `@estebanforge/pi-glm-tweaks` | pi.dev/packages | `pi install npm:@estebanforge/pi-glm-tweaks`, then apply the `extensions` override shown below |
+| `@estebanforge/pi-codegraph-enhanced` | pi.dev/packages | `pi install npm:@estebanforge/pi-codegraph-enhanced` |
+| `pi-rtk-optimizer` | pi.dev/packages | `pi install npm:pi-rtk-optimizer` |
+| `@estebanforge/pi-ask-codex` | pi.dev/packages | `pi install npm:@estebanforge/pi-ask-codex` |
+| `@estebanforge/pi-slack-me` | pi.dev/packages | `pi install npm:@estebanforge/pi-slack-me` |
+| `@pi-kaush/pi-inline-skill-identifier` | pi.dev/packages | `pi install npm:@pi-kaush/pi-inline-skill-identifier` |
+| `pi-agent-browser-screenshot` | GitHub | `pi install git:github.com/jnsahaj/pi-agent-browser-screenshot` |
+| `pi-queue-steer` | GitHub | `pi install git:github.com/tmustier/pi-queue-steer` |
+| `@estebanforge/pi-token-cost-ledger` | pi.dev/packages | `pi install npm:@estebanforge/pi-token-cost-ledger` |
+| `pi-unified-exec` | pi.dev/packages | `pi install npm:pi-unified-exec` |
+| `@tmustier/pi-session-recap` | pi.dev/packages | `pi install npm:@tmustier/pi-session-recap` |
+| `pi-vision-handoff` | pi.dev/packages | `pi install npm:pi-vision-handoff` |
+| `@thurstonsand/pi-librarian` | pi.dev/packages | `pi install npm:@thurstonsand/pi-librarian` |
+| `pi-agent-browser-native` | pi.dev/packages | `pi install npm:pi-agent-browser-native` |
+| `pi-visualize-code-changes` | pi.dev/packages | `pi install npm:pi-visualize-code-changes` |
+| `pi-review-loop` | pi.dev/packages | `pi install npm:pi-review-loop` |
+| `@pi-stef/atlassian` | pi.dev/packages | `pi install npm:@pi-stef/atlassian` |
+| `@estebanforge/pi-git-me` | pi.dev/packages | `pi install npm:@estebanforge/pi-git-me` |
+| `@tmustier/pi-tab-status` | pi.dev/packages | `pi install npm:@tmustier/pi-tab-status` |
+| `pi-clarify` | pi.dev/packages | `pi install npm:pi-clarify` |
+| `@estebanforge/pi-asana-me` | pi.dev/packages | `pi install npm:@estebanforge/pi-asana-me` |
+| `@tintinweb/pi-subagents` | pi.dev/packages | `pi install npm:@tintinweb/pi-subagents` |
+| `@estebanforge/pi-ask-claude` | pi.dev/packages | `pi install npm:@estebanforge/pi-ask-claude` |
+| `@estebanforge/pi-hostname` | pi.dev/packages | `pi install npm:@estebanforge/pi-hostname` |
+| `@estebanforge/pi-zendesk-me` | pi.dev/packages | `pi install npm:@estebanforge/pi-zendesk-me` |
+| `@estebanforge/pi-antigravity-bridge` | pi.dev/packages | `pi install npm:@estebanforge/pi-antigravity-bridge` |
+| `pi-redact-all` | pi.dev/packages | `pi install npm:pi-redact-all` |
+| `@mobrienv/pi-tidy-tools` | pi.dev/packages | `pi install npm:@mobrienv/pi-tidy-tools` |
+| `pi-observational-memory` | pi.dev/packages | `pi install npm:pi-observational-memory` |
+
+Notes:
+
+- `pi-agent-browser-screenshot`, `pi-nested-agents-md`, and `pi-queue-steer` are not in the pi.dev catalog and have no npm package under their bare or scoped names. GitHub is the only source; install with the `git:` form.
+- `pi-notify` and `pi-review-loop` are installed here with the `git:` form (see `packages` below). The catalog also publishes both on npm. The npm form tracks releases; the `git:` form tracks the repo head.
+- The pi.dev catalog indexes npm packages tagged `pi-extension` or `pi-package`. A catalog page per package lives at `https://pi.dev/packages/<name>`.
+
 ```json
 "packages": [
   "git:github.com/ferologics/pi-notify",
