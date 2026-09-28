@@ -41,11 +41,11 @@ Disabled but available: `chrome-devtools`, `playwright`, `sequential-thinking`, 
 
 ## Extensions
 
-Installed packages (all active, 42 total). Verified via `pi list`.
+Installed packages (all active, 41 total). Verified via `pi list`.
 
 ### Package sources and install commands
 
-Each package was located in this order: 1. [pi.dev/packages](https://pi.dev/packages), 2. npm registry (keywords `pi-extension`, `pi-package`), 3. GitHub. First match wins. 39 of 42 are in the pi.dev catalog. 3 are GitHub-only.
+Each package was located in this order: 1. [pi.dev/packages](https://pi.dev/packages), 2. npm registry (keywords `pi-extension`, `pi-package`), 3. GitHub. First match wins. 38 of 41 are in the pi.dev catalog. 3 are GitHub-only.
 
 | Package | Found on | Install command |
 |---|---|---|
@@ -53,7 +53,6 @@ Each package was located in this order: 1. [pi.dev/packages](https://pi.dev/pack
 | `pi-web-providers` | pi.dev/packages | `pi install npm:pi-web-providers` |
 | `@tintinweb/pi-tasks` | pi.dev/packages | `pi install npm:@tintinweb/pi-tasks` |
 | `pi-nested-agents-md` | GitHub | `pi install git:github.com/code-yeongyu/pi-nested-agents-md` |
-| `pi-init` | pi.dev/packages | `pi install npm:pi-init` |
 | `@ff-labs/pi-fff` | pi.dev/packages | `pi install npm:@ff-labs/pi-fff` |
 | `@upstash/context7-pi` | pi.dev/packages | `pi install npm:@upstash/context7-pi` |
 | `@estebanforge/pi-agentmemory` | pi.dev/packages | `pi install npm:@estebanforge/pi-agentmemory` |
@@ -104,7 +103,6 @@ Notes:
   "npm:pi-web-providers",
   "npm:@tintinweb/pi-tasks",
   "git:github.com/code-yeongyu/pi-nested-agents-md",
-  "npm:pi-init",
   "npm:@ff-labs/pi-fff",
   "npm:@upstash/context7-pi",
   "npm:@estebanforge/pi-agentmemory",
