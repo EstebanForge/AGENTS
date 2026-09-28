@@ -289,7 +289,7 @@ sync_dir_symlink() {
     else
         local ancestor; ancestor="$(find_existing_ancestor "${target}")"
         if [[ "${ancestor}" == "${HOME}" || "${ancestor}" == "/" ]]; then
-            log_info "${name}: Agent not installed (skipped ${kind})"; return 0
+            log_info "${name}: Config dir not found yet (skipped ${kind})"; return 0
         fi
         [[ -L "${target}" && ! -e "${target}" ]] && rm -f "${target}"   # dangling
         mkdir -p "${target}"
@@ -447,7 +447,7 @@ manage_agent() {
                     mkdir -p "$(dirname "${target}")"; ln -s "${CENTRAL_AGENTS}" "${target}"
                     log_success "${name}: Linked AGENTS.md"
                 fi
-            else log_info "${name}: Agent not installed (skipped AGENTS.md)"; fi
+            else log_info "${name}: Config dir not found yet (skipped AGENTS.md)"; fi
         fi
     fi
 
