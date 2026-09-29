@@ -35,6 +35,7 @@ Bro that for me.
 
 ## Version History
 
+- **1.1.0** - Expanded anti-jargon rules, forbidden words list, and plain language translations.
 - **1.0.0** - Initial release.
 
 ## Source

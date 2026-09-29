@@ -7,7 +7,7 @@ license: none (upstream repo ships no LICENSE file, no license declared)
 repo-created: 2026-07-15 (vendored from backnotprop/bro-skills, since renamed)
 last-synced: 2026-09-21
 upstream-commit: ae59583 (2026-08-04)
-sync-status: verbatim (synced)
+sync-status: custom (anti-jargon rules and forbidden words enforcement)
 
 ## Provenance
 
@@ -19,17 +19,17 @@ it fires only when the human types `/bro`.
 
 ## Layout
 
-`SKILL.md` is the entire upstream skill (7 lines) and is byte-identical
-to upstream ae59583. `README.md` is repo-local; upstream ships no
+`SKILL.md` contains the expanded anti-jargon rules, forbidden words list,
+and translation guide. `README.md` is repo-local; upstream ships no
 README under skills/bro/.
 
 ## What changed locally
 
-Nothing. The 2026-07-15 import carried a light paraphrase; 3ac0711
-(2026-09-21) replaced it with upstream verbatim. The README stays as a
-local addition.
+Expanded `SKILL.md` with explicit anti-jargon rules, the forbidden words list
+from `AGENTS.md`, plain everyday word substitutions, em dash ban, and
+before/after examples.
 
 ## sync-status
 
-Verbatim. On refresh, re-diff SKILL.md against the linked upstream file;
-any diff is drift, sync it away. README.md is out of scope for syncs.
+Custom. Modified locally from upstream to enforce anti-jargon and plain-human
+communication rules.
