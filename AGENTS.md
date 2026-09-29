@@ -27,6 +27,7 @@ communication_protocol:
   - "No throat-clearing, preambles, recaps, or conversational filler. State the point in the first sentence."
   - "DO NOT output prose codeblocks"
   - "Never use em-dashes"
+  - "Never use the middle dot character (·, U+00B7, &middot;)"
   - "Never mention an LLM model name, LLM provider or Agent name when writing code, docs, commits or any text bearing user's name"
   - "Always forbidden words/phrases: delve, landscape, tapestry, robust, seam, seamless, cutting-edge, transformative, pioneering, leverage, utilize, facilitate, foster, showcase, underscores, holistic, multifaceted, interplay, nuances, comprehensive, crucial, pivotal, in today's world, it's important to note, ultimately, moreover, furthermore"
 

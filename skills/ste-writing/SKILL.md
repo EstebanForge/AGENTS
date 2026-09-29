@@ -25,7 +25,7 @@ STE applies to prose. It does not apply to code, identifiers, or command syntax.
 | Sentence length | 20 words max for an instruction, 25 for a description | Long compound or subordinate-clause sentences |
 | Noun cluster | Max 3 nouns stacked: "fuel pump valve" | 4 or more nouns in a stack |
 | No ellipsis | Keep the subject, verb, and article explicit | Drop words to save space (this makes ambiguity, not clarity) |
-| Punctuation | Write two sentences | Use a semicolon. Use an em dash (repo rule). |
+| Punctuation | Write two sentences | Use a semicolon. Use an em dash or a middle dot (repo rules). |
 | Contractions | Expand them: do not, it is | don't, it's |
 | Marketing adjectives | Describe the thing | seamless, robust, powerful, cutting-edge, effortless, revolutionary |
 | Paragraph | One topic, 6 sentences max | Multi-topic paragraphs |
@@ -52,7 +52,7 @@ STE applies to prose. It does not apply to code, identifiers, or command syntax.
 Before you return the text, every item below must pass.
 
 - No sentence over the word cap for its mode.
-- No semicolon. No em dash.
+- No semicolon. No em dash. No middle dot (·, U+00B7).
 - No contraction.
 - No passive voice where you know the actor.
 - No -ing main verb, no nominalization ("perform an analysis"), no phrasal verb ("spin up").
