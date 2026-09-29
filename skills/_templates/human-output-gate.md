@@ -1,6 +1,7 @@
 ---
 name: human-output-gate
 description: Human approval gate for text published under Esteban's name to external surfaces (commits, PRs, issues). Use before any git commit or gh post command.
+disable-model-invocation: true
 ---
 
 # Human-output gate

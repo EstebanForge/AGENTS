@@ -1,6 +1,7 @@
 ---
 name: issue-tracker
 description: GitHub issue-tracker conventions for this repo (create, read, label, triage via gh CLI). Use when a skill says publish to or fetch from the issue tracker.
+disable-model-invocation: true
 ---
 
 # Issue tracker: GitHub

@@ -1,6 +1,7 @@
 ---
 name: triage-labels
 description: Maps the five canonical triage roles to this repo's issue-tracker label strings. Use when applying or reading triage labels.
+disable-model-invocation: true
 ---
 
 # Triage Labels
