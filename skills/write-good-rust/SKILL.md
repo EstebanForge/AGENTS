@@ -4,7 +4,7 @@ description: Apply curated idiomatic-Rust checks BEFORE writing or heavily editi
 ---
 # Write Good Rust
 
-Pre-write prevention. Eleven rules models still get wrong, cited to the full rubric in [rust-smells.md](../review-my-rust/rust-smells.md) (§ = anti-pattern name there). Review stays with [review-my-rust](../review-my-rust/SKILL.md); this skill is prevention only.
+Pre-write prevention. Twelve rules models still get wrong, cited to the full rubric in [rust-smells.md](../review-my-rust/rust-smells.md) (§ = anti-pattern name there). Review stays with [review-my-rust](../review-my-rust/SKILL.md); this skill is prevention only.
 
 ## Rules
 
@@ -20,6 +20,7 @@ Pre-write prevention. Eleven rules models still get wrong, cited to the full rub
 10. **Trait bounds over files** (§ Hardcoded File Inputs): accept `impl Read` / `impl Write`, not paths.
 
 11. **Async runtime hygiene** (§ Blocking the Async Runtime Across `.await`): no `std::fs`, `thread::sleep`, or held `MutexGuard` across `.await`; use async primitives, `spawn_blocking`, short lock scopes.
+12. **No `Box::leak` lifetime hacks** (§ Deliberate Memory Leaks): never fake a `&'static` from owned data to silence a lifetime error. Leaks skip `Drop`, so secrets stay in RAM, and per-call leaks grow without bound. Use owned types, `Cow<'static, str>`, or a one-time static.
 
 ## While writing
 

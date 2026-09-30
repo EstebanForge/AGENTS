@@ -251,6 +251,39 @@ impl Graph {
 }
 ```
 
+### ❌ Anti-Pattern: Deliberate Memory Leaks (`Box::leak` for Lifetimes)
+
+Calling `Box::leak` to fabricate a `&'static` reference out of owned data just to silence a lifetime error. The allocation is never freed and `Drop` never runs, so any zeroization-on-drop defense is bypassed: keys, tokens, and PII stay in RAM and in core dumps for the life of the process. One leak per call in a loop, request handler, or per-message path grows the heap without bound (CWE-401), and an attacker who controls the call count turns it into a denial-of-service lever.
+
+```rust
+// Bad: launders a temporary String into &'static, leaking on every call
+fn greeting(name: &str) -> &'static str {
+    Box::leak(format!("Hello, {name}!").into_boxed_str())
+}
+
+```
+
+### ⛵ Idiomatic Fix: Owned Types, `Cow<'static, str>`, or a True One-Time Static
+
+Express the real lifetime instead of faking `'static`. When an API truly demands `&'static str`, pay for the allocation once at startup (`OnceLock` / `LazyLock`), never per input, and never for secret material.
+
+```rust
+// Good: caller owns the value; Drop still runs
+fn greeting(name: &str) -> String {
+    format!("Hello, {name}!")
+}
+
+// Good: API demands 'static? Decide at the boundary, not per call
+fn greeting(name: &str) -> Cow<'static, str> {
+    if name.is_empty() {
+        Cow::Borrowed("Hello, stranger!")
+    } else {
+        Cow::Owned(format!("Hello, {name}!"))
+    }
+}
+
+```
+
 ### ❌ Anti-Pattern: Overextending Conflicting Reference Lifetimes
 
 Keeping an immutable reference open in a wide scope while attempting a mutable mutation on the same resource.
@@ -301,3 +334,19 @@ async fn load(path: &str) -> std::io::Result<String> {
     tokio::fs::read_to_string(path).await
 }
 ```
+
+---
+
+## Deep dives: Apollo Rust Best Practices Handbook
+
+Vendored under [references/](references/README.md) (MIT, © Apollo GraphQL, https://github.com/apollographql/rust-best-practices). Reference material, not review gates: load a chapter only when a diff needs depth the rubric above does not carry.
+
+- [chapter_01](references/chapter_01.md) — Coding styles and idioms: borrow vs clone, `Copy` trait, iterator vs `for`
+- [chapter_02](references/chapter_02.md) — Clippy configuration and workspace lint setup
+- [chapter_03](references/chapter_03.md) — Performance mindset: profiling, redundant clones, stack vs heap
+- [chapter_04](references/chapter_04.md) — Error handling: `Result` vs panic, `thiserror` vs `anyhow`
+- [chapter_05](references/chapter_05.md) — Automated testing: naming, assertions, snapshot tests
+- [chapter_06](references/chapter_06.md) — Generics and dispatch: static vs `dyn Trait`
+- [chapter_07](references/chapter_07.md) — Type state pattern
+- [chapter_08](references/chapter_08.md) — Comments vs documentation
+- [chapter_09](references/chapter_09.md) — Pointers, `Send`/`Sync`, thread safety
