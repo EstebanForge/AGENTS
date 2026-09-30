@@ -98,6 +98,7 @@ testing_protocol:
   - "Order: Follow test-first strictly. Never write unit tests after code."
   - "Priority: Use End-to-End (E2E) tests as primary validation for complex features and bug fixes."
   - "Artifacts: Produce inspectable, reproducible artifacts from E2E runs."
+  - "Unit testing: after E2E pass, write unit tests with the writing-good-tests skill for critical paths on the new code."
   - "Skill: Author tests with the writing-good-tests skill; re-evaluate after E2E runs."
   - "Isolation: Enumerate failure modes first, write tests, then write code."
   - "Complexity: Test realistic medium-to-high complexity scenarios. Reject trivial happy-path-only tests."
