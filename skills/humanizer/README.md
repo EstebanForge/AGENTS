@@ -132,6 +132,7 @@ The skill also includes a final "obviously AI generated" audit pass and a second
 
 ## Version History
 
+- **2.3.0 (local)** - Added "Agent tells" section (patterns 26-29: colon overuse, abstract metaphor nouns, mannered prose, over-compression), ported from the local unslop skill, now removed. Local-only change; upstream stays at 2.2.0.
 - **2.2.0** - Added a final "obviously AI generated" audit + second-pass rewrite prompts
 - **2.1.1** - Fixed pattern #18 example (curly quotes vs straight quotes)
 - **2.1.0** - Added before/after examples for all 24 patterns

@@ -1,6 +1,6 @@
 ---
 name: humanizer
-version: 2.2.0
+version: 2.3.0
 description: Remove unnatural and formulaic patterns from AI-generated prose. Use when revising drafts, articles, or communications to sound natural, human, and direct.
 allowed-tools:
   - Read
@@ -395,6 +395,58 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 
 **After:**
 > The company plans to open two more locations next year.
+
+---
+
+## AGENT TELLS
+
+Patterns specific to agent-composed text: coding agents, chat transcripts, and docs written in a compressed assistant voice.
+
+### 26. Colon Overuse
+
+**Words to watch:** colons gluing a setup to a point
+
+**Problem:** Agents lean on colons as mid-sentence connectors. Colons belong before a list or an example, not as a crutch.
+
+**Before:**
+> If you're coming from traditional automation: instead of registering event handlers, you describe conditions.
+
+**After:**
+> Describing when the scheduler should fire works best as plain English.
+
+### 27. Abstract Metaphor Nouns
+
+**Words to watch:** substrate, wedge, vector, locus, vantage, nexus, primitive (as noun), harness (as metaphor), bedrock, scaffolding (as metaphor), modality, paradigm, gold-plating, ratchet (as metaphor), endgame, north star, flywheel
+
+**Problem:** These read technical but usually have a plainer concrete word: "substrate" is a base, "wedge in" is add, "vector" is a way, "gold-plating" is more than the job needs, "endgame" is the last phase.
+
+**Before:**
+> This module acts as the substrate for the whole pipeline and gives us a wedge for future refactors.
+
+**After:**
+> Every stage of the pipeline builds on this module, so we can add new stages without reworking the old ones.
+
+### 28. Mannered Prose
+
+**Words to watch:** aphorisms ("wire it or delete it"), rhetorical fragments, personified code ("the plan holds it"), figurative verbs ("rides along", "stands on")
+
+**Problem:** Metaphor or flourish where a literal phrase exists. Code does not hold plans; a config value is not "a dial worth turning". Say what you mean.
+
+**Before:**
+> The config is a dial worth turning, and the validation layer rides along with every write.
+
+**After:**
+> This config parameter is worth changing, and every write passes through validation.
+
+### 29. Over-Compression
+
+**Problem:** Agent output drops articles and verbs and leans on arrows and symbol-speak: "Parser rejects bad date → exit 2, no write." The reader has to decode instead of read. Write whole sentences, spell out arrows and abbreviations.
+
+**Before:**
+> Parser rejects bad date → exit 2, no write
+
+**After:**
+> The parser rejects a bad date, exits with code 2, and writes nothing.
 
 ---
 
