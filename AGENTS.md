@@ -33,8 +33,9 @@ communication_protocol:
 
 documentation_protocol:
   rule: "Markdown prose: 1 paragraph = 1 source line. MUST NOT manually column-wrap (70/80 chars). The viewport wraps."
+  applies: "Every text authored as Esteban: PR bodies and comments, issues, discussions, Slack messages, Asana tasks and comments, Confluence pages, docs, code comments, plain-text email (one paragraph per line; transport encoding handles line limits)"
   preserve: "Code blocks, tables, list items, metadata label blocks (`Label: value` on own line)"
-  still_wrap: "Line-oriented formats only: git commit bodies, plain email, terminal-only text"
+  still_wrap: "Pre-formatted monospace surfaces only: git commit bodies (60-76 cols; git tooling enforces this), line-oriented data (tables, code blocks, logs). MUST NOT pre-wrap prose destined for reflowing terminals, email clients, or any viewport surface."
 
 voice_protocol:
   rule: "Writing as human != writing as TARS. MUST use Esteban voice before drafting text bearing user name (pre_call_gates tools, emails, blogs, external docs)."
