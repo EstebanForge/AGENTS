@@ -41,11 +41,11 @@ Disabled but available: `chrome-devtools`, `playwright`, `sequential-thinking`, 
 
 ## Extensions
 
-Installed packages (all active, 41 total). Verified via `pi list`.
+Installed packages (all active, 42 total). Verified via `pi list`.
 
 ### Package sources and install commands
 
-Each package was located in this order: 1. [pi.dev/packages](https://pi.dev/packages), 2. npm registry (keywords `pi-extension`, `pi-package`), 3. GitHub. First match wins. 38 of 41 are in the pi.dev catalog. 3 are GitHub-only.
+Each package was located in this order: 1. [pi.dev/packages](https://pi.dev/packages), 2. npm registry (keywords `pi-extension`, `pi-package`), 3. GitHub. First match wins. 38 of 42 are in the pi.dev catalog. 4 are GitHub-only.
 
 | Package | Found on | Install command |
 |---|---|---|
@@ -89,11 +89,12 @@ Each package was located in this order: 1. [pi.dev/packages](https://pi.dev/pack
 | `@estebanforge/pi-antigravity-bridge` | pi.dev/packages | `pi install npm:@estebanforge/pi-antigravity-bridge` |
 | `pi-redact-all` | pi.dev/packages | `pi install npm:pi-redact-all` |
 | `pi-observational-memory` | pi.dev/packages | `pi install npm:pi-observational-memory` |
+| `umputun/revdiff` | GitHub | `pi install https://github.com/umputun/revdiff` |
 | `pi-tool-display` | pi.dev/packages | `pi install npm:pi-tool-display` |
 
 Notes:
 
-- `pi-agent-browser-screenshot`, `pi-nested-agents-md`, and `pi-queue-steer` are not in the pi.dev catalog and have no npm package under their bare or scoped names. GitHub is the only source; install with the `git:` form.
+- `pi-agent-browser-screenshot`, `pi-nested-agents-md`, and `pi-queue-steer` are not in the pi.dev catalog and have no npm package under their bare or scoped names. GitHub is the only source; install with the `git:` form. `umputun/revdiff` is also outside the catalog and is installed here from the plain URL form, which clones the repo head the same way the `git:` form does.
 - `pi-notify` and `pi-review-loop` are installed here with the `git:` form (see `packages` below). The catalog also publishes both on npm. The npm form tracks releases; the `git:` form tracks the repo head.
 - The pi.dev catalog indexes npm packages tagged `pi-extension` or `pi-package`. A catalog page per package lives at `https://pi.dev/packages/<name>`.
 
@@ -139,6 +140,7 @@ Notes:
   "npm:@estebanforge/pi-antigravity-bridge",
   "npm:pi-redact-all",
   "npm:pi-observational-memory",
+  "https://github.com/umputun/revdiff",
   "npm:pi-tool-display"
 ]
 ```
