@@ -88,8 +88,8 @@ Each package was located in this order: 1. [pi.dev/packages](https://pi.dev/pack
 | `@estebanforge/pi-zendesk-me` | pi.dev/packages | `pi install npm:@estebanforge/pi-zendesk-me` |
 | `@estebanforge/pi-antigravity-bridge` | pi.dev/packages | `pi install npm:@estebanforge/pi-antigravity-bridge` |
 | `pi-redact-all` | pi.dev/packages | `pi install npm:pi-redact-all` |
-| `@mobrienv/pi-tidy-tools` | pi.dev/packages | `pi install npm:@mobrienv/pi-tidy-tools` |
 | `pi-observational-memory` | pi.dev/packages | `pi install npm:pi-observational-memory` |
+| `pi-tool-display` | pi.dev/packages | `pi install npm:pi-tool-display` |
 
 Notes:
 
@@ -138,8 +138,8 @@ Notes:
   "npm:@estebanforge/pi-zendesk-me",
   "npm:@estebanforge/pi-antigravity-bridge",
   "npm:pi-redact-all",
-  "npm:@mobrienv/pi-tidy-tools",
-  "npm:pi-observational-memory"
+  "npm:pi-observational-memory",
+  "npm:pi-tool-display"
 ]
 ```
 
