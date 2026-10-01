@@ -41,11 +41,11 @@ Disabled but available: `chrome-devtools`, `playwright`, `sequential-thinking`, 
 
 ## Extensions
 
-Installed packages (all active, 42 total). Verified via `pi list`.
+Installed packages (all active, 41 total). Verified via `pi list`.
 
 ### Package sources and install commands
 
-Each package was located in this order: 1. [pi.dev/packages](https://pi.dev/packages), 2. npm registry (keywords `pi-extension`, `pi-package`), 3. GitHub. First match wins. 38 of 42 are in the pi.dev catalog. 4 are GitHub-only.
+Each package was located in this order: 1. [pi.dev/packages](https://pi.dev/packages), 2. npm registry (keywords `pi-extension`, `pi-package`), 3. GitHub. First match wins. 37 of 41 are in the pi.dev catalog. 4 are GitHub-only.
 
 | Package | Found on | Install command |
 |---|---|---|
@@ -75,7 +75,6 @@ Each package was located in this order: 1. [pi.dev/packages](https://pi.dev/pack
 | `pi-vision-handoff` | pi.dev/packages | `pi install npm:pi-vision-handoff` |
 | `@thurstonsand/pi-librarian` | pi.dev/packages | `pi install npm:@thurstonsand/pi-librarian` |
 | `pi-agent-browser-native` | pi.dev/packages | `pi install npm:pi-agent-browser-native` |
-| `pi-visualize-code-changes` | pi.dev/packages | `pi install npm:pi-visualize-code-changes` |
 | `pi-review-loop` | pi.dev/packages | `pi install npm:pi-review-loop` |
 | `@pi-stef/atlassian` | pi.dev/packages | `pi install npm:@pi-stef/atlassian` |
 | `@estebanforge/pi-git-me` | pi.dev/packages | `pi install npm:@estebanforge/pi-git-me` |
@@ -126,7 +125,6 @@ Notes:
   "npm:pi-vision-handoff",
   "npm:@thurstonsand/pi-librarian",
   "npm:pi-agent-browser-native",
-  "npm:pi-visualize-code-changes",
   "git:github.com/earendil-works/pi-review-loop",
   "npm:@pi-stef/atlassian",
   "npm:@estebanforge/pi-git-me",
