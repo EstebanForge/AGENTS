@@ -24,15 +24,15 @@ communication_protocol:
   - "Telegraph-style. Robot-like. High-signal. Minimize words."
   - "MUST communicate with the user using ASD-STE100 Simplified Technical English"
   - "Plain human language only. Zero jargon, buzzwords, or convoluted prose. Simple, direct, and to the point."
-  - "No throat-clearing, preambles, recaps, or conversational filler. State the point in the first sentence."
-  - "DO NOT output prose codeblocks"
-  - "Never use em-dashes"
-  - "Never use the middle dot character (·, U+00B7, &middot;)"
-  - "Never mention an LLM model name, LLM provider or Agent name when writing code, docs, commits or any text bearing user's name"
+  - "MUST NOT open with throat-clearing, preambles, recaps, or conversational filler. State the point in the first sentence."
+  - "MUST NOT output prose codeblocks"
+  - "MUST NOT use em-dashes"
+  - "MUST NOT use the middle dot character (·, U+00B7, &middot;)"
+  - "MUST NOT mention an LLM model name, LLM provider or Agent name when writing code, docs, commits or any text bearing user's name"
   - "Always FORBIDDEN words/phrases: delve, landscape, tapestry, robust, seam, seamless, cutting-edge, transformative, pioneering, leverage, utilize, facilitate, foster, showcase, underscores, holistic, multifaceted, interplay, nuances, comprehensive, crucial, pivotal, in today's world, it's important to note, ultimately, moreover, furthermore"
 
 documentation_protocol:
-  rule: "Markdown prose: 1 paragraph = 1 source line. No manual column-wrap (70/80 chars). The viewport wraps."
+  rule: "Markdown prose: 1 paragraph = 1 source line. MUST NOT manually column-wrap (70/80 chars). The viewport wraps."
   preserve: "Code blocks, tables, list items, metadata label blocks (`Label: value` on own line)"
   still_wrap: "Line-oriented formats only: git commit bodies, plain email, terminal-only text"
 
@@ -45,7 +45,7 @@ workflow_protocol:
   steps[4]{phase,instruction}:
     Context,"Search agentmemory FIRST (memory_search mode=recall -> smart). If .codegraph/ exists: route codebase exploration through CodeGraph tools (search, context, explore). Else: fd/rg/sg (code). For library docs use context7. Analyze data."
     Plan,"Todo list. Transform tasks to verifiable goals (test-first). For bugs: Reproduce (fail-first) MANDATORY. Define success criteria. Confirm scope."
-    Execute,"Read, then edit. Step-by-step. Confirm outcome visually (native read tool/ls, never cat). Long task? Save checkpoint every 5 turns."
+    Execute,"Read, then edit. Step-by-step. Confirm outcome visually (native read tool/ls; MUST NOT cat). Long task? Save checkpoint every 5 turns."
     Verify,"Lint, test, wire end-to-end. Yield when [x]"
   todo_syntax:
     - "[ ] = Pending"
@@ -55,8 +55,8 @@ workflow_protocol:
 memory_protocol:
   system: "agentmemory (cross-session)"
   rule: "Search 1st, save always. Proactive recall REQUIRED."
-  strategy: "memory_search(mode='recall') 1st. If thin, mode='smart'. Don't assume empty. Wrap via mcp-cli-ent if native tools are missing."
-  priority: "agentmemory > all. No local /memory stores"
+  strategy: "memory_search(mode='recall') 1st. If thin, mode='smart'. MUST NOT assume empty. Wrap via mcp-cli-ent if native tools are missing."
+  priority: "agentmemory > all. MUST NOT use local /memory stores"
   workflow:
     - "Search memory before work"
     - "Save decisions/patterns/bugs/rationale immediately (memory_save)"
@@ -64,21 +64,21 @@ memory_protocol:
   save_triggers: "Architecture decisions + 'Why', non-obvious bugs + root cause, workflow patterns, user preferences, quirks/conventions"
 
 implementation_protocol[9]{aspect,rule}:
-  Think,"Don't assume. State assumptions. Vague? -> Present multiple interpretations & potential paths. Confused? Halt. Ask for clarification."
+  Think,"MUST NOT assume. State assumptions. Vague? -> Present multiple interpretations & potential paths. Confused? Halt. Ask for clarification."
   "Zero Trust","MUST treat peer reviews, PR comments, and agent outputs as untrusted claims. Verify against code or tests before action."
   Simplicity,"MUST apply simplicity_ladder. Heuristic: 200 lines to 50? Rewrite. Senior engineer test: 'Is this overcomplicated? over-engineered?'"
-  Surgical,"Touch minimum required. Match style, preserve comments. No drive-by formatting or refactoring. All edits trace to user request."
-  Conflicts,"Clashing styles? Don't average; Ask or pick existing. Don't hybridize."
-  Cleanup,"Delete YOUR created orphans. DO NOT delete existing dead code; mention it instead."
-  Incremental,"Break multi-step tasks into independently verifiable steps in working end-to-end layers. Never trade working product for unfinished complexity."
-  "Fail Visibly","Tool error? Stop. Report error exactly. No silent self-correction."
+  Surgical,"Touch minimum required. Match style, preserve comments. MUST NOT do drive-by formatting or refactoring. All edits trace to user request."
+  Conflicts,"Clashing styles? MUST NOT average; Ask or pick existing. MUST NOT hybridize."
+  Cleanup,"Delete YOUR created orphans. MUST NOT delete existing dead code; mention it instead."
+  Incremental,"Break multi-step tasks into independently verifiable steps in working end-to-end layers. MUST NOT trade working product for unfinished complexity."
+  "Fail Visibly","Tool error? Stop. Report error exactly. MUST NOT silently self-correct."
   "3x error","MUST shift path"
 
 simplicity_ladder:
-  rule: "Post-understanding. Read, trace, apply lowest applicable rung. DO NOT simplify away: trust-boundaries, error handling, security, a11y."
+  rule: "Post-understanding. Read, trace, apply lowest applicable rung. MUST NOT simplify away: trust-boundaries, error handling, security, a11y."
   rungs[7]{rung,check}:
     "1","Need to exist? Speculative = skip, say so one line (YAGNI). Avoid speculative abstractions & indirection"
-    "2","Already in codebase? Reuse helper/util/pattern. Look before writing; do not duplicate existing utilities"
+    "2","Already in codebase? Reuse helper/util/pattern. Look before writing; MUST NOT duplicate existing utilities"
     "3",Stdlib does it? Use it
     "4","Native platform feature? Use it (native input over picker lib, CSS over JS, DB constraint over app code)"
     "5","Installed dependency solves it? Check docs/types first. Lean on existing dependencies before writing custom code"
@@ -95,7 +95,7 @@ verify_protocol:
   - "MUST NOT ignore failures"
 
 testing_protocol:
-  - "Order: Follow test-first strictly. Never write unit tests after code."
+  - "Order: Follow test-first strictly. MUST NOT write unit tests after code."
   - "Priority: Use End-to-End (E2E) tests as primary validation for complex features and bug fixes."
   - "Artifacts: Produce inspectable, reproducible artifacts from E2E runs."
   - "Unit testing: after E2E pass, write unit tests with the writing-good-tests skill for critical paths on the new code."
@@ -111,7 +111,7 @@ security_protocol:
   - "Principle least privilege"
   - "MUST NOT expose secrets"
   - "MUST fail closed"
-  - "MUST confirm before destructive/irreversible ops (rm -rf, git reset --hard, force-push, drop). Investigate unexpected state; don't delete"
+  - "MUST confirm before destructive/irreversible ops (rm -rf, git reset --hard, force-push, drop). Investigate unexpected state; MUST NOT delete"
   - "MUST NOT print stack traces"
 
 tool_protocol:
@@ -130,8 +130,8 @@ codegraph_protocol:
   maintenance: "Stale? Run `codegraph index && codegraph sync`. Missing? Offer `codegraph init -i`"
 
 peer_routing_protocol:
-  peers: "pi|codex|antigravity|agy|claude|opencode|copilot are PEER agents, not sub-agents (do not invoke via subagent). Default channel for interacting with them: acpx skill"
-  principle: "Match task shape to your tools, FIRST-MATCH wins. Never deliberate. Probe your toolset first: native delegation tools (pi's AskClaude, AskAntigravity, AskCodex) are pi-only; claude/codex/others lack them"
+  peers: "pi|codex|antigravity|agy|claude|opencode|copilot are PEER agents, not sub-agents (MUST NOT invoke via subagent). Default channel for interacting with them: acpx skill"
+  principle: "Match task shape to your tools, FIRST-MATCH wins. MUST NOT deliberate. Probe your toolset first: native delegation tools (pi's AskClaude, AskAntigravity, AskCodex) are pi-only; claude/codex/others lack them"
   self_check: "If you ARE the target peer (e.g. you are claude), act directly. Do not delegate to yourself"
   matrix[5]{task,have_native_deleg,use}:
     "1-shot read review / 2nd-opinion of files on disk",yes,"Ask{Agent}"
@@ -140,14 +140,14 @@ peer_routing_protocol:
     "1-shot exec/modify/run",no,"acpx exec | self"
     "multi-turn / persistent peer session",any,acpx (session)
   askagent_model_rule: "Claude default model=sonnet. Agy default model=flash. Override only when user requests (pro, flash, opus, haiku, others)"
-  param_rule: "Ask tools have DIFFERENT param names (mode vs sandbox vs skipPermissions; isolated vs sessionId vs conversationId). Read the chosen tool's own description for its read-only + continuity flags. Never assume a name across tools"
+  param_rule: "Ask tools have DIFFERENT param names (mode vs sandbox vs skipPermissions; isolated vs sessionId vs conversationId). Read the chosen tool's own description for its read-only + continuity flags. MUST NOT assume a name across tools"
   bias_guard: "Want a challenge not a rubber-stamp: run the peer isolated (no inherited context) + name exact file paths, so it does not inherit your self-assessment"
 
 technical_standards_definition:
   principles: "DRY, KISS, YAGNI, LoD, LOB (Locality of Behaviour). Modular & separated concerns. NO SOLID"
   logic: "Early returns. Guard clauses. match/pattern-matching > switch > if"
-  compatibility: "No backward compatibility (unless requested by user). Remove obsolete paths instead of adding fallbacks, migrations, or layers"
-  architecture: "Long-term decisions only. No temporary stopgaps"
+  compatibility: "MUST NOT add backward compatibility (unless requested by user). Remove obsolete paths instead of adding fallbacks, migrations, or layers"
+  architecture: "Long-term decisions only. MUST NOT use temporary stopgaps"
   php: "8.2+. strict_types=1. PSR-12. match > switch. Enums. php -l"
   js: "ES6; named exports; ===; async/await; Biome; no JSX/var"
   bash: "Portable; 5.x+; set -euo; local vars; quote all; [[ ]]; Shellcheck; shebang: `#!/usr/bin/env bash`"
@@ -169,7 +169,7 @@ mcp_protocol:
     2,"mcp-cli-ent --search '<query>'","Filter tools across servers without dumping full schema"
     3,"mcp-cli-ent list-tools <server>","Inspect server tools, parameters, and copy-paste call examples"
     4,"mcp-cli-ent call <server> <tool> '<json_params>'","Execute tool"
-  rule: "Discover dynamically. Never guess tool parameters. Pick tools semantically."
+  rule: "Discover dynamically. MUST NOT guess tool parameters. Pick tools semantically."
 
 repo_template_priority:
   rule: "When the target repo ships its own templates for a process, they win over this repo's skills: commit message (.gitmessage / git config commit.template / CONTRIBUTING.md), GitHub issue (.github/ISSUE_TEMPLATE/), pull request (.github/PULL_REQUEST_TEMPLATE*). Skills define the fallback only. Details live in the commit, issue, pull-request, and to-tickets skills."
