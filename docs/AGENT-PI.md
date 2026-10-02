@@ -63,7 +63,7 @@ Each package was located in this order: 1. [pi.dev/packages](https://pi.dev/pack
 | `pi-claude-bridge` | pi.dev/packages | `pi install npm:pi-claude-bridge` |
 | `@estebanforge/pi-glm-tweaks` | pi.dev/packages | `pi install npm:@estebanforge/pi-glm-tweaks`, then apply the `extensions` override shown below |
 | `@estebanforge/pi-codegraph-enhanced` | pi.dev/packages | `pi install npm:@estebanforge/pi-codegraph-enhanced` |
-| `pi-rtk-optimizer` | pi.dev/packages | `pi install npm:pi-rtk-optimizer` |
+| `@estebanforge/pi-rtk-optimizer` | pi.dev/packages | `pi install npm:@estebanforge/pi-rtk-optimizer` (maintained fork of the inactive MasuRii original) |
 | `@estebanforge/pi-ask-codex` | pi.dev/packages | `pi install npm:@estebanforge/pi-ask-codex` |
 | `@estebanforge/pi-slack-me` | pi.dev/packages | `pi install npm:@estebanforge/pi-slack-me` |
 | `@pi-kaush/pi-inline-skill-identifier` | pi.dev/packages | `pi install npm:@pi-kaush/pi-inline-skill-identifier` |
@@ -89,7 +89,7 @@ Each package was located in this order: 1. [pi.dev/packages](https://pi.dev/pack
 | `pi-redact-all` | pi.dev/packages | `pi install npm:pi-redact-all` |
 | `pi-observational-memory` | pi.dev/packages | `pi install npm:pi-observational-memory` |
 | `umputun/revdiff` | GitHub | `pi install https://github.com/umputun/revdiff` |
-| `pi-tool-display` | pi.dev/packages | `pi install npm:pi-tool-display` |
+| `@estebanforge/pi-tool-display` | pi.dev/packages | `pi install npm:@estebanforge/pi-tool-display` (maintained fork of the inactive MasuRii original) |
 
 Notes:
 
@@ -113,7 +113,7 @@ Notes:
   "npm:pi-claude-bridge",
   { "source": "npm:@estebanforge/pi-glm-tweaks", "extensions": ["+extensions/index.ts"] },
   "npm:@estebanforge/pi-codegraph-enhanced",
-  "npm:pi-rtk-optimizer",
+  "npm:@estebanforge/pi-rtk-optimizer",
   "npm:@estebanforge/pi-ask-codex",
   "npm:@estebanforge/pi-slack-me",
   "npm:@pi-kaush/pi-inline-skill-identifier",
@@ -139,7 +139,7 @@ Notes:
   "npm:pi-redact-all",
   "npm:pi-observational-memory",
   "https://github.com/umputun/revdiff",
-  "npm:pi-tool-display"
+  "npm:@estebanforge/pi-tool-display"
 ]
 ```
 
