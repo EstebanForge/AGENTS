@@ -7,7 +7,7 @@ license: none (no LICENSE file upstream at sync time)
 repo-created: 2026-10-02
 last-synced: 2026-10-02
 upstream-commit: 0573ad9 (2026-10-02)
-sync-status: synced (verbatim)
+sync-status: synced (one local delta: upstream tool references embedded)
 
 ## Provenance
 
@@ -18,15 +18,31 @@ skills repo on first import; reaches agents through the
 
 ## What changed locally
 
-Nothing. Byte-for-byte copy of upstream 0573ad9.
+The upstream body depends on Claude Code built-ins (the Artifact tool,
+`artifact-design`, `artifact-diagramming`) and on HeyGen's
+`faceless-explainer` plugin skill. None run on this stack, so the references
+are replaced with embedded, standalone equivalents:
 
-Local note, not a change: the body references upstream tooling that does not
-exist on this stack (`Artifact tool`, `artifact-design`,
-`artifact-diagramming`, `faceless-explainer` skills). The format ladder
-already degrades to plain text and terminal ASCII without them; revisit the
-references only if a richer output path is adopted here.
+- Rich diagrams: inline SVG mechanics (native shapes, viewBox, currentColor,
+  marker arrowheads, figure and figcaption), condensed from the archived
+  artifact-diagramming skill.
+- HTML pages: standalone-file build notes (token theming for light and dark,
+  type and layout rules, access basics), condensed from the archived
+  artifact-design skill.
+- Explainer videos: the ladder rung is restored with a summary of the
+  HyperFrames pipeline and a storyboard-plus-script fallback when the CLI or
+  the audio account is missing.
+
+Research sources (2026-10-02): archived built-ins at
+asgeirtj/system_prompts_leaks (Anthropic/claude-code/skills/artifact-design
+and .../artifact-diagramming), cross-checked against
+Piebald-AI/claude-code-system-prompts; the faceless-explainer skill at
+heygen-com/hyperframes (skills/faceless-explainer/SKILL.md). The built-ins
+ship inside the Claude Code CLI; no official public copy exists.
 
 ## sync-status
 
-Synced verbatim. On refresh, re-diff against upstream `skills/explain/SKILL.md`
-and re-apply nothing; keep the local note above accurate if upstream drifts.
+Synced with one local delta: upstream tool references replaced by embedded
+standalone equivalents (see What changed locally). On refresh, re-diff
+against upstream `skills/explain/SKILL.md`, re-apply the replacement, and
+keep both sections accurate if upstream drifts.

@@ -10,9 +10,9 @@ Goal: the user understands fast. Pick the lightest format that works, then escal
 ## Format ladder
 
 1. **Text** — default. Write in ~80% ASD-STE100 (see rules below).
-2. **Diagram** — when the answer is a flow, structure, sequence, or relationship. Follow the Diagram style below. In the terminal use plain ASCII boxes and arrows; for a richer one, publish via the Artifact tool (`artifact-diagramming` skill).
-3. **HTML page** — a one-page reference sheet (see below) when the topic is large, has many parts, or benefits from interaction (tabs, step-through, annotated code). Publish with the Artifact tool (`artifact-design` skill).
-4. **Explainer video** — only if the user asks. Use the `faceless-explainer` skill.
+2. **Diagram** — when the answer is a flow, structure, sequence, or relationship. Follow the Diagram style below. In the terminal use plain ASCII boxes and arrows; for a richer one, write inline SVG (see SVG mechanics).
+3. **HTML page** — a one-page reference sheet (see below) when the topic is large, has many parts, or benefits from interaction (tabs, step-through, annotated code). Write it as a standalone HTML file (see HTML build notes).
+4. **Explainer video** — only if the user asks. Narrated scenes with invented visuals per scene (typography, diagrams, data-viz), no talking head. Built with the HyperFrames CLI when available (see Explainer video).
 
 Short question → text. "How does X flow / fit together" → diagram. "Explain the whole X" → HTML page. Do not escalate to a bigger format unasked for a small question.
 
@@ -32,7 +32,7 @@ For "explain the whole X" or any spec, overview, or system with many parts. One 
 - **Type:** mono for examples, code, captions, and numbers. Clean sans for titles and body.
 - **Title block** (bottom-right): title, source, owner, sheet "1 of 1".
 - **Content:** every panel shows a real example, never only a definition. Wrong next to right, side by side.
-- Build with the Artifact tool and the `artifact-design` skill. Works in light and dark mode. Must fit a phone width by stacking panels.
+- Write it as one standalone HTML file. Works in light and dark mode. Must fit a phone width by stacking panels.
 
 Use the Excalidraw style below for flows and paths. Use the sheet style for specs and overviews. Do not mix them on one page.
 
@@ -46,13 +46,54 @@ Minimal, hand-drawn, calm. Looks like a whiteboard sketch, not a corporate slide
 - **Text:** hand-style font (`Caveat` or `Kalam` from Google Fonts), 2-4 words per label. Never a sentence in a box.
 - **Layout:** left to right or top to bottom, generous spacing, one arrow per relationship, no crossing lines. Max ~8 boxes; split the diagram if you need more.
 - **Arrows:** label only when the verb is not obvious ("sends token", "401").
-- **Output:** inline SVG in an Artifact for rich diagrams. For editable output, write an `.excalidraw` JSON file the user can open at excalidraw.com.
+- **Output:** inline SVG for rich diagrams (see SVG mechanics below). For editable output, write an `.excalidraw` JSON file the user can open at excalidraw.com.
 
 Terminal fallback:
 
 ```
  [Browser] --token--> [app-studio] --> [optics] --> [Device]
 ```
+
+## SVG mechanics (rich diagrams)
+
+Hand-author the markup. Native shapes only: `rect`, `circle`, `line`, `polyline`, `path`, `text`. No diagram libraries, no runtime JavaScript, no external images, no `foreignObject`.
+
+- Size with `viewBox`; scale with CSS. The drawing stays resolution-independent.
+- Theme with `currentColor` so it reads in light and dark mode. One literal hue at most, for the one meaningful element.
+- Arrowheads: define a `<marker>` in `<defs>` and point at it with `marker-end`, or draw a small polygon.
+- Labels: 11-13px at drawn scale, 2-4 words. Sentences belong in the caption, not the drawing.
+- One figure, one claim. Wrap in `<figure>` with `<figcaption>`; give the `svg` a `role="img"` and an `aria-label` that states the claim.
+- Depict the mechanism, not its name: show the path through the cache, not a box labeled "cache". Label arrows with the verb ("writes", "invalidates", "polls every 30s"). For a comparison, draw the edge that differs, not two parallel box lists.
+- Keep ids unique within the fragment. Align to an even grid.
+
+## HTML build notes (reference sheet)
+
+The page is one self-contained file. Inline the CSS; no build step; zero dependencies by default. External hosts, when truly needed: Google Fonts for fonts, pinned builds on cdnjs otherwise.
+
+- Theme through CSS custom properties. `:root` carries the light palette; `@media (prefers-color-scheme: dark)` applies the dark palette unless `:root[data-theme="light"]`; `:root[data-theme="dark"]` forces it. Set `color-scheme` to match. Components read tokens only.
+- Type: one display face plus one body face; ~65-character measure; a fixed type scale; `text-wrap: balance` on headings.
+- Layout: flex or grid with `gap`; 16px side gutter at every width; stack to one column at phone width (~400px). Only wide tables, code, and diagrams scroll, each inside its own container.
+- Real content only. Never placeholder text; every panel shows a working example, wrong next to right.
+- Access: visible `:focus-visible` states, respect `prefers-reduced-motion`, stable ids on form controls, tabular numerals for aligned numbers.
+- Skip the template look: no gradient hero, no emoji markers, no everything-centered layout, no default cream-and-serif palette.
+- Open the file in a browser once. Fix what is broken in one pass. Do not loop.
+
+## Explainer video
+
+Ladder rung 4, ask-only. A faceless explainer: every scene uses invented visuals (typography, abstract graphics, diagrams, data-viz); no talking head. Landscape 1920x1080, portrait 1080x1920, or square 1080x1080.
+
+Pipeline (HyperFrames CLI, run as `npx hyperframes`; project lives in `videos/<project>/`):
+
+1. Init and write `BRIEF.md` from what the user asked.
+2. Pick a frame preset; generate the design system and caption skin.
+3. Write `STORYBOARD.md` (shot sequence) and `SCRIPT.md` (narration). Sequence serves the story, not the input's paragraph order.
+4. Generate TTS narration plus background music, with word timings.
+5. Time-code each shot in the storyboard; build one HTML composition per frame; add transitions and captions; assemble the index.
+6. Lint and snapshot for review, then render to MP4.
+
+Audio: HeyGen cloud voices need an account sign-in; the offline engine works without. A silent project declares `music: none` and skips `SCRIPT.md`.
+
+No CLI, or the audio account is unavailable? Stop after step 3 and deliver `STORYBOARD.md` and `SCRIPT.md`. Those two files carry the video's content; only the render needs the tool.
 
 ## Writing rules (ASD-STE100, relaxed)
 
