@@ -16,6 +16,7 @@ esteban-voice
 # Ever-managed skills names: current tree + git history.
 explain
 facts
+ffmpeg-skill
 flint-chart-author
 .gitkeep
 grilling
