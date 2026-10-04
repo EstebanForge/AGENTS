@@ -47,6 +47,7 @@ pull-request
 refactor-pass
 # Regenerate with: ./manage.sh regen-seeds (commit the result).
 request-refactor-plan
+reverse-engineer-anything
 review-my-go
 review-my-javascript
 review-my-php
