@@ -66,6 +66,7 @@ Comments, label changes, and close text publish under Esteban's name: gate each 
 - **Repo templates win (hard).** `.github/ISSUE_TEMPLATE/` first; this skill's template is the fallback. Third-party maintainers' conventions come first.
 - **NEVER attribute to any AI agent.** No `Generated with ...` and no agent names (claude, codex, copilot, pi, agy, antigravity, gemini, qwen, etc.) in titles, bodies, or comments. The output reads as a human dev's.
 - **No invented labels or assignees.** Labels from `gh label list` only; assignees only when the user asks.
+- **Human word budget (hard).** Match human median length (60-110 words; hard ceiling 140 words). Keep issues dense: problem statement, steps to reproduce, and acceptance criteria. Zero prose fluff.
 
 ## Notes
 

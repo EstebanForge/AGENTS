@@ -88,7 +88,8 @@ Do NOT close or modify any parent issue.
 ## Hard rules
 
 - **Gate every ticket before posting (hard).** Never auto-create. Render each ticket's full title and body to the user, then STOP and wait for approve / amend / cancel, one ticket at a time. See [`../_templates/human-output-gate.md`](../_templates/human-output-gate.md).
+- **Human word budget (hard).** Match human developer scale (40-90 words per ticket description; hard ceiling 120 words). Keep vertical slice descriptions dense and actionable. Zero prose filler.
 
 ## Notes
 
-- Write ticket titles and bodies in Esteban's formal voice (`esteban-voice` skill, FORMAL mode, for tone only: first-person active, no em dashes, concrete specifics). Keep the ticket template structure from step 5.
+- Write ticket titles and bodies in Esteban's formal voice (`esteban-voice` skill, FORMAL mode, for tone only: first-person active, no em dashes, concrete specifics, human word budgets). Keep the ticket template structure from step 5.

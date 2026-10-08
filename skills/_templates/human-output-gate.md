@@ -6,15 +6,16 @@ disable-model-invocation: true
 
 # Human-output gate
 
-Applies to any text published under Esteban's name to an external surface: git commit messages, GitHub PR titles and bodies, PR reviews and review comments, and GitHub issue titles and bodies. Once posted, these read as the human's own words. They are never auto-posted.
+Applies to any text published under Esteban's name to an external surface: git commit messages, GitHub PR titles and bodies, PR reviews and review comments, GitHub issue titles and bodies, and professional emails. Once posted, these read as the human's own words. They are never auto-posted.
 
 ## Rule (hard)
 
-Before running the command that posts the text (`git commit`, `gh pr create`, `gh pr review`, `gh pr comment`, `gh api .../pulls/<N>/comments`, `gh issue create`, etc.), you MUST:
+Before running the command that posts the text (`git commit`, `gh pr create`, `gh pr review`, `gh pr comment`, `gh api .../pulls/<N>/comments`, `gh issue create`, email send, etc.), you MUST:
 
-1. **Render the complete, final message** exactly as it will be posted. Title and body, in full, not a summary. Use a fenced code block so whitespace, bullets, and emoji are visible.
-2. **Name the destination** and, where relevant, the event (e.g. "PR review REQUEST_CHANGES on #42", "Issue: <title>", "Commit message").
-3. **STOP. Wait for an explicit decision.** Do not run the post command until the user gives one of:
+1. **Verify human word budget.** Ensure the text respects the surface budget (PR: 60-150 words, comments: 10-25 words, email: 50-125 words, issues: 60-110 words) and enforces anti-diff rules (no diff recitation).
+2. **Render the complete, final message** exactly as it will be posted. Title and body, in full, not a summary. Use a fenced code block so whitespace, bullets, and emoji are visible.
+3. **Name the destination** and, where relevant, the event (e.g. "PR review REQUEST_CHANGES on #42", "Issue: <title>", "Commit message", "Email to <recipient>").
+4. **STOP. Wait for an explicit decision.** Do not run the post command until the user gives one of:
    - **Approve** ("post", "ship", "go", "looks good") -> post exactly as shown.
    - **Amend** -> apply the edit, re-render the full message, then STOP and wait again. Loop until approved.
    - **Cancel** (or silence / no clear answer) -> abort. Post nothing.

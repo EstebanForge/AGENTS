@@ -28,16 +28,25 @@ Open the current branch's changes for review as a GitHub pull request.
    - Done when: you can summarize the net change vs the base branch.
 
 5. **Draft the body** following the template if one exists, else this fallback:
+   - **Human word budget (hard):** 60 to 150 words total (hard ceiling 200 words). Match human developer scale (reference: `wicket-wp-base-plugin#66`, `wicket-wp-account-centre#60`).
+   - **Anti-diff rule (hard):** Never explain what the code does line-by-line or list modified functions. Reviewers read the diff. State why and non-obvious intent only.
+   - **What & Why:** 1-2 dense sentences each.
+   - **How (optional):** Reserved strictly for scope boundaries (what stays untouched), compatibility/audit caveats, and merge order. Omit if the diff is self-explanatory.
 
    ```
+   ## Context
+   Task ID: <id>
+   Task Link: <url>
+   Related PRs: <cross-repo PRs if any>
+
    ## What
-   <what this PR does>
+   <1-2 sentences: what was missing, broken, or added>
 
    ## Why
-   <motivation/context>
+   <1-2 sentences: root cause, historical context, or user impact>
 
    ## How
-   <key implementation notes, only if non-obvious>
+   <scope bounds, compatibility caveats, or merge ordering; omit if obvious>
 
    ## Testing
    - [ ] <how it was verified>
@@ -70,6 +79,7 @@ Open the current branch's changes for review as a GitHub pull request.
 - **NEVER push to a protected branch.** Exception: personal repos (`EstebanForge` or `actitudstudio` ownership) allow direct push to the default branch.
 - **No `git add -A` / `git add .`.** Stage explicitly; if scope is ambiguous, ask the user (see `commit` skill).
 - **Use `--body-file`.** Never pass a multi-line body inline or via a shell heredoc.
+- **Human word budget and anti-diff rule (hard).** Never output a wall of text. Total body MUST stay within 60-150 words (hard ceiling 200 words). Do not describe code mechanics or enumerate functions that the reviewer inspects in the diff.
 
 ## Notes
 

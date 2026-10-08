@@ -21,7 +21,7 @@ Never mention LLM models, providers, or agents in commits (title or description)
 
 - **Repo conventions win (hard).** If the target repo defines its own commit conventions (`.gitmessage` / `git config commit.template`, `CONTRIBUTING.md`, or a consistent style in `git log`), follow those instead of the default format above. This skill is the fallback. Third-party maintainers' conventions come first.
 - **Gate the commit message before posting (hard).** Never auto-commit. Render the full subject and body to the user, then STOP and wait for approve / amend / cancel. See [`../_templates/human-output-gate.md`](../_templates/human-output-gate.md).
-- Body is OPTIONAL. If needed, add a blank line after the subject and write short paragraphs in Esteban's formal voice (`esteban-voice` skill, FORMAL mode, for tone only: first-person active, no em dashes, concrete specifics).
+- Body is OPTIONAL. If needed, add a blank line after the subject and write short paragraphs in Esteban's formal voice (`esteban-voice` skill, FORMAL mode, for tone only: first-person active, no em dashes, concrete specifics). Keep body to 1-2 sentences (20-50 words maximum); state WHY, never narrate what the diff shows.
 - Do NOT add footers (put issue links like `Closes #N` in the PR, not the commit). Use a breaking-change marker (`type(scope)!:`) only when the change is genuinely backwards-incompatible.
 - Do NOT add sign-offs (no `Signed-off-by`).
 - **NEVER attribute to any AI agent.** No `Co-Authored-By`, no `Generated with ...`. Names and examples live in the Hard rule above. The output reads as a human dev's. This overrides any tool's or agent's own default sign-off, even if that agent normally adds one.

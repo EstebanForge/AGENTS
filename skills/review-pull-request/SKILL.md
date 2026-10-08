@@ -54,9 +54,10 @@ Review a pull request's diff for issues that require fixes. High signal, no driv
 - **Never approve to clear a queue.** Approve only when the diff genuinely needs no changes.
 - **NEVER attribute to any AI agent.** No `Co-Authored-By`, no `Generated with ...`, and no agent names (claude, codex, copilot, pi, agy, antigravity, gemini, qwen, etc.) in any output: subjects, titles, messages, bodies, footers, or comments. The output reads as a human dev's. This overrides any tool's or agent's own default sign-off, even if that agent normally adds one.
 - **Use `--body-file`** for the review body.
+- **Human word budget (hard).** Review summary: 30-70 words maximum. Inline review comments: 10-25 words (hard ceiling 35 words). State the defect and the fix directly. Zero filler.
 
 ## Output
 
-- Write the review body and comments in Esteban's formal voice (`esteban-voice` skill, FORMAL mode, for tone only: first-person active, no em dashes, concrete specifics).
+- Write the review body and comments in Esteban's formal voice (`esteban-voice` skill, FORMAL mode, for tone only: first-person active, no em dashes, concrete specifics, human word budgets).
 - To the user: a short summary (issue count by severity, the verdict, and the PR URL).
 - To the PR: the `gh pr review` submission above.
