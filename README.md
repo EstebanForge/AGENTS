@@ -46,11 +46,11 @@ The same rulebook bills differently per model family. Measured 2026-10-14 agains
 | GLM | GLM-4.x, 5.3, 5.3-flash (same tokenizer) | 3,141 | +0.7% |
 | MiniMax M3 | MiniMax-M3 | 3,252 | +4.3% |
 | MiniMax M3.1 Flash | MiniMax-M3.1-Flash-Preview | 3,293 | +5.6% |
-| Gemini 3.8 Flash | Gemini 2.5 / 3.x | 3,381 | +8.4% |
 | Gemini 4 Argon | Gemini 4 | 3,344 | +7.2% |
+| Gemini 3.8 Flash | Gemini 2.5 / 3.x | 3,381 | +8.4% |
 | r50k_base | GPT-3.5 legacy | 3,623 | +16.2% |
 | Claude pre-4.7 | Sonnet 4.5, Opus 4.6 and older | 3,694 | +18.4% |
-| Claude 4.7+ | Opus 4.7+, Opus 5.x, Fable / Mythos 5.x | 5,202 | +66.8% |
+| Claude 4.7+ | Opus 4.7+ (5+), Sonnet 5.x | 5,202 | +66.8% |
 
 Sources: OpenAI rows via ctoken (local tiktoken), cross-checked with the `/v1/responses/input_tokens` API: 3,125 on gpt-6-astra and gpt-5.5 alike (+6 message-overhead tokens over the raw 3,119); GLM, MiniMax via their tokenizer endpoints; Gemini via `countTokens`; Claude via `messages/count_tokens`. The Claude 4.7+ tokenizer measured +40.8% over pre-4.7 on this file; vendor docs claim "~30%". The cap in this README is o200k-measured; Claude 4.7+ sessions bill roughly 1.7x it for the same file.
 
