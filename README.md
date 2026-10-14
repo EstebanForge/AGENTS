@@ -21,7 +21,7 @@ View [AGENTS.md](AGENTS.md) for the full rulebook.
 
 ### Size budget
 
-The rulebook is capped at 200 lines and 3,000 tokens. Check before merging changes:
+The rulebook is capped at 150 lines and 3,100 tokens. Check before merging changes:
 
 ```bash
 wc -l AGENTS.md && ctoken AGENTS.md
@@ -31,9 +31,25 @@ Rationale:
 
 - Peer-reviewed studies (2026) found no measured adherence loss from file size up to 500 lines; inference cost is the only proven downside.
 - Anthropic documents a 200-line target per instruction file, citing context cost and adherence decay past it.
-- The rulebook loads once per session and again in every subagent, so the budget keeps the total cheap.
+- The rulebook loads once per session and again in every subagent, so the budget keeps the total cheap. Three 2026 compaction passes (216 to 132 lines) measured a phrasing floor near 3,100 tokens once fixed content (gate lists, forbidden words, budgets) is preserved.
 
 The cap is budget-neutral: adding a rule requires displacing or trimming an existing one. Changes that push the file over the limit are rejected at review.
+
+### Tokenizer comparison
+
+The same rulebook bills differently per model family. Measured 2026-10-14 against AGENTS.md at 132 lines / 3,119 o200k tokens:
+
+| Tokenizer | Applies to | Tokens | vs o200k |
+|---|---|---:|---:|
+| o200k_base | GPT-5.x, GPT-6 | 3,119 | baseline |
+| cl100k_base | GPT-4, GPT-4o | 3,129 | +0.3% |
+| GLM glm-4.6 | GLM-4.x | 3,141 | +0.7% |
+| Gemini 3.x | Gemini 2.5 / 3.x | 3,381 | +8.4% |
+| r50k_base | GPT-3.5 legacy | 3,623 | +16.2% |
+| Claude pre-4.7 | Sonnet 4.5, Opus 4.6 and older | 3,694 | +18.4% |
+| Claude 4.7+ | Opus 4.7+, Opus 5.x, Fable / Mythos 5.x | 5,202 | +66.8% |
+
+Sources: OpenAI rows via ctoken (local tiktoken); GLM via its tokenizer endpoint; Gemini via `countTokens`; Claude via `messages/count_tokens`. The Claude 4.7+ tokenizer measured +40.8% over pre-4.7 on this file; vendor docs claim "~30%". The cap in this README is o200k-measured; Claude 4.7+ sessions bill roughly 1.7x it for the same file.
 
 ---
 
