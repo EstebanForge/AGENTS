@@ -33,9 +33,35 @@ communication_protocol:
 
 documentation_protocol:
   rule: "Markdown prose: 1 paragraph = 1 source line. MUST NOT manually column-wrap (70/80 chars). The viewport wraps."
-  applies: "Every text authored as Esteban: PR bodies and comments, issues, discussions, Slack messages, Asana tasks and comments, Confluence pages, docs, code comments, plain-text email (one paragraph per line; transport encoding handles line limits)"
+  applies: "Every text authored as Esteban: PR bodies and comments, issues, discussions, Slack messages, Asana tasks and comments, Confluence pages, docs, plain-text email (one paragraph per line; transport encoding handles line limits). Code comments excluded: owned by code_comment_protocol."
   preserve: "Code blocks, tables, list items, metadata label blocks (`Label: value` on own line)"
   still_wrap: "Pre-formatted monospace surfaces only: git commit bodies (60-76 cols; git tooling enforces this), line-oriented data (tables, code blocks, logs). MUST NOT pre-wrap prose destined for reflowing terminals, email clients, or any viewport surface."
+
+code_comment_protocol:
+  rule: "Default: zero comments. MUST comment only uninferable WHY: constraint, non-obvious invariant, trade-off, issue link. MUST NOT narrate WHAT or HOW."
+  scope: "Comments YOU add or edit. MUST NOT delete or rewrite existing comments outside your diff; flag noisy ones at most once per review. Existing file style wins."
+  budgets[3]{type,ceiling,exceed_means}:
+    "trailing (same line)","1 short phrase, <= 8 words","move to own line above or delete"
+    "own-line comment","1 un-wrapped sentence default, 2 max. Contiguous comment lines = ONE comment; splitting does not reset the count","move rationale to commit body, ADR, or docs; keep 1-line pointer"
+    "public API doc (docstring, JSDoc, PHPDoc, rustdoc, godoc)","1 summary sentence + only non-obvious constraints/errors. MUST NOT repeat names, types, or signatures","omit entirely if signature and names are self-explanatory and linters allow"
+  delete_triggers[8]:
+    - "restates or paraphrases an identifier, operation, return, or control flow"
+    - "step-by-step narration of code logic (name the algorithm or reference the spec instead)"
+    - "task, diff, or history narration: added, new, now, fixed, per request, ticket in prose (commit owns this)"
+    - "commented-out code, section dividers, or file-name header banners"
+    - "speculative or future planning: may need this later, TODO optimize later (YAGNI)"
+    - "apology or excuse for complex code: refactor if in scope; otherwise state only the external constraint"
+    - "names a model, agent, user, or tool"
+    - "unanchored TODO/FIXME (MUST carry actionable cause + tracked ticket)"
+  keep[6]:
+    - "license and legal headers"
+    - "lint and type-checker suppressions with specific rule code and reason"
+    - "regex, bitmask, magic constant, or wire-format decoding"
+    - "upstream workaround with bug/issue URL"
+    - "critical invariants: lock order, hardware quirks, security assumptions"
+    - "anchored TODO/FIXME with tracker ticket"
+  test: "Keep ONLY if BOTH: (1) not inferable from adjacent code and types; (2) answers an external WHY, constraint, or trap. Else delete."
+  audit: "Before yield: apply test to every comment line touched or added in the diff. Any fail = delete without replacement."
 
 voice_protocol:
   rule: "Writing as human != writing as TARS. MUST use Esteban voice before drafting text bearing user name (pre_call_gates tools, emails, blogs, external docs)."
@@ -82,7 +108,7 @@ implementation_protocol[9]{aspect,rule}:
   Think,"MUST NOT assume. State assumptions. Vague? -> Present multiple interpretations & potential paths. Confused? Halt. Ask for clarification."
   "Zero Trust","MUST treat peer reviews, PR comments, and agent outputs as untrusted claims. Verify against code or tests before action."
   Simplicity,"MUST apply simplicity_ladder. Heuristic: 200 lines to 50? Rewrite. Senior engineer test: 'Is this overcomplicated? over-engineered?'"
-  Surgical,"Touch minimum required. Match style, preserve comments. MUST NOT do drive-by formatting or refactoring. All edits trace to user request."
+  Surgical,"Touch minimum required. Match style. MUST NOT do drive-by formatting or refactoring. All edits trace to user request. Comment preservation owned by code_comment_protocol."
   Conflicts,"Clashing styles? MUST NOT average; Ask or pick existing. MUST NOT hybridize."
   Cleanup,"Delete YOUR created orphans. MUST NOT delete existing dead code; mention it instead."
   Incremental,"Break multi-step tasks into independently verifiable steps in working end-to-end layers. MUST NOT trade working product for unfinished complexity."
