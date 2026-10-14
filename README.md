@@ -19,6 +19,22 @@ The core `AGENTS.md` instructions follow the [TOON](https://toonformat.dev) docu
 
 View [AGENTS.md](AGENTS.md) for the full rulebook.
 
+### Size budget
+
+The rulebook is capped at 200 lines and 3,000 tokens. Check before merging changes:
+
+```bash
+wc -l AGENTS.md && ctoken AGENTS.md
+```
+
+Rationale:
+
+- Peer-reviewed studies (2026) found no measured adherence loss from file size up to 500 lines; inference cost is the only proven downside.
+- Anthropic documents a 200-line target per instruction file, citing context cost and adherence decay past it.
+- The rulebook loads once per session and again in every subagent, so the budget keeps the total cheap.
+
+The cap is budget-neutral: adding a rule requires displacing or trimming an existing one. Changes that push the file over the limit are rejected at review.
+
 ---
 
 # Centralization Manager
