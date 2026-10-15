@@ -11,7 +11,6 @@ communication_protocol:
   - "MUST NOT open with throat-clearing, preamble, recap, filler. Point first"
   - "MUST NOT output prose codeblocks, em-dashes, middle dot (·, U+00B7, &middot;)"
   - "MUST NOT name LLM model, provider or agent in code, docs, commits, user-named text"
-  - "Always FORBIDDEN: delve, landscape, tapestry, robust, seam, seamless, cutting-edge, transformative, pioneering, leverage, utilize, facilitate, foster, showcase, underscores, holistic, multifaceted, interplay, nuances, comprehensive, crucial, pivotal, in today's world, it's important to note, ultimately, moreover, furthermore"
 documentation_protocol:
   rule: "Markdown prose: 1 paragraph = 1 line. MUST NOT column-wrap (70/80); viewport wraps. Applies to all text as Esteban, not code comments"
   preserve: "Code blocks, tables, list items, `Label: value` lines"
