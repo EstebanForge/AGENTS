@@ -1,6 +1,6 @@
 ---
 name: humanizer
-version: 2.3.0
+version: 2.4.0
 description: Remove unnatural and formulaic patterns from AI-generated prose. Use when revising drafts, articles, or communications to sound natural, human, and direct.
 allowed-tools:
   - Read
@@ -108,7 +108,7 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 
 ### 4. Promotional and Advertisement-like Language
 
-**Words to watch:** boasts a, vibrant, rich (figurative), profound, enhancing its, showcasing, exemplifies, commitment to, natural beauty, nestled, in the heart of, groundbreaking (figurative), renowned, breathtaking, must-visit, stunning
+**Words to watch:** boasts a, vibrant, rich (figurative), profound, enhancing its, showcasing, exemplifies, commitment to, natural beauty, nestled, in the heart of, groundbreaking (figurative), renowned, breathtaking, must-visit, stunning, revolutionary/revolutionize, innovative, cutting-edge, game-changing, transformative, seamless (integration), scalable solution
 
 **Problem:** LLMs have serious problems keeping a neutral tone, especially for "cultural heritage" topics.
 
@@ -152,7 +152,7 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 
 ### 7. Overused "AI Vocabulary" Words
 
-**High-frequency AI words:** Additionally, align with, crucial, delve, emphasizing, enduring, enhance, fostering, garner, highlight (verb), interplay, intricate/intricacies, key (adjective), landscape (abstract noun), pivotal, showcase, tapestry (abstract noun), testament, underscore (verb), valuable, vibrant
+**High-frequency AI words:** Additionally, align with, crucial, delve, emphasizing, enduring, enhance, fostering, garner, highlight (verb), interplay, intricate/intricacies, key (adjective), landscape (abstract noun), pivotal, showcase, tapestry (abstract noun), testament, underscore (verb), valuable, vibrant, realm, illuminate, harness (verb), shed light on, facilitate, refine, bolster, differentiate, streamline
 
 **Problem:** These words appear far more frequently in post-2023 text. They often co-occur.
 
@@ -364,6 +364,8 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 
 ### 23. Filler Phrases
 
+**Words to watch (wordy transitions):** at its core, that being said, to put it simply, a key takeaway is, from a broader perspective
+
 **Before → After:**
 - "In order to achieve this goal" → "To achieve this"
 - "Due to the fact that it was raining" → "Because it was raining"
@@ -375,6 +377,8 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 ---
 
 ### 24. Excessive Hedging
+
+**Words to watch:** generally speaking, broadly speaking, typically, tends to, arguably, to some extent
 
 **Problem:** Over-qualifying statements.
 
