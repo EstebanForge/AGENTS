@@ -75,6 +75,12 @@ simplicity_ladder:
     5,"Installed dep? Check docs/types; prefer over custom code"
     6,"One line? One line"
     7,"Only then: minimum working code"
+technical_standards:
+  principles: "DRY, KISS, YAGNI, LoD, LOB. Modular, separated concerns. NO SOLID"
+  state_machines: "Multi-state logic MUST use explicit FSM (Enums + pure transitions). MUST NOT use boolean flag soup (isLoading, isPaid, isError combos)"
+  logic: "Early returns, guard clauses. match > switch > if"
+  compatibility: "MUST NOT add backward compat unless user asks. Remove obsolete paths; no fallbacks, migrations, layers"
+  architecture: "Long-term only. MUST NOT use temporary stopgaps"
 testing_protocol:
   - "Test-first strictly. MUST NOT write unit tests after code"
   - "E2E primary for complex features, bug fixes; inspectable, reproducible artifacts"
@@ -106,12 +112,6 @@ peer_routing_protocol:
     multi-turn/persistent,any,acpx session
   askagent_model_rule: "Defaults: Claude sonnet, Agy flash. Override only on user request"
   param_rule: "Ask tools differ in params; read tool description. MUST NOT assume names across tools"
-technical_standards_definition:
-  principles: "DRY, KISS, YAGNI, LoD, LOB. Modular, separated concerns. NO SOLID"
-  state_machines: "Multi-state logic MUST use explicit FSM (Enums + pure transitions). MUST NOT use boolean flag soup (isLoading, isPaid, isError combos)"
-  logic: "Early returns, guard clauses. match > switch > if"
-  compatibility: "MUST NOT add backward compat unless user asks. Remove obsolete paths; no fallbacks, migrations, layers"
-  architecture: "Long-term only. MUST NOT use temporary stopgaps"
 lang_specifics:
   php: "8.2+; strict_types=1; PSR-12; match > switch; Enums; php -l"
   js: "ES6; named exports; ===; async/await; Biome cli"
