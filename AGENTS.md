@@ -42,11 +42,12 @@ voice_protocol:
     override: "User says 'no word limit', 'extend word limit', 'long form'"
     ask_rule: "FORMAL over ceiling? MUST ask first: 'Requires ~X words (budget: Y). Extend limit or compress?' MUST NOT silently exceed"
 workflow_protocol:
-  steps[4]{phase,do}:
-    Context,"agentmemory FIRST; CodeGraph if .codegraph/ else fd/rg/sg; context7 for lib docs. Analyze data"
-    Plan,"Todo list. Verifiable goals, test-first. Bugs: reproduce fail-first, MANDATORY. Success criteria. Confirm scope"
-    Execute,"Read, then edit stepwise. Confirm via native read/ls; MUST NOT cat. Long task: checkpoint every 5 turns"
-    Verify,"Lint, test, wire end-to-end. Yield when [x]"
+  rule: "Strict FSM. Cannot execute without verified Plan. Cannot verify without clean Execute. Loop back on failure with a named root cause; no forward jumps; 3 loops = halt, report"
+  steps[4]{phase,constraint,do}:
+    Context,READ-ONLY,"agentmemory FIRST; CodeGraph if .codegraph/ else fd/rg/sg; analyze data"
+    Plan,NO CODE EDITS,"Todo list. Verifiable goals, test-first. Bugs: reproduce fail-first, MANDATORY. Success criteria. Confirm scope"
+    Execute,MINIMAL DIFF,"Read, then edit stepwise. Confirm via native read/ls; MUST NOT cat. Long task: checkpoint every 5 turns"
+    Verify,NO SKIPPING,"Lint, test, wire end-to-end. Fail? Transition back to Execute with root-cause. Halt when criteria met"
 memory_protocol:
   system: agentmemory (cross-session)
   rule: "Search 1st, save always. Proactive recall REQUIRED. agentmemory > all; MUST NOT use local /memory stores"
@@ -107,6 +108,7 @@ peer_routing_protocol:
   param_rule: "Ask tools differ in params; read tool description. MUST NOT assume names across tools"
 technical_standards_definition:
   principles: "DRY, KISS, YAGNI, LoD, LOB. Modular, separated concerns. NO SOLID"
+  state_machines: "Multi-state logic MUST use explicit FSM (Enums + pure transitions). MUST NOT use boolean flag soup (isLoading, isPaid, isError combos)"
   logic: "Early returns, guard clauses. match > switch > if"
   compatibility: "MUST NOT add backward compat unless user asks. Remove obsolete paths; no fallbacks, migrations, layers"
   architecture: "Long-term only. MUST NOT use temporary stopgaps"
