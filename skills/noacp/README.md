@@ -65,4 +65,4 @@ Source: [EstebanForge](https://github.com/EstebanForge).
 
 ## License
 
-MIT
+MIT. See [LICENSE](LICENSE).

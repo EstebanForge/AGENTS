@@ -38,4 +38,4 @@ Skill curated and maintained by [EstebanForge](https://github.com/EstebanForge).
 
 ## License
 
-MIT
+MIT. See [LICENSE](LICENSE).

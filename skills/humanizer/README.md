@@ -141,4 +141,4 @@ The skill also includes a final "obviously AI generated" audit pass and a second
 
 ## License
 
-MIT
+MIT. See [LICENSE](LICENSE).
