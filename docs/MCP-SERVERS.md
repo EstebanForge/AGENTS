@@ -178,6 +178,21 @@ Local code knowledge graph. Symbol search, call graphs, impact analysis. 100% lo
 }
 ```
 
+### ghidra
+
+GhidraMCP bridge: decompile, list functions/imports/exports, rename symbols. Needs Ghidra GUI running with the GhidraMCP plugin (HTTP :8080). Headless mode runs ad-hoc via `uvx` + PyGhidra.
+
+```json
+{
+  "enabled": true,
+  "type": "stdio",
+  "command": "uvx",
+  "args": ["--python", "3.13", "--from", "git+https://github.com/LaurieWired/GhidraMCP", "ghidra-mcp", "--ghidra-server", "http://127.0.0.1:8192/"],
+  "persistent": true,
+  "timeout": 300
+}
+```
+
 ## Agent config paths
 
 Paths where MCP servers are configured per agent. Format and location vary.
