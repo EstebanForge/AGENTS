@@ -35,19 +35,20 @@ voice_protocol:
       PR description,60-150,"200. Context links, 1-2 sentence What/Why"
       PR/Issue comment,10-25,"35. 1-2 sentences"
       Issue description,60-110,"140. Problem, repro, acceptance criteria"
-      Email,50-125,"150. Median reply ~43. Context, ask/answer, next step"
-      Slack,10-25,"30. 1-3 sentences. Status, context, blocker"
+      Email,50-125,"150. Median reply ~43. Context, ask/answer"
+      Slack,10-25,"30. 1-3 sentences max. No filler"
       Asana/Jira task,20-50,"60. Outcome, action, next step"
     exempt: "PERSONAL: no ceilings (paragraphs <= 3 sentences)"
     override: "User says 'no word limit', 'extend word limit', 'long form'"
-    ask_rule: "FORMAL over ceiling? MUST ask first: 'Requires ~X words (budget: Y). Extend limit or compress?' MUST NOT silently exceed"
+    ask_rule: "Content needs more than the ceiling? MUST ask first: 'Requires ~X words (budget: Y). Extend limit or compress?'. Trim otherwise; the ask covers deliberate extension only"
 workflow_protocol:
   rule: "Strict FSM. Cannot execute without verified Plan. Cannot verify without clean Execute. Loop back on failure with a named root cause; no forward jumps; 3 loops = halt, report"
   steps[4]{phase,constraint,do}:
     Context,READ-ONLY,"agentmemory FIRST; CodeGraph if .codegraph/ else fd/rg/sg; analyze data"
     Plan,NO CODE EDITS,"Todo list. Verifiable goals, test-first. Bugs: reproduce fail-first, MANDATORY. Success criteria. Confirm scope"
-    Execute,MINIMAL DIFF,"Read, then edit stepwise. Confirm via native read/ls; MUST NOT cat. Long task: checkpoint every 5 turns"
+    Execute,MINIMAL DIFF,"Read, then edit stepwise. Long task: checkpoint every 5 turns"
     Verify,NO SKIPPING,"Lint, test, wire end-to-end. Fail? Transition back to Execute with root-cause. Halt when criteria met"
+  verify [Lint, Test, Wire end-to-end, Analyze failure before fix, "Fix root cause, not symptom; find all callers; one shared guard > many caller guards", MUST NOT ignore failures]
 memory_protocol:
   system: agentmemory (cross-session)
   rule: "Search 1st, save always. Proactive recall REQUIRED. agentmemory > all; MUST NOT use local /memory stores"
@@ -74,7 +75,6 @@ simplicity_ladder:
     5,"Installed dep? Check docs/types; prefer over custom code"
     6,"One line? One line"
     7,"Only then: minimum working code"
-verify_protocol: [Lint, Test, Wire end-to-end, Analyze failure before fix, "Fix root cause, not symptom; find all callers; one shared guard > many caller guards", MUST NOT ignore failures]
 testing_protocol:
   - "Test-first strictly. MUST NOT write unit tests after code"
   - "E2E primary for complex features, bug fixes; inspectable, reproducible artifacts"
@@ -88,14 +88,14 @@ tool_protocol:
   - "Redoing steps: explain why"
   - "Native tools > CLI. rg > grep"
   - "Byte-cap verbose output (2>&1 | head -c 4000 || true)"
-  - "Subagents for broad tasks where only result matters (exploration, research, big-output summary, refactor survey)"
+  - "Own subagents for broad tasks where only result matters (exploration, research, big-output summary, refactor survey)"
   - "Browser: native agent_browser; CLI `agent-browser` (first run `agent-browser skills get core`; self-signed `--ignore-https-errors`)"
 codegraph_protocol:
   priority: "codegraph > fd/rg/sg when .codegraph/ exists; no grep re-scan"
   primary: "codegraph_explore (CLI `codegraph explore '<query>'`): source, call path, blast radius. Treat as read"
   maintenance: "Stale? `codegraph index && codegraph sync`. Missing? Offer `codegraph init -i`"
 peer_routing_protocol:
-  peers: "pi|codex|antigravity|agy|claude|opencode|copilot = PEERS. MUST NOT invoke via subagent. Default: acpx skill"
+  peers: "pi|codex|antigravity|agy|claude|opencode|copilot = PEERS. MUST NOT route peers through subagents. Default: acpx skill"
   principle: "FIRST-MATCH task shape vs your tools; MUST NOT deliberate. AskClaude/AskAntigravity/AskCodex are pi-only"
   self_check: "You are target peer? Act directly; never self-delegate"
   matrix[5]{task,native,use}:
@@ -112,8 +112,9 @@ technical_standards_definition:
   logic: "Early returns, guard clauses. match > switch > if"
   compatibility: "MUST NOT add backward compat unless user asks. Remove obsolete paths; no fallbacks, migrations, layers"
   architecture: "Long-term only. MUST NOT use temporary stopgaps"
+lang_specifics:
   php: "8.2+; strict_types=1; PSR-12; match > switch; Enums; php -l"
-  js: "ES6; named exports; ===; async/await; Biome; no JSX/var"
+  js: "ES6; named exports; ===; async/await; Biome cli"
   bash: "Portable; 5.x+; set -euo; local vars; quote all; [[ ]]; Shellcheck; shebang `#!/usr/bin/env bash`"
   go: "1.27+; errors-as-values; context 1st; table-tests; consumer interfaces; Gofmt; no panic"
   rust: "2024 edition; Cargo; Clippy; rustfmt; Result/Option, no panic; pattern matching"
@@ -121,10 +122,8 @@ technical_standards_definition:
   ruby: "frozen_string_literal; symbol keys; Enumerable; no monkey-patch; RuboCop"
   sql: "PDO; prepared"
   html: "Responsive; mobile-first; semantic; ARIA"
-  css: "Modern; vars; flex > grid; nesting; BEM; rem; no !important; clamp(); Biome"
+  css: "Modern; vars; flex > grid; nesting; BEM; rem; no !important; clamp(); Biome cli"
   wp: "Latest; WP funcs > PHP; wpdb; hooks; nonces; sanitize/validate/escape"
-  hypermedia: "HTML + status codes (Datastar/HTMX)"
-  naming: "methods: verbs; variables: nouns"
 mcp_protocol:
   client: mcp-cli-ent
   workflow: "list-servers; --search '<query>' (no schema); list-tools <server>; call <server> <tool> '<json_params>'"
