@@ -42,11 +42,11 @@ Disabled but available: `chrome-devtools`, `playwright`, `sequential-thinking`, 
 
 ## Extensions
 
-Installed packages (all active, 37 total). Verified via `pi list`.
+Installed packages (all active, 36 total). Verified via `pi list`.
 
 ### Package sources and install commands
 
-Each package was located in this order: 1. [pi.dev/packages](https://pi.dev/packages), 2. npm registry (keywords `pi-extension`, `pi-package`), 3. GitHub. First match wins. 35 of 37 are in the pi.dev catalog. 2 are GitHub-only.
+Each package was located in this order: 1. [pi.dev/packages](https://pi.dev/packages), 2. npm registry (keywords `pi-extension`, `pi-package`), 3. GitHub. First match wins. 34 of 36 are in the pi.dev catalog. 2 are GitHub-only.
 
 | Package | Found on | Install command |
 |---|---|---|
@@ -65,7 +65,6 @@ Each package was located in this order: 1. [pi.dev/packages](https://pi.dev/pack
 | `@pi-kaush/pi-inline-skill-identifier` | pi.dev/packages | `pi install npm:@pi-kaush/pi-inline-skill-identifier` |
 | `@estebanforge/pi-token-cost-ledger` | pi.dev/packages | `pi install npm:@estebanforge/pi-token-cost-ledger` |
 | `pi-unified-exec` | pi.dev/packages | `pi install npm:pi-unified-exec` |
-| `@tmustier/pi-session-recap` | pi.dev/packages | `pi install npm:@tmustier/pi-session-recap` |
 | `pi-vision-handoff` | pi.dev/packages | `pi install npm:pi-vision-handoff` |
 | `pi-agent-browser-native` | pi.dev/packages | `pi install npm:pi-agent-browser-native` |
 | `@pi-stef/atlassian` | pi.dev/packages | `pi install npm:@pi-stef/atlassian` |
@@ -91,7 +90,6 @@ Each package was located in this order: 1. [pi.dev/packages](https://pi.dev/pack
 Notes:
 
 - `pi-nested-agents-md` is not in the pi.dev catalog and has no npm package under its bare or scoped name. GitHub is the only source; install with the `git:` form. `umputun/revdiff` is also outside the catalog and is installed here from the plain URL form, which clones the repo head the same way the `git:` form does.
-- `pi-queue-steer` moved from the `git:` form (`tmustier/pi-queue-steer`) to the published `npm:@tmustier/pi-queue-steer` package; the npm form tracks releases.
 - The pi.dev catalog indexes npm packages tagged `pi-extension` or `pi-package`. A catalog page per package lives at `https://pi.dev/packages/<name>`.
 
 ```json
@@ -111,7 +109,6 @@ Notes:
   "npm:@pi-kaush/pi-inline-skill-identifier",
   "npm:@estebanforge/pi-token-cost-ledger",
   "npm:pi-unified-exec",
-  "npm:@tmustier/pi-session-recap",
   "npm:pi-vision-handoff",
   "npm:pi-agent-browser-native",
   "npm:@pi-stef/atlassian",
