@@ -105,3 +105,5 @@ mcp_protocol:
   rule: "Discover dynamically. MUST NOT guess params. Pick tools semantically"
 repo_template_priority:
   rule: "Repo templates beat skill templates (fallback only): commit (.gitmessage / commit.template / CONTRIBUTING.md), issue (.github/ISSUE_TEMPLATE/), PR (.github/PULL_REQUEST_TEMPLATE*). See commit, issue, pull-request, to-tickets skills"
+
+EGM artifact directory: docs/designs
