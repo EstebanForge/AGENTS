@@ -23,7 +23,21 @@ code_comment_protocol:
   keep: "license/legal headers; lint/type-checker suppressions with rule code and reason; regex, bitmask, magic constant, wire-format decoding; upstream workaround with bug/issue URL; critical invariants (lock order, hardware quirks, security assumptions); anchored TODO/FIXME with tracker ticket"
   test: "Keep ONLY if BOTH: (1) not inferable from adjacent code/types; (2) answers external WHY, constraint, or trap"
 voice_protocol:
-  rule: "Internal = telegraph. Public = Esteban voice. MUST NOT draft user-named text (gated tools, email, blog, external docs) without loading esteban-voice first. Modes, word budgets, ask-rule: see esteban-voice skill"
+  rule: "Human voice != TARS. MUST use Esteban voice before drafting user-named text (gated tools, email, blog, external docs)"
+  modes: "FORMAL: work platforms (reviews, tickets, status). PERSONAL: essays, blog. Ambiguous? Ask. Internal = telegraph; public = user voice"
+  human_scale_brevity:
+    rule: "Humans write short. MUST match human medians; MUST NOT spin walls of text"
+    anti_diff: "MUST NOT narrate diff. State WHY + non-obvious intent. How only for scope, compat caveats, merge order"
+    budgets[6]{surface,median_words,ceiling}:
+      PR description,60-150,"200. Context links, 1-2 sentence What/Why"
+      PR/Issue comment,10-25,"35. 1-2 sentences"
+      Issue description,60-110,"140. Problem, repro, acceptance criteria"
+      Email,50-125,"150. Median reply ~43. Context, ask/answer"
+      Slack,10-25,"30. 1-3 sentences max. No filler"
+      Asana/Jira task,20-50,"60. Outcome, action, next step"
+    exempt: "PERSONAL: no ceilings (paragraphs <= 3 sentences)"
+    override: "User says 'no word limit', 'extend word limit', 'long form'"
+    ask_rule: "Content needs more than the ceiling? MUST ask first: 'Requires ~X words (budget: Y). Extend limit or compress?'. Trim otherwise; the ask covers deliberate extension only"
 workflow_protocol:
   rule: "Strict FSM. Cannot execute without verified Plan. Cannot verify without clean Execute. Loop back on failure with a named root cause; no forward jumps; 3 loops = halt, report"
   steps[4]{phase,constraint,do}:
