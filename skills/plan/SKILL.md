@@ -68,6 +68,17 @@ For every specific issue (bug, smell, design concern, or risk):
 - Do not assume my priorities on timeline or scale.
 - After each section, pause and ask for my feedback before moving on.
 
+## Process Reward Verification Gate (Plan-to-Execute Barrier)
+
+Before transitioning from Plan to Execute in `workflow_protocol`, the plan MUST pass this deterministic 4-part Process Reward Model (PRM) verification gate. No code edits are permitted until all four criteria are verified:
+
+1. **Reproduction (Fail-First):** Provide a concrete runnable command (test runner, curl, or CLI invocation) that reproduces the failure or proves the absence of the requested feature before modifying production code.
+2. **Blast Radius (CodeGraph Mapping):** List all direct and transitive callers, callees, and consumers affected by the planned change with concrete `file:line` references.
+3. **State Boundaries & Invariants:** Define explicit FSM states, event enums, and transition guards (per `fsm-design`), or exact input/output preconditions and postconditions. Reject boolean flag soup.
+4. **Rollback & Halt Condition:** Specify a concrete revert command (`git checkout -- <files>`) and an execution loop budget (maximum 3 correction iterations before halting to report).
+
+For architectural changes or critical refactors, execute an adversarial peer check via `prompts/ask-peer.md` (Diagnosis challenge frame) before executing code edits.
+
 ---
 
 BEFORE YOU START:
