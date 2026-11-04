@@ -42,7 +42,7 @@ Browser automation: elements, snapshots, interactions.
 {
   "enabled": false,
   "command": "npx",
-  "args": ["-y", "@playwright/mcp@latest"],
+  "args": ["-y", "@playwright/mcp@latest", "--browser", "chrome", "--sandbox", "--executable-path", "/usr/bin/chromium-browser"],
   "persistent": true,
   "timeout": 60
 }
