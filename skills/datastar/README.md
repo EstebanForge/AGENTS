@@ -21,16 +21,17 @@ Read the datastar skill and build a click-to-edit form.
 
 ## What is inside
 
-- **`SKILL.md`** - the full reference: signals (`$`), modifiers (`__`), data attributes, actions (`@`), expressions, SSE event types, response content types, SDK list, patterns and best practices, anti-patterns, and Pro features.
-- **`EXAMPLES.md`** - 17 self-contained, idiomatic examples: Active Search, Click to Edit, Bulk Update, Edit Row, Delete Row, File Upload, Form Submission, Infinite Scroll, Inline Validation, Lazy Tabs, Progress Bar, TodoMVC, Sortable, Web Component, Event Delegation, Signal Watcher, Custom Plugin.
+- **`SKILL.md`** - the full reference: signals (`$`), modifiers (`__`), data attributes, actions (`@`), expressions, SSE event types, response content types, SDK list, Rocket web components, patterns and best practices, anti-patterns, and Pro features.
+- **`EXAMPLES.md`** - 18 self-contained, idiomatic examples: Active Search, Click to Edit, Bulk Update, Edit Row, Delete Row, File Upload, Form Submission, Infinite Scroll, Inline Validation, Lazy Tabs, Progress Bar, TodoMVC, Sortable, Web Component (Vanilla), Rocket Component, Event Delegation, Signal Watcher, Custom Plugin.
 
 ## Notes
 
-- Datastar uses `Function()` constructors, so Content Security Policy requires `unsafe-eval`.
+- Datastar historically requires `unsafe-eval` due to `Function()` constructors, but now provides opt-in CSP mode via `data-nonce` to run without `unsafe-eval`.
 - The official docs at `data-star.dev` can be fetched on demand for deeper reference.
 
 ## Version History
 
+- **1.0.4** - Updated for Datastar 1.0.4: opt-in CSP mode without `unsafe-eval` (`data-nonce`), new `@query()` backend action, backend request options and cancellation (`requestCancellation`), and Rocket web components bundle.
 - **1.0.0** - Initial curated reference.
 
 ## Source

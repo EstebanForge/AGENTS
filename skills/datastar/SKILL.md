@@ -7,12 +7,12 @@ description: Build reactive hypermedia web applications using Datastar. Use when
 
 Hypermedia framework. Backend drives frontend via SSE. Frontend reactivity via `data-*` attributes and signals. Single CDN include, no npm required.
 
-**CSP note**: Datastar uses `Function()` constructors, requiring `unsafe-eval` in Content Security Policy.
+**CSP note**: Datastar uses `Function()` constructors by default, requiring `unsafe-eval` in Content Security Policy. To run without `unsafe-eval`, enable opt-in CSP mode by adding `data-nonce="{nonce}"` (or aliased `data-star-nonce`) to the `<html>` element matching your CSP `script-src` nonce.
 
 ## Quick Start
 
 ```html
-<script type="module" src="https://cdn.jsdelivr.net/gh/starfederation/datastar@v1.0.2/bundles/datastar.js"></script>
+<script type="module" src="https://cdn.jsdelivr.net/gh/starfederation/datastar@v1.0.4/bundles/datastar.js"></script>
 ```
 
 Core pattern: `data-*` attributes on HTML elements, `$signalName` for reactive state, `@action()` for backend calls.
@@ -45,8 +45,12 @@ Modifiers alter attribute behavior. Applied with double underscore syntax. Used 
 
 | Modifier | Applies to | Example |
 |---|---|---|
-| `__debounce.Xms` | `data-on:*` | `data-on:input__debounce.200ms="@get('/search')"` |
+| `__debounce.Xms` | `data-on:*`, `data-on-signal-patch` | `data-on:input__debounce.200ms="@get('/search')"` |
+| `__debounce.Xms.leading` | `data-on:*` | Fire on leading edge |
+| `__debounce.Xms.notrailing` | `data-on:*` | Fire without trailing edge |
 | `__throttle.Xms` | `data-on:*` | `data-on:scroll__throttle.100ms="..."` |
+| `__throttle.Xms.noleading` | `data-on:*` | Throttle without leading edge |
+| `__throttle.Xms.trailing` | `data-on:*` | Throttle with trailing edge |
 | `__window` | `data-on:*` | `data-on:keydown__window="evt.key === 'Enter' && ..."` |
 | `__document` | `data-on:*` | Document-scoped events |
 | `__outside` | `data-on:click` | Click-outside-to-close menus |
@@ -95,6 +99,7 @@ For exhaustive modifier lists, fetch https://data-star.dev/reference/attributes
 | `data-on-signal-patch` | Trigger on signal change | `data-on-signal-patch="$foo"` |
 | `data-on-signal-patch-filter` | Filter which signal patches trigger | `data-on-signal-patch-filter="/^form\./"` |
 | `data-json-signals` | Display signals as JSON (debugging, supports `__terse` and `{include/exclude}` filters) | `data-json-signals` |
+| `data-nonce` | Enable CSP mode without `unsafe-eval` (placed on `<html>`, also supports aliases like `data-star-nonce`) | `<html data-nonce="{nonce}">` |
 
 **Attribute evaluation order matters**: `data-indicator` must appear before `data-init` / backend actions in the HTML to ensure the indicator signal exists when the request fires.
 
@@ -112,11 +117,19 @@ Safe helper functions. The `@` prefix is a security sandbox; arbitrary JS cannot
 - `@post(url, opts)` - POST request
 - `@put(url, opts)` - PUT request
 - `@patch(url, opts)` - PATCH request
+- `@query(url, opts)` - QUERY request (RFC 10008). Safe and idempotent read-only request like GET, but sends signals in the request body instead of the URL query string.
 - `@delete(url, opts)` - DELETE request
 
-All backend actions send all signals by default (`datastar` query param for GET, JSON body for others). Private signals (`_` prefix) excluded. Use `{filterSignals: /regex/}` to limit (not recommended; prefer sending all).
+All backend actions send all signals by default (`datastar` query param for GET, JSON body for others including QUERY). Private signals (`_` prefix) excluded. Use `{filterSignals: /regex/}` to limit (not recommended; prefer sending all).
 
-**Form submission**: Use `{contentType: 'form'}` to send as form data instead of signals. Auto-finds closest `<form>`, validates, and sends form elements. `data-on:submit` auto-prevents default.
+**Backend Request Options (`opts`):**
+- `contentType` - Set `'form'` to send form data instead of signals. Auto-finds closest `<form>`, validates, and sends form elements. `data-on:submit` auto-prevents default.
+- `headers` - Custom request headers object (e.g. `{'X-Csrf-Token': token}`).
+- `openWhenHidden` - Keep connection open when page is hidden (default `false` for GET, `true` for other methods).
+- `payload` - Override request payload with custom object.
+- `retry` - Retry policy: `'auto'` (default, retries on network error), `'error'` (retries 4xx and 5xx), `'always'`, `'never'`. Retries re-send current signal state.
+- `retryInterval`, `retryScaler`, `retryMaxWait`, `retryMaxCount` - Exponential backoff settings (defaults: 1000ms base, scaler 2, max 30000ms, max 10 attempts).
+- `requestCancellation` - Cancellation policy: `'auto'` (default, cancels preceding in-flight requests to same method and URL), `'cleanup'` (cancels on element/attribute cleanup and duplicate in-flight requests), `'disabled'` (allows concurrent requests), or pass an `AbortController` instance.
 
 ### Expressions
 
@@ -306,21 +319,57 @@ Use `data-on-intersect` on a sentinel element:
 - **Don't** use `data-on-interval` when SSE can push updates instead.
 - **Don't** send partial signals without good reason. Prefer sending all (private `_` signals excluded automatically).
 
+## Rocket (Web Components)
+
+Rocket is Datastar's official Web Component API. It is free and open-source, available in the standalone `datastar-rocket.js` bundle (which includes Datastar core):
+
+```html
+<script type="module" src="https://cdn.jsdelivr.net/gh/starfederation/datastar@v1.0.4/bundles/datastar-rocket.js"></script>
+```
+
+Define custom elements with `rocket(tagName, definition)`. Component instances use `$$` for instance-isolated reactive state (rewritten to `$._rocket.<id>`):
+
+```javascript
+import { rocket } from 'https://cdn.jsdelivr.net/gh/starfederation/datastar@v1.0.4/bundles/datastar-rocket.js'
+
+rocket('demo-counter', {
+  props: ({ number, string }) => ({
+    count: number.step(1).min(0),
+    label: string.trim.default('Counter'),
+  }),
+  setup: ({ $$, observeProps, props }) => {
+    $$.count = props.count
+    observeProps(() => {
+      $$.count = props.count
+    }, 'count')
+  },
+  render: ({ html, props: { label } }) => html`
+    <div>
+      <button
+        type="button"
+        data-on:click="$$count += 1"
+        data-text="${label} + ': ' + $$count"
+      ></button>
+    </div>
+  `,
+})
+```
+
 ## Pro Features (Commercial License)
 
 Attributes: `data-animate`, `data-custom-validity`, `data-match-media`, `data-on-raf`, `data-on-resize`, `data-persist`, `data-query-string`, `data-replace-url`, `data-scroll-into-view`, `data-view-transition`.
 
 Actions: `@clipboard()`, `@fit()`, `@intl()`.
 
-Rocket: Web component API. `rocket(tagName, { ... })` with reactive props.
+Bundler: Custom bundle creation and custom attribute aliasing (e.g. `data-star-*`).
 
 See https://data-star.dev/pro for details.
 
 ## Examples
 
-17 complete, idiomatic code examples in [EXAMPLES.md](EXAMPLES.md):
+18 complete, idiomatic code examples in [EXAMPLES.md](EXAMPLES.md):
 
-Active Search, Click to Edit, Bulk Update, Edit Row, Delete Row, File Upload, Form Submission, Infinite Scroll, Inline Validation, Lazy Tabs, Progress Bar, TodoMVC, Sortable, Web Component, Event Delegation, Signal Watcher, Custom Plugin.
+Active Search, Click to Edit, Bulk Update, Edit Row, Delete Row, File Upload, Form Submission, Infinite Scroll, Inline Validation, Lazy Tabs, Progress Bar, TodoMVC, Sortable, Web Component (Vanilla), Rocket Component, Event Delegation, Signal Watcher, Custom Plugin.
 
 Copy and adapt. Each example is self-contained with working HTML.
 

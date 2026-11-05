@@ -467,7 +467,7 @@ Pattern: external JS dispatches custom events, Datastar reacts via `data-on:reor
 
 ---
 
-## Web Component Integration
+## Web Component Integration (Vanilla HTMLElement)
 
 ```html
 <label>
@@ -499,6 +499,45 @@ Pattern: external JS dispatches custom events, Datastar reacts via `data-on:reor
 ```
 
 `data-attr:name` passes signal value as attribute (props down). `data-on:reverse` listens for custom event (events up). Note `_` prefix on signals: private, not sent to backend.
+
+---
+
+## Rocket Component (Official Web Component API)
+
+Rocket is Datastar's web component framework (`bundles/datastar-rocket.js`). It provides typed props codecs and instance-isolated reactive state with `$$`:
+
+```html
+<script type="module" src="https://cdn.jsdelivr.net/gh/starfederation/datastar@v1.0.4/bundles/datastar-rocket.js"></script>
+
+<fancy-counter id="counter-1" count="5" label="Items"></fancy-counter>
+<fancy-counter id="counter-2" count="10" label="Points"></fancy-counter>
+
+<script type="module">
+    import { rocket } from 'https://cdn.jsdelivr.net/gh/starfederation/datastar@v1.0.4/bundles/datastar-rocket.js';
+
+    rocket('fancy-counter', {
+        props: ({ number, string }) => ({
+            count: number.step(1).min(0),
+            label: string.trim.default('Count'),
+        }),
+        setup: ({ $$, observeProps, props }) => {
+            $$.count = props.count;
+            observeProps(() => {
+                $$.count = props.count;
+            }, 'count');
+        },
+        render: ({ html, props: { label } }) => html`
+            <div class="counter">
+                <span data-text="${label} + ': ' + $$count"></span>
+                <button type="button" data-on:click="$$count++">+</button>
+                <button type="button" data-on:click="$$count--">-</button>
+            </div>
+        `,
+    });
+</script>
+```
+
+`$$count` is rewritten per-instance to `$._rocket.<id>.count`, isolating state across separate component instances without manual naming.
 
 ---
 
