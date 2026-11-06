@@ -77,7 +77,7 @@ Before transitioning from Plan to Execute in `workflow_protocol`, the plan MUST 
 3. **State Boundaries & Invariants:** Define explicit FSM states, event enums, and transition guards (per `fsm-design`), or exact input/output preconditions and postconditions. Reject boolean flag soup.
 4. **Rollback & Halt Condition:** Specify a concrete revert command (`git checkout -- <files>`) and an execution loop budget (maximum 3 correction iterations before halting to report).
 
-For architectural changes or critical refactors, execute an adversarial peer check via `prompts/ask-peer.md` (Diagnosis challenge frame) before executing code edits.
+For architectural changes or critical refactors, execute an adversarial peer check via `prompts/peer-review.md` (Diagnosis challenge frame) before executing code edits.
 
 ---
 
