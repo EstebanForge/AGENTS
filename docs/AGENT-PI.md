@@ -42,11 +42,11 @@ Disabled but available: `chrome-devtools`, `playwright`, `sequential-thinking`, 
 
 ## Extensions
 
-Installed packages (all active, 36 total). Verified via `pi list`.
+Installed packages (all active, 38 total). Verified via `pi list`.
 
 ### Package sources and install commands
 
-Each package was located in this order: 1. [pi.dev/packages](https://pi.dev/packages), 2. npm registry (keywords `pi-extension`, `pi-package`), 3. GitHub. First match wins. 34 of 36 are in the pi.dev catalog. 2 are GitHub-only.
+Each package was located in this order: 1. [pi.dev/packages](https://pi.dev/packages), 2. npm registry (keywords `pi-extension`, `pi-package`), 3. GitHub. First match wins. 36 of 38 are in the pi.dev catalog. 2 are GitHub-only.
 
 | Package | Found on | Install command |
 |---|---|---|
@@ -64,7 +64,6 @@ Each package was located in this order: 1. [pi.dev/packages](https://pi.dev/pack
 | `@estebanforge/pi-slack-me` | pi.dev/packages | `pi install npm:@estebanforge/pi-slack-me` |
 | `@pi-kaush/pi-inline-skill-identifier` | pi.dev/packages | `pi install npm:@pi-kaush/pi-inline-skill-identifier` |
 | `@estebanforge/pi-token-cost-ledger` | pi.dev/packages | `pi install npm:@estebanforge/pi-token-cost-ledger` |
-| `pi-unified-exec` | pi.dev/packages | `pi install npm:pi-unified-exec` |
 | `pi-vision-handoff` | pi.dev/packages | `pi install npm:pi-vision-handoff` |
 | `pi-agent-browser-native` | pi.dev/packages | `pi install npm:pi-agent-browser-native` |
 | `@pi-stef/atlassian` | pi.dev/packages | `pi install npm:@pi-stef/atlassian` |
@@ -82,10 +81,13 @@ Each package was located in this order: 1. [pi.dev/packages](https://pi.dev/pack
 | `@estebanforge/pi-tool-display` | pi.dev/packages | `pi install npm:@estebanforge/pi-tool-display` (maintained fork of the inactive MasuRii original) |
 | `@estebanforge/pi-image-inline` | pi.dev/packages | `pi install npm:@estebanforge/pi-image-inline` |
 | `pi-subagent-manager` | pi.dev/packages | `pi install npm:pi-subagent-manager` |
-| `@juicesharp/rpiv-todo` | pi.dev/packages | `pi install npm:@juicesharp/rpiv-todo` |
-| `@juicesharp/rpiv-btw` | pi.dev/packages | `pi install npm:@juicesharp/rpiv-btw` |
 | `@estebanforge/pi-peer-review` | pi.dev/packages | `pi install npm:@estebanforge/pi-peer-review` |
-| `@tmustier/pi-queue-steer` | pi.dev/packages | `pi install npm:@tmustier/pi-queue-steer` |
+| `@tangentyh/pi-auto-rename` | pi.dev/packages | `pi install npm:@tangentyh/pi-auto-rename` |
+| `pi-system-prompt-trim` | pi.dev/packages | `pi install npm:pi-system-prompt-trim` |
+| `@estebanforge/pi-egm` | pi.dev/packages | `pi install npm:@estebanforge/pi-egm` |
+| `@thoth-agents/pi-todo` | pi.dev/packages | `pi install npm:@thoth-agents/pi-todo` |
+| `pi-better-render` | pi.dev/packages | `pi install npm:pi-better-render` |
+| `pi-bg-bash` | pi.dev/packages | `pi install npm:pi-bg-bash` |
 
 Notes:
 
@@ -108,7 +110,6 @@ Notes:
   "npm:@estebanforge/pi-slack-me",
   "npm:@pi-kaush/pi-inline-skill-identifier",
   "npm:@estebanforge/pi-token-cost-ledger",
-  "npm:pi-unified-exec",
   "npm:pi-vision-handoff",
   "npm:pi-agent-browser-native",
   "npm:@pi-stef/atlassian",
@@ -126,10 +127,13 @@ Notes:
   "npm:@estebanforge/pi-tool-display",
   "npm:@estebanforge/pi-image-inline",
   "npm:pi-subagent-manager",
-  "npm:@juicesharp/rpiv-todo",
-  "npm:@juicesharp/rpiv-btw",
   "npm:@estebanforge/pi-peer-review",
-  "npm:@tmustier/pi-queue-steer"
+  "npm:@tangentyh/pi-auto-rename",
+  "npm:pi-system-prompt-trim",
+  "npm:@estebanforge/pi-egm",
+  "npm:@thoth-agents/pi-todo",
+  "npm:pi-better-render",
+  "npm:pi-bg-bash"
 ]
 ```
 
