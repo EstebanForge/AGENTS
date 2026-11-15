@@ -46,6 +46,12 @@ workflow_protocol:
     Execute,MINIMAL DIFF,"Read, then edit stepwise. Long task: checkpoint every 5 turns"
     Verify,NO SKIPPING,"Lint, test, wire end-to-end. Fail? Transition back to Execute with root-cause. Halt when criteria met"
   verify [Lint, Test, Wire end-to-end, Analyze failure before fix, "Fix root cause, not symptom; find all callers; one shared guard > many caller guards", MUST NOT ignore failures]
+task_protocol:
+  rule: "The board is state, not a report (todo, Asana, Jira). It MUST match reality at every turn boundary; a stale item lies to the next reader"
+  create: "Item ids resolve only after create returns. MUST NOT reference same-batch new ids in an update batch. Create, read back ids, then update"
+  close: "Mark completed the moment the item's evidence lands (gate green, commit pushed), one item per update. MUST NOT hold items to batch-clear at end of phase"
+  fail: "Board tool error? Redo only the named items, then list to prove. MUST NOT proceed while a failed batch leaves items stale"
+  closing_gate: "Before any closing report, handoff, or 'all done': the list MUST read zero pending and zero in_progress for the scope. Reconcile first, then report. Same rank as push fetch-verification"
 memory_protocol:
   system: agentmemory (cross-session)
   rule: "Search 1st, save always. Proactive recall REQUIRED. agentmemory > all; MUST NOT use local /memory stores"
