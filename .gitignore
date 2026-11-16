@@ -3,6 +3,11 @@ skills/work/
 /skills/esteban-voice
 /skills/wicket-*
 
+# Check-in tool (personal, not for public repo)
+/prompts/am-checkin.md
+/prompts/pm-checkout.md
+/scripts/checkin/
+
 # Dunk review comments (local)
 .dunk/
 .pi/
