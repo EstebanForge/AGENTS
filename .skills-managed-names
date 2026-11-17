@@ -1,14 +1,10 @@
-_templates
-.gitkeep
-.system
-# Ever-managed skills names: current tree + git history.
-# Regenerate with: ./manage.sh regen-seeds (commit the result).
 acpx
 agent-browser
+beautiful-rust
 before-and-after
 bro
-code-review
 codebase-design
+code-review
 codex-delegate
 commit
 datastar
@@ -18,14 +14,16 @@ diagnosing-bugs
 domain-modeling
 dunk-review
 esteban-voice
+# Ever-managed skills names: current tree + git history.
 explain
 facts
 ffmpeg-skill
 flint-chart-author
 fsm-design
+.gitkeep
+grilling
 grill-me
 grill-with-docs
-grilling
 handoff
 headless-ui-screenshot
 humanizer
@@ -35,6 +33,7 @@ implement
 improve-codebase-architecture
 ip-as-logo
 issue
+local-ci
 logging-best-practices
 logo-generator
 mascot-as-logo
@@ -50,6 +49,7 @@ prd-to-plan
 proof-of-work
 pull-request
 refactor-pass
+# Regenerate with: ./manage.sh regen-seeds (commit the result).
 request-refactor-plan
 reverse-engineer-anything
 review-my-go
@@ -61,9 +61,11 @@ review-pull-request
 show-me
 simplify-review
 ste-writing
+.system
 taste-skill
 tdd
 teach
+_templates
 test-audit
 to-issues
 to-prd

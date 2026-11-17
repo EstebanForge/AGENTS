@@ -1,15 +1,18 @@
-# Ever-managed prompts names: current tree + git history.
-# Regenerate with: ./manage.sh regen-seeds (commit the result).
-ask-peer-review.md
+am-checkin.md
 ask-peer.md
+ask-peer-review.md
+better.md
 bug.md
 bump.md
 changelog.md
 clarify.md
+# Ever-managed prompts names: current tree + git history.
 fix-tests.md
 fsm-audit.md
 init.md
 mannered-prose.md
 peer-review.md
+pm-checkout.md
+# Regenerate with: ./manage.sh regen-seeds (commit the result).
 review.md
 synthesize-skill.md
