@@ -53,6 +53,8 @@ The same rulebook bills differently per model family. Measured 2026-10-14 agains
 
 Sources: OpenAI rows via ctoken (local tiktoken), cross-checked with the `/v1/responses/input_tokens` API: 3,125 on gpt-6-astra and gpt-5.5 alike (+6 message-overhead tokens over the raw 3,119); GLM, MiniMax via their tokenizer endpoints; Gemini via `countTokens`; Claude via `messages/count_tokens`. The Claude 4.7+ tokenizer measured +40.8% over pre-4.7 on this file; vendor docs claim "~30%". The cap in this README is o200k-measured; Claude 4.7+ sessions bill roughly 1.7x it for the same file.
 
+Current revision (2026-11-17): 129 lines, 3,101 o200k tokens via `ctoken`. The table was measured against the earlier 132-line revision (3,119 tokens); per-tokenizer deltas scale with file size, so the relative column still holds.
+
 ---
 
 # Centralization Manager
