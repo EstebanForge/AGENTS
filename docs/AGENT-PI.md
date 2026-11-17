@@ -1,6 +1,27 @@
 # Pi Configuration Reference
 
-> Reproduce this pi setup on a fresh machine. Prompts are symlinked from the repo; skills are synced via `manage.sh`.
+> Reproduce this pi setup on a fresh machine. Prompts and skills are symlinked from this repo (`prompts/`, `skills/`) by `manage.sh sync`.
+
+## Core settings (`~/.pi/agent/settings.json`)
+
+- `defaultProvider: zai`, `defaultModel: glm-5.3-flash`
+- `defaultThinkingLevel: low`; `modelThinkingLevels` pins `zai/glm-5.3-flash` to `high`
+- `compaction.enabled: true`, `retry.enabled: true`
+- `steeringMode: all`, `followUpMode: one-at-a-time`, `theme: dark`
+- `enabledModels` (13): `minimax/MiniMax-M3`, `minimax/MiniMax-M3.1-Flash`, `zai/glm-5.3`, `zai/glm-5.3-flash`, `claude-bridge/claude-sonnet-5`, `claude-bridge/claude-sonnet-4-6`, `claude-bridge/claude-haiku-5-5`, `claude-bridge/claude-fable-5-1`, `claude-bridge/claude-opus-5-5`, `antigravity/claude-sonnet-5-5`, `antigravity/gemini-3-8-flash`, `antigravity/gemini-4-argon`, `antigravity/gemini-4-hydrogen`
+
+The `claude-bridge` and `antigravity` providers come from the `pi-claude-bridge` and `pi-antigravity-bridge` extensions; `minimax` and `zai` are hand-defined in `models.json` (next section).
+
+## Custom models (`~/.pi/agent/models.json`)
+
+Hand-defined providers on top of the built-in catalog. `deepseek.apiKey` is a real secret; not tracked in this repo.
+
+| Provider | API | Models |
+|---|---|---|
+| `deepseek` | `openai-completions` (`api.deepseek.com`) | `deepseek-v4-pro`, `deepseek-v4-flash` — 1M context, 384k max output, reasoning |
+| `zai` | `anthropic-messages` (`api.z.ai/api/anthropic`) | `glm-5.2`, `glm-5.3`, `glm-5.3-flash` — 1M context, 131k max output, reasoning; flash also takes image input |
+
+Both deepseek models pin `thinkingFormat: deepseek` and map every thinking level below `xhigh` to `high`.
 
 ## Web Providers (`~/.pi/agent/web-providers.json`)
 
@@ -42,11 +63,11 @@ Disabled but available: `chrome-devtools`, `playwright`, `sequential-thinking`, 
 
 ## Extensions
 
-Installed packages (all active, 38 total). Verified via `pi list`.
+Installed packages (all active, 37 total). Verified via `pi list`.
 
 ### Package sources and install commands
 
-Each package was located in this order: 1. [pi.dev/packages](https://pi.dev/packages), 2. npm registry (keywords `pi-extension`, `pi-package`), 3. GitHub. First match wins. 36 of 38 are in the pi.dev catalog. 2 are GitHub-only.
+Each package was located in this order: 1. [pi.dev/packages](https://pi.dev/packages), 2. npm registry (keywords `pi-extension`, `pi-package`), 3. GitHub. First match wins. 35 of 37 are in the pi.dev catalog. 2 are GitHub-only.
 
 | Package | Found on | Install command |
 |---|---|---|
@@ -68,7 +89,6 @@ Each package was located in this order: 1. [pi.dev/packages](https://pi.dev/pack
 | `pi-agent-browser-native` | pi.dev/packages | `pi install npm:pi-agent-browser-native` |
 | `@pi-stef/atlassian` | pi.dev/packages | `pi install npm:@pi-stef/atlassian` |
 | `@estebanforge/pi-git-me` | pi.dev/packages | `pi install npm:@estebanforge/pi-git-me` |
-| `@tmustier/pi-tab-status` | pi.dev/packages | `pi install npm:@tmustier/pi-tab-status` |
 | `@estebanforge/pi-asana-me` | pi.dev/packages | `pi install npm:@estebanforge/pi-asana-me` |
 | `@estebanforge/pi-ask-claude` | pi.dev/packages | `pi install npm:@estebanforge/pi-ask-claude` |
 | `@estebanforge/pi-hostname` | pi.dev/packages | `pi install npm:@estebanforge/pi-hostname` |
@@ -114,7 +134,6 @@ Notes:
   "npm:pi-agent-browser-native",
   "npm:@pi-stef/atlassian",
   "npm:@estebanforge/pi-git-me",
-  "npm:@tmustier/pi-tab-status",
   "npm:@estebanforge/pi-asana-me",
   "npm:@estebanforge/pi-ask-claude",
   "npm:@estebanforge/pi-hostname",
