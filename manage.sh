@@ -6,6 +6,8 @@
 
 set -euo pipefail
 
+command -v jq >/dev/null 2>&1 || { echo "manage.sh: jq is required for manifest read/write" >&2; exit 1; }
+
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CENTRAL_AGENTS="${SCRIPT_DIR}/AGENTS.md"
 CENTRAL_SKILLS="${SCRIPT_DIR}/skills"
@@ -159,7 +161,10 @@ backup_path() {
 # clean removal and reconciliation when central entries are renamed or removed.
 # Applies to BOTH standard agents (per-entry symlinks) and construct-cli sandbox
 # paths (per-entry copy without --delete).
-MANIFEST_NAME=".agents-central-managed"
+MANIFEST_NAME="manifest.json"
+# Pre-manifest-format name; removed wherever a manifest is written or unlinked
+# so targets synced by older script versions self-migrate on their next run.
+MANIFEST_LEGACY=".agents-central-managed"
 
 # Emit the direct children names of a source dir (files + dirs, including
 # dotfiles), one per line. This is the canonical "managed set".
@@ -171,18 +176,19 @@ managed_entry_names() {
     done
 }
 
+# Manifest lives as JSON so agents and humans can both spot and parse it.
+# jq is the parser/writer: no hand-maintained quoting or format logic.
 read_manifest() {
     local target=$1
-    [[ -f "${target}/${MANIFEST_NAME}" ]] && cat "${target}/${MANIFEST_NAME}"
+    local f="${target}/${MANIFEST_NAME}"
+    [[ -f "${f}" ]] || return 0
+    jq -r '.managed[]?' "${f}"
 }
 
 write_manifest() {
     local target=$1; shift
-    if (( $# > 0 )); then
-        printf '%s\n' "$@" | sort > "${target}/${MANIFEST_NAME}"
-    else
-        : > "${target}/${MANIFEST_NAME}"
-    fi
+    jq -n '{managed: ($ARGS.positional | sort)}' --args "$@" > "${target}/${MANIFEST_NAME}"
+    rm -f "${target}/${MANIFEST_LEGACY}"
 }
 
 # --- Ever-managed names (rename/delete propagation beyond the manifest) ---
@@ -393,7 +399,7 @@ unsync_dir_symlink() {
         local dst="${target}/${s}"
         [[ -L "${dst}" ]] && rm "${dst}"
     done < <(read_manifest "${target}")
-    rm -f "${target}/${MANIFEST_NAME}"
+    rm -f "${target}/${MANIFEST_NAME}" "${target}/${MANIFEST_LEGACY}"
     log_success "${name}: Removed managed ${kind} links"
 }
 
@@ -407,7 +413,7 @@ unsync_dir_copy() {
         [[ -z "$s" ]] && continue
         rm -rf "${target:?}/${s}"
     done < <(read_manifest "${target}")
-    rm -f "${target}/${MANIFEST_NAME}"
+    rm -f "${target}/${MANIFEST_NAME}" "${target}/${MANIFEST_LEGACY}"
     log_success "${name}: Removed managed ${kind}"
 }
 
@@ -566,7 +572,7 @@ cmd_status() {
             if [[ -L "${sk}" ]]; then
                 sk_s="${YELLOW}Legacy-link${NC}"
             elif [[ -d "${sk}" && -f "${sk}/${MANIFEST_NAME}" ]]; then
-                local n; n="$(wc -l < "${sk}/${MANIFEST_NAME}" 2>/dev/null)"; n="${n//[[:space:]]/}"
+                local n; n="$(read_manifest "${sk}" | grep -c .)"
                 sk_s="${GREEN}Managed(${n})${NC}"
             elif [[ -d "${sk}" ]]; then
                 sk_s="${YELLOW}Dir${NC}"
@@ -579,7 +585,7 @@ cmd_status() {
             if [[ -L "${pr}" ]]; then
                 pr_s="${YELLOW}Legacy-link${NC}"
             elif [[ -d "${pr}" && -f "${pr}/${MANIFEST_NAME}" ]]; then
-                local m; m="$(wc -l < "${pr}/${MANIFEST_NAME}" 2>/dev/null)"; m="${m//[[:space:]]/}"
+                local m; m="$(read_manifest "${pr}" | grep -c .)"
                 pr_s="${GREEN}Managed(${m})${NC}"
             elif [[ -d "${pr}" ]]; then
                 pr_s="${YELLOW}Dir${NC}"
