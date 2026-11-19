@@ -1,16 +1,17 @@
 ---
-description: Ask a peer agent (claude, codex, agy) for an opinion, a diagnosis challenge, or an adversarial peer review; builds a self-contained consult
+description: Ask a peer agent (claude, codex, agy) for an opinion, a diagnosis challenge, a stuck consult, or an adversarial peer review; builds a self-contained consult
 argument-hint: "[peer] <question or review request>"
 ---
-Dispatch this ask to a peer agent. The peer sees nothing from this session, so the prompt you send must be fully self-contained. Use the native Ask tool for the target when available (AskClaude, AskCodex, AskAntigravity); otherwise use the acpx skill.
+Dispatch this ask to a peer agent. The peer sees nothing from this session, so the prompt you send must be fully self-contained. Use the native Ask tool for the target when available (AskClaude, AskCodex for gpt, AskAntigravity); otherwise use the acpx skill.
 
 Ask:
 ${@:-(none given. Ask which peer to consult and what to ask, then proceed.)}
 
 Parse the ask:
 1. A leading peer name (claude, codex, gpt, agy, antigravity) sets the target; the rest is the request. No name: pick the strongest available reviewer and state the pick.
-2. Pick the frame by session state first, wording second:
+2. Pick the frame by session state first, wording second. A request that names a hypothesis or diff to validate outranks the stuck state:
    - If you are debugging a bug in this session, or the request asks to validate the diagnosis or the root-cause hypothesis: use the Diagnosis challenge frame.
+   - Else if you are stuck (repeated failures, blocked, or no clear next step): use the Stuck consult frame.
    - Else if the request asks to review or validate applied changes, fixes, or features: use the Adversarial review frame.
    - Else (opinion, ideas, second opinion): use the Opinion frame.
 3. "same session" continues the peer session (pass the stored sessionId / conversationId). "clean session" or "again" starts isolated.
@@ -34,6 +35,12 @@ Adversarial review frame:
 - Material: the task(s) given, the executor's final claim ("verify it, do not trust it"), change summary, touched files, verification facts (test and lint runs, pass or fail), and anything not shown named as such.
 - Add "Challenge these specifically (do not rubber-stamp)" with 2 to 6 concrete attack questions: races, trust model, callers relying on old behavior, test honesty, regressions.
 - Output contract: numbered findings, at most 5, each starting with BLOCKER: / RISK: / NIT: and citing file:line evidence, or an UNVERIFIED: line for what could not be checked. When nothing blocks, first line is exactly NO_BLOCKERS. State coverage: reviewed N of M changed files. End with a verdict: merge, or change first.
+
+Stuck consult frame (if you are stuck):
+- Material: the goal, the blocker, recent failed commands with exit codes and error tails, what you already tried and why it did not work, and any constraints.
+- Ask the peer for 3 to 6 concrete next moves, ranked, highest priority first. Each move carries an exact command or edit, or the precise reason the approach cannot work.
+- Require an explicit flag when a failure is caused by the environment rather than code.
+- Output: ranked bullets, no preamble.
 
 Opinion frame:
 - First line: "Second-opinion request. I am another coding agent. My human asked: <original ask>."
