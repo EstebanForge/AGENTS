@@ -1,0 +1,18 @@
+{
+  "managed": [
+    "am-checkin.md",
+    "ask-peer-review.md",
+    "better.md",
+    "bug.md",
+    "bump.md",
+    "changelog.md",
+    "clarify.md",
+    "fix-tests.md",
+    "fsm-audit.md",
+    "init.md",
+    "mannered-prose.md",
+    "pm-checkout.md",
+    "review.md",
+    "synthesize-skill.md"
+  ]
+}

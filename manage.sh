@@ -169,10 +169,15 @@ MANIFEST_LEGACY=".agents-central-managed"
 # Emit the direct children names of a source dir (files + dirs, including
 # dotfiles), one per line. This is the canonical "managed set".
 managed_entry_names() {
-    local src=$1 entry
+    local src=$1 entry name
     for entry in "${src}"/* "${src}"/.[!.]*; do
         [[ -e "${entry}" || -L "${entry}" ]] || continue
-        printf '%s\n' "${entry#"${src}/"}"
+        name="${entry#"${src}/"}"
+        # Manifest files are repo/target bookkeeping, never sync entries; a
+        # central manifest symlinked into a target would collide with the
+        # target's own manifest at the same path.
+        [[ "${name}" == "${MANIFEST_NAME}" || "${name}" == "${MANIFEST_LEGACY}" ]] && continue
+        printf '%s\n' "${name}"
     done
 }
 
@@ -212,7 +217,9 @@ historical_managed_names() {
             names+="$(git -C "${SCRIPT_DIR}" -c core.quotePath=false log --format= --name-only -- "${kind}/" 2>/dev/null \
                 | sed -nE "s#^${kind}/([^/]+)/.*#\1#p; s#^${kind}/([^/]+)\$#\1#p")"
         fi
-        _HIST_CACHE[${kind}]="$(printf '%s\n' "${names}" | sort -u)"
+        _HIST_CACHE[${kind}]="$(printf '%s\n' "${names}" \
+            | sed -e "/^${MANIFEST_NAME}\$/d" -e "/^${MANIFEST_LEGACY}\$/d" \
+            | sort -u)"
     fi
     printf '%s\n' "${_HIST_CACHE[${kind}]}"
 }
@@ -267,10 +274,15 @@ cmd_regen_seeds() {
             echo "# Regenerate with: ${BASH_SOURCE[0]} regen-seeds (commit the result)."
             managed_entry_names "${SCRIPT_DIR}/${kind}" 2>/dev/null
             git -C "${SCRIPT_DIR}" -c core.quotePath=false log --format= --name-only -- "${kind}/" 2>/dev/null \
-                | sed -nE "s#^${kind}/([^/]+)/.*#\1#p; s#^${kind}/([^/]+)\$#\1#p"
+                | sed -nE "s#^${kind}/([^/]+)/.*#\1#p; s#^${kind}/([^/]+)\$#\1#p" \
+                | sed -e "/^${MANIFEST_NAME}\$/d" -e "/^${MANIFEST_LEGACY}\$/d"
         } | sort -u > "${SCRIPT_DIR}/.${kind}-managed-names"
         count="$(grep -cvE '^\s*#|^\s*$' "${SCRIPT_DIR}/.${kind}-managed-names")"
         log_success "Seeded .${kind}-managed-names (${count} names)"
+        local -a entries=()
+        mapfile -t entries < <(managed_entry_names "${SCRIPT_DIR}/${kind}")
+        write_manifest "${SCRIPT_DIR}/${kind}" "${entries[@]}"
+        log_success "Wrote ${kind}/manifest.json (${#entries[@]} entries)"
     done
 }
 
