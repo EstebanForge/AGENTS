@@ -3,8 +3,8 @@
 source: https://github.com/mattpocock/skills/blob/main/skills/productivity/writing-for-agents
 upstream-category: productivity
 sync-status: synced
-last-synced: 2026-08-05
-upstream-commit: v1.2.0
+last-synced: 2026-11-24
+upstream-commit: abeeaf9 (2026-11-19)
 
 ## Fork notes
 
@@ -40,7 +40,11 @@ README.md reference updated (was `writing-great-skills`).
 ## patterns.md convention (2026-08-28) — local addition
 
 Local addition, not upstream. Preserve on next sync. New "Pattern notes"
-section in SKILL-MECHANICS.md; pointer in SKILL.md extended to name it.
+section in SKILL-MECHANICS.md; pointer in SKILL.md extended to name it;
+MECHANICS opening line names it too (re-applied after the 2026-11-24
+punctuation merge, which adopted upstream's em-dash cleanup in both
+files). Also local: the "State versus history" section in SKILL.md
+(explicit-state adoption). Upstream never carried either.
 
 - **Two audiences.** `SKILL.md` serves the executor at runtime;
   `patterns.md` (sibling file) serves the editor across sessions. History

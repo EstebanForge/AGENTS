@@ -5,7 +5,9 @@ upstream-repo: stympy/skills
 upstream-author: stympy (Ryan Bates)
 license: none (no LICENSE file upstream; default is all rights reserved)
 repo-created: 2026-02-21
-sync-status: verbatim
+last-synced: 2026-11-24
+upstream-commit: f9c0ea9 (2026-02-23)
+sync-status: near-verbatim (valid frontmatter kept; see 2026-11-24 check)
 
 ## Provenance
 
@@ -30,4 +32,14 @@ MIT or any other license without upstream permission.
 
 ## sync-status
 
-Verbatim. Re-pull from the link above if refreshing.
+Near-verbatim. Re-pull from the link above if refreshing.
+
+## 2026-11-24 check (upstream f9c0ea9)
+
+Upstream's only edit since the vendoring commit broke the frontmatter: name
+and description collapsed onto one line, which no compliant loader parses.
+Adopted the new description text as a proper second frontmatter line.
+Deliberately kept local: the "Actively apply the DRY, KISS, and YAGNI
+principles." line (upstream removed it; house technical standards keep it)
+and the valid two-line frontmatter. Re-check upstream's frontmatter before
+any future verbatim re-pull.

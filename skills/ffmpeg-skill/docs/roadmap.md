@@ -16,14 +16,14 @@ minor and `fix` PRs into a patch, so each block below is one or two `feat` PRs p
 - **shipped, eval pending** — released, but no evals iteration has graded it yet.
 - **planned** — not released. Nothing below a *planned* heading exists in any published version;
   the feature lines are the intent, not a description of the code.
+- **planned theme, superseded** — a 1.x theme written before 1.x ended. Its version number was
+  later used for an unrelated release (the table above), and the items of it that did ship are
+  listed there under the release that shipped them.
 
-The released version today is **2.4.2** (notes in CHANGELOG.md); **2.2.1** — `render.py`, `caption.py --mode mux` and
-`sequence.py` now check every input before any work, as `join.py --list` (2.2.0) does: every
-missing or broken TTS/render segment is named at once (`--on-missing skip` joins the rest). 2.1.0: `render.py --export-timeline` hands the cut to an
-editor as FCPXML, CMX 3600 EDL or OpenTimelineIO (clips, speed, dissolves, music bed, chapter
-markers; everything else listed as `not_exported`), plus the eval-24 follow-up that stops
-`export.py` calling a BT.2020 SDR source HDR. 2.0.0 made the five changes 1.10.0 announced
-(docs/contract.md "What 2.0 changed"). Tool count still 42.
+The released version today is **4.7.1** (notes in CHANGELOG.md); **4.0.0** (notes in CHANGELOG.md), the third deliberate break: the 12 core tools keep
+the stable promise and the rest are `beta`; a platform export meets its loudness by default (`--no-normalize` keeps
+3.x's report-only); a stream-copy join of AAC clips that would drift more than 50 ms is refused; and a standalone
+review page shows a project's plan and result (docs/contract.md "What 4.0 changed"). Tool count still 42.
 
 | version | state | evidence |
 |---|---|---|
@@ -59,7 +59,11 @@ markers; everything else listed as `not_exported`), plus the eval-24 follow-up t
 | 1.24.0 | shipped, eval pending | MCP `prompts` capability with five workflow recipes (#272): `reel`, `podcast`, `multicam`, `delivery_check`, `hdr`. `initialize` advertises `capabilities.prompts`; `prompts/list`/`prompts/get` fill a template built from facts SKILL.md's own request table already states -- recipes, not new tool calls, every command line named is one `tools/call` (or the CLI) can already run. `feat:` release, hence the minor bump. Tool count still 42 |
 | 1.24.1 | shipped, evaluated (eval 23b) | `caption.py --karaoke-style word` (#276, #278): one ASS Dialogue event per word, active word scaled by `--karaoke-scale` (default 112%) and emboldened, past/upcoming words coloured -- not a colour-only sweep. `loudness.py`'s stream-copy branch gains `-movflags +faststart` (#277, #275), fixing a `render.py --template ... --normalize` delivery that lost faststart. Eval 23b's `kw1`/`ff1` prompts (`evals/results/iteration-23b.json`) confirm both for real: the generated ASS carries `\fscx112\fscy112` on the active word, and a loudness-normalised template-youtube delivery still has `moov` before `mdat`, with `check.py`'s loudness/true-peak rows PASS |
 | 1.25.0 | shipped, evaluated (eval 23b) | `chore:` release bump; closes the remaining mp4 stream-copy paths over to `-movflags +faststart` (#279). No script API change, tool count still 42. Covered by eval 23b alongside 1.24.1 -- same faststart code path, no regression found |
-| 2.0.0 | planned | — |
+| 2.0.0 | shipped | see "2.0.0 — the announced breaks" below |
+
+The table and the per-version blocks below end at 2.0.0. Releases after it (2.1 onward and 3.x)
+have no row and no block of their own here: `CHANGELOG.md` is their record. The "released version"
+sentence above follows them, and the "Eval 25" block records one evals run on 2.1/2.2.
 
 ## 1.8.0 — one-call delivery, quieter checks, encoder flags (shipped + evaluated, eval 8)
 
@@ -225,8 +229,10 @@ encode because `export.py` ran without `--normalize` first.
 - `export.py` presets for shorts / tiktok / linkedin as named targets (today aliases of
   reels / youtube), `youtube-hdr` (HEVC Main10 HDR10 kept), `youtube-av1`; a preset carries its
   loudness spec so `--normalize` and `check.py` read one table.
-- `look.py --best-frame` picks a thumbnail candidate by sharpness and exposure (measured, no
-  content judgement) and writes it at the platform's thumbnail size; `report.py` embeds it.
+- **Not shipped:** `look.py --best-frame` (a thumbnail candidate picked by measured sharpness and
+  exposure, written at the platform's thumbnail size and embedded by `report.py`) was planned for
+  this release and was never built. No released version has the flag; `look.py --at` with a time
+  the caller chooses is what exists.
 - Eval 15 on the delivery prompts (`dl1`–`dl8`), three repeats, measuring the encode count per
   delivery rather than pass/fail alone.
 
@@ -603,7 +609,7 @@ truth-up. No further action was needed there.
   open until an environment with that access runs Set B (whisper/TTS), Set D (the 55-prompt
   trigger judge), and an Opus/independent-model quality pass.
 
-## 1.19.0 — observability, portability (planned)
+## 1.19.0 — observability, portability (planned theme, superseded)
 
 - `--trace FILE` (common flag): one JSON line per ffmpeg run with wall time, encode fps,
   speed, exit code, bytes written; `result_v2.metrics` carries the same for the whole tool.
@@ -616,13 +622,23 @@ truth-up. No further action was needed there.
   issue #143.
 - ffmpeg 8 / 9: filter and encoder fixtures refreshed, `bt709_tag_args` and the colour
   negotiation path re-verified on each; a compatibility table in `references/devices.md`.
-- `--hwaccel auto` (opt-in): videotoolbox / vaapi / nvenc for previews (`--fast`) only,
-  never for the final encode unless `--hwaccel final` is given, with the encoder named in the
-  result so a difference is traceable.
+- GPU encoding -- **shipped differently than planned, after 2.5.1 (#304).** The plan was
+  `--hwaccel auto` over videotoolbox / vaapi / nvenc, for `--fast` previews only unless
+  `--hwaccel final`. What ships is Apple VideoToolbox only (Apple Silicon; h264/hevc/prores,
+  AV1 stays on SVT-AV1), as `--hw`/`--no-hw` on every re-encoding tool and `export.py`. It is
+  never automatic and not tied to `--fast`: `--hw` asks for it on one call, `FFMPEG_SKILL_HW=1`
+  makes it a machine's default for every re-encoding tool except `export.py`'s delivery presets,
+  which take only an explicit `--hw` (or `render.py`/`batch.py --hw`, explicit for every stage).
+  A job VideoToolbox itself refuses is re-encoded on the CPU; nothing else is retried. Every
+  result names the `encoder` that ran and carries `hw` (`requested`, `source`, `used`,
+  `fallback`, `notes`), and a GPU encode notes that its quality is not CRF-equivalent: `--quality`
+  maps to `-q:v` by an approximate SSIM fit, at 1.1-3.5x the bytes. vaapi / nvenc / qsv are not
+  planned: each needs a real-hardware-verified quality mapping and refusal list, as VideoToolbox
+  got (`tests/bench_vt.py`, docs/design-decisions.md "Unreleased -- the GPU").
 - Eval 20 on the Windows and macOS runners; it also grades whether agents quote the metrics
   rather than re-probe.
 
-## 1.20.0 — agent ergonomics (planned)
+## 1.20.0 — agent ergonomics (planned theme, superseded)
 
 - SKILL.md rewritten from evals 8–20: **the request table regrouped by intent** (the clusters
   people actually ask in — shorten, reframe, caption, fix the audio, deliver, inspect — rather
@@ -634,7 +650,7 @@ truth-up. No further action was needed there.
 - Eval 21: trigger set doubled, plus "second-turn" prompts where the agent must continue an edit
   from a previous result document.
 
-## 1.21.0 — the 2.0 freeze (planned)
+## 1.21.0 — the 2.0 freeze (planned theme, superseded)
 
 - Everything 2.0 removes is announced (`deprecated` in the contract, `--help`, CHANGELOG) for
   at least one minor; `docs/migrating-2.0.md` maps every old spelling to the new one.

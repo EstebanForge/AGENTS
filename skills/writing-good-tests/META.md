@@ -4,8 +4,8 @@ source: https://github.com/obra/superpowers/blob/main/skills/test-driven-develop
 upstream-category: test-driven-development (reference file)
 license: MIT (Copyright (c) 2025 Jesse Vincent)
 sync-status: adapted (reference promoted to standalone self-contained skill)
-last-synced: 2026-08-29
-upstream-commit: b36e082 (2026-08-12)
+last-synced: 2026-11-24
+upstream-commit: 22f0b46 (2026-11-03, release v7.0.2)
 
 ## Provenance
 
@@ -17,3 +17,7 @@ Port of Jesse Vincent's `writing-good-tests.md` from obra/superpowers (MIT). Ups
 - **Inlined boundary mocking rules.** External dependencies on external skill files removed; boundary rules (mock external services, time/randomness; do not mock internal modules) are defined directly in the skill.
 - **Upstream-specific pointers generalized.** Cross-references to external frameworks dropped; human partner devices reworded as standing challenge questions.
 - **Refactoring separation.** Upstream loop definition drops "refactor" because refactoring belongs to the review stage, not the green implementation step. Mirroring rule scoped to the boundary type's fields. Added suite-coupling warning sign (pass in isolation, fail in full suite). Added guidance for tests added outside a loop (reviews, backfilled coverage).
+
+## 2026-11-24 check (upstream 22f0b46, release v7.0.2)
+
+Content is already current: the doctrine merged in a prior session covers everything upstream carries (Principle 1's independently-derived expectations, change detectors, behavior-not-text, your-code-not-the-framework, expanded gate function). Remaining diff is packaging only: local frontmatter, one-line-per-paragraph format, and generalized pointers. Nothing to adopt.

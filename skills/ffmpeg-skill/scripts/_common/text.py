@@ -30,11 +30,12 @@ from _common.emoji import (
     emoji_support, resolve_emoji_assets, emoji_filter_chain,
 )
 from _common.drawtext import (
-    drawtext_boxborderw, SHAPING_SCRIPTS, BIDI_SCRIPTS, _SHAPING_BUILD_CACHE, drawtext_shaping, needs_shaping,
-    escape_drawtext, drawtext_text_opts,
+    drawtext_boxborderw, drawtext_fontfile, SHAPING_SCRIPTS, BIDI_SCRIPTS, _SHAPING_BUILD_CACHE, drawtext_shaping, needs_shaping,
+    escape_drawtext, drawtext_text_opts, drawtext_center_align, NEWLINE_GLYPH_RELEASES,
+    drawtext_draws_newline_glyph, is_multiline, drawtext_clean, drawtext_line_metrics,
 )
 from _common.wrap import (
-    ADVANCE_EM, NO_SPACE_SCRIPTS, NO_BOUNDARY_SCRIPTS, LATIN_EM, LEADING_VOWELS, _is_mark, _char_em,
+    ADVANCE_EM, NO_SPACE_SCRIPTS, LATIN_EM, LEADING_VOWELS, _is_mark, _char_em,
     text_width_em, SAFE_WIDTH_FRACTION, ORPHAN_MIN_EM, WRAP_MODES, JA_PARTICLES, JA_PARTICLE_WORDS,
     JA_SENTENCE_END, JA_NO_LINE_START, JA_NO_LINE_END, FUNCTION_WORDS, _FUNCTION_WORDS_ANY, PENALTY_FORBIDDEN,
     PENALTY_OKURIGANA, PENALTY_FUNCTION_WORD, PENALTY_IDEOGRAPHS, PENALTY_NEUTRAL, PENALTY_FUNCTION_WORD_START,

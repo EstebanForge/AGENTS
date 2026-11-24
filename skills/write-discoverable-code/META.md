@@ -6,7 +6,9 @@ upstream-author: benvinegar (Ben Vinegar, Modem)
 license: MIT
 repo-created: 2026-07-20
 backing-article: https://modem.dev/blog/how-coding-agents-read-your-code
-sync-status: verbatim
+last-synced: 2026-11-24
+upstream-commit: edcdedb (2026-07-20)
+sync-status: verbatim (body); description modernized, license stays in META
 
 ## Provenance
 
@@ -33,3 +35,10 @@ stats and examples.
 ## sync-status
 
 Verbatim. Re-pull from the link above if refreshing.
+
+## 2026-11-24 check (upstream edcdedb)
+
+Body still byte-for-byte identical. Upstream's richer multi-line description
+(trigger branches: "whenever writing or renaming code") adopted, folded to
+the house single-line frontmatter style. License line stays omitted here
+(recorded in this META per repo convention).

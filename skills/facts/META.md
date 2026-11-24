@@ -5,7 +5,9 @@ upstream-repo: backnotprop/bro
 upstream-author: backnotprop
 license: none (upstream has no LICENSE file)
 repo-created: 2026-04-22
-sync-status: near-verbatim
+last-synced: 2026-11-24
+upstream-commit: 08f40b4 (2026-11-23)
+sync-status: custom (anti-jargon rules and forbidden words enforcement)
 
 ## Provenance
 
@@ -32,3 +34,9 @@ MIT or any other license here without upstream permission.
 
 Near-verbatim. Re-pull from the link above; preserve the local `<meta-rule>`
 tags on merge.
+
+## 2026-11-24 check (upstream 08f40b4)
+
+Upstream tightened the body prompt and added an explicit-invocation-only
+description guard ("never otherwise; do not invoke automatically"). Both
+adopted verbatim; `<meta-rule>` wrap preserved.

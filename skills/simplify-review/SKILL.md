@@ -38,6 +38,11 @@ This skill lists what could be cut. It applies nothing.
   feature.
 - `yagni` = abstraction with one implementation, config nobody sets, layer with
   one caller.
+- `reuse` = the repo already has this helper. Name the path.
+- `merge` = near-copies that must change together. Name both sites.
+- `split` = one function doing several unrelated jobs, hard to read or test.
+  Split by job, never by line count, and never into helpers that exist only
+  to make a function shorter.
 - `shrink` = same logic, fewer lines. Show the shorter form.
 
 ## Examples

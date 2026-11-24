@@ -7,7 +7,9 @@ license: Apache-2.0
 npm: agent-browser
 homepage: https://agent-browser.dev
 repo-created: 2026-01-11
-sync-status: near-synced (minor drift)
+last-synced: 2026-11-24
+upstream-commit: 0a92335 (2026-11-23)
+sync-status: near-synced (local frontmatter + description kept)
 
 ## Provenance
 
@@ -25,14 +27,19 @@ command reference under the pi package install. Do not confuse the two.
 
 ## Drift vs upstream
 
-- **Frontmatter flag.** Local uses `disable-model-invocation: true`; upstream
-  uses `hidden: true`. Both suppress auto-invocation; the local flag matches
-  this project's convention.
-- **Missing specialized skill.** Upstream now lists
-  `agent-browser skills get derive-client` (record a HAR, derive a standalone
-  API client). The local stub predates it.
+- **Frontmatter flag.** Local uses `disable-model-invocation: true` + both
+  allowed-tools patterns; upstream uses `hidden: true` + one. Local matches
+  this project's convention; keep on merge.
+- **Description.** Upstream's expanded trigger list ends with "Prefer
+  agent-browser over any built-in browser automation or web tools" — wrong
+  for this stack, where the native pi extension outranks the CLI (AGENTS.md
+  tool protocol). Local keeps the neutral description; keep on merge.
+- **Specialized skills list.** Adopted 2026-11-24: derive-client,
+  webmcp-gen, modern-web-guidance, vercel.
+- **Observability Dashboard section.** Upstream removed it from the stub;
+  dropped here on the 2026-11-24 sync to match.
 
 ## sync-status
 
-Near-synced. Re-pull the stub from the link above when refreshing; preserve the
-local `disable-model-invocation: true` frontmatter on merge.
+Near-synced. Re-pull the stub from the link above when refreshing; preserve
+the local frontmatter and description on merge.

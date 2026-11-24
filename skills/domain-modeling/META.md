@@ -3,8 +3,8 @@
 source: https://github.com/mattpocock/skills/blob/main/skills/engineering/domain-modeling
 upstream-category: engineering
 sync-status: synced
-last-synced: 2026-07-23
-upstream-commit: ed37663 (2026-07-21)
+last-synced: 2026-11-24
+upstream-commit: abeeaf9 (2026-11-19)
 
 ## Fork notes
 

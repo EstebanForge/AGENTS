@@ -53,3 +53,12 @@ use.
 Adapted and simplified. Re-merge by diffing the gist and the gstack
 `plan-eng-review` skill; the local copy intentionally keeps the lighter
 4-section structure.
+
+## 2026-11-24 check (gstack aab606e, 2026-11-23)
+
+Upstream grew to 557 lines of harness machinery: hard-STOP scope gate,
+AskUserQuestion plumbing and fallbacks, telemetry, plan-status footers,
+engineering-manager cognitive patterns, question-tuning flags. Nothing
+improves the 4-section review core; all of it is the class of machinery the
+fork deliberately dropped. Kept local; no re-merge planned unless upstream
+changes the core review sections themselves.

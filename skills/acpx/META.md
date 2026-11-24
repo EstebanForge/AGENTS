@@ -6,7 +6,9 @@ upstream-author: OpenClaw Team
 license: MIT
 npm: acpx
 repo-created: 2026-02-17
-sync-status: stale (behind upstream)
+last-synced: 2026-11-24
+upstream-commit: e6a5e17 (2026-11-21)
+sync-status: synced (local sections re-applied; see 2026-11-24 re-sync)
 
 ## Provenance
 
@@ -17,7 +19,8 @@ additions, so it is not a verbatim copy of `main`.
 
 ## What is behind upstream
 
-The local copy lacks features the upstream skill now documents:
+Resolved 2026-11-24 by full re-sync at e6a5e17. The gaps listed below are
+now carried; kept as history:
 
 - System prompt override (`--system-prompt` / `--append-system-prompt`) and
   Claude settings isolation (`ACPX_CLAUDE_INCLUDE_USER_SETTINGS`).
@@ -33,14 +36,15 @@ The local copy lacks features the upstream skill now documents:
 
 ## Fork notes
 
-- **Local edits.** The body is close to upstream but the frontmatter
-  `description` is shorter, and a local "Antigravity (agy) redirect" section
-  plus an "Agent quirks" / "Direct agent usage" block are present locally.
-  These look project-specific, not upstream.
+- **Local sections, re-applied on the 2026-11-24 re-sync, keep on refresh:**
+  "Antigravity (agy)" (rewritten: upstream now ships a native `antigravity`
+  adapter, untested on this machine; noacp stays the proven fallback),
+  "Direct agent usage (outside acpx)", "Agent quirks" (placed before
+  "Config files").
 - **Re-sync by hand.** Do not overwrite the local copy from `main` blindly;
-  diff first and merge, preserving the local agy redirect and any
-  project-specific guidance.
+  diff first and merge, preserving the local sections.
 
 ## sync-status
 
-Stale. Re-merge against the linked file when refreshing.
+Synced at e6a5e17 (2026-11-21) with local sections re-applied. Re-merge by
+hand when refreshing; preserve the fork notes above.

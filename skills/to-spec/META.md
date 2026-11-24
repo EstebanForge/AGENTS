@@ -5,8 +5,8 @@ upstream-repo: mattpocock/skills
 upstream-author: Matt Pocock
 license: MIT
 sync-status: near-verbatim (local template bindings + voice note)
-last-synced: 2026-08-05
-upstream-commit: v1.2.0
+last-synced: 2026-11-24
+upstream-commit: abeeaf9 (2026-11-19)
 
 ## Provenance
 

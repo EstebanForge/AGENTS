@@ -6,6 +6,8 @@ upstream-author: Dietrich Gebert
 license: MIT
 homepage: https://ponytail.dev
 sync-status: adapted (renamed + expanded), not verbatim
+last-synced: 2026-11-24
+upstream-commit: ebd8654 (2026-11-22)
 
 ## Provenance
 
@@ -47,3 +49,14 @@ local version renames the skill and adds a workflow.
 Adapted, not synced. Re-merge by reading upstream and folding in any new
 tags/examples by hand, keeping the `simplify-review` name and the local
 workflow.
+
+## 2026-11-24 merge (upstream ebd8654)
+
+- Upstream pivoted `ponytail-review` from over-engineering-only to a general
+  quality review (correct/safe/scale/tested/fast/lean, reads connected code).
+  Deliberately NOT adopted: the general scope overlaps the local
+  `review-pull-request` skill; this skill keeps the narrow boundary.
+- Adopted from upstream's lean axis: new `reuse`, `merge`, `split` tags with
+  their definitions (split-by-job wording verbatim). Local `shrink` tag kept:
+  upstream dropped it, but nothing upstream replaces the case; it stays a
+  local extension.

@@ -5,8 +5,8 @@ upstream-repo: kajisho5/ffmpeg-skill
 upstream-author: kajisho5
 license: MIT (LICENSE at repo root, Copyright (c) 2026 kajisho5)
 repo-created: 2026-10-04
-last-synced: 2026-10-04
-upstream-commit: a991599 (2026-10-03, release 2.4.2)
+last-synced: 2026-11-24
+upstream-commit: bad487c (2026-11-23, release 4.7.1)
 sync-status: synced (one local delta: demo media dropped)
 
 ## Provenance
@@ -44,7 +44,12 @@ a vendor requirement; the skill's own doctor reports a missing tool.
 
 ## sync-status
 
-Synced at upstream commit a991599 (release 2.4.2). On refresh, re-copy the
-upstream payload (SKILL.md, scripts, templates, references, docs minus
-demos*, mcp, package.json), re-diff byte-for-byte, and re-apply the demo
-media trim; keep both delta sections accurate if upstream drifts.
+Synced at upstream commit bad487c (release 4.7.1) on 2026-11-24: full payload
+refresh (SKILL.md, scripts/ incl. new _common modules, templates/,
+references/ incl. new flags.md, docs/, mcp/, package.json), demo-media trim
+re-applied. docs/showcase.md is upstream-new and not part of the demos* trim,
+but is marketing weight; dropped here alongside the demos trim on this sync.
+On refresh, re-copy the upstream payload (SKILL.md, scripts, templates,
+references, docs minus demos*, mcp, package.json), re-diff byte-for-byte, and
+re-apply the demo media trim; keep both delta sections accurate if upstream
+drifts.

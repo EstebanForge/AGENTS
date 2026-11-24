@@ -5,8 +5,8 @@ upstream-repo: backnotprop/bro
 upstream-author: backnotprop
 license: none (upstream repo ships no LICENSE file, no license declared)
 repo-created: 2026-07-15 (vendored from backnotprop/bro-skills, since renamed)
-last-synced: 2026-09-21
-upstream-commit: ae59583 (2026-08-04)
+last-synced: 2026-11-24
+upstream-commit: 08f40b4 (2026-11-23)
 sync-status: custom (anti-jargon rules and forbidden words enforcement)
 
 ## Provenance
@@ -33,3 +33,9 @@ before/after examples.
 
 Custom. Modified locally from upstream to enforce anti-jargon and plain-human
 communication rules.
+
+## 2026-11-24 check (upstream 08f40b4)
+
+Upstream is still the 7-line minimal prompt (reworded since ae59583). The
+local 57-line expansion strictly supersedes it; nothing to adopt. Re-check
+only if upstream grows real rules.

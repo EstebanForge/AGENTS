@@ -5,8 +5,8 @@ upstream-repo: morluto/rea
 upstream-author: morluto
 license: MIT (LICENSE at repo root, Copyright (c) 2026 morluto)
 repo-created: 2026-10-04
-last-synced: 2026-10-04
-upstream-commit: 405732a (2026-10-04)
+last-synced: 2026-11-24
+upstream-commit: b1b0bdf (2026-11-23)
 sync-status: synced (verbatim)
 
 ## Provenance
@@ -19,9 +19,10 @@ skill-only so the routing guidance is available untethered from the `rea`
 setup wizard: it reaches agents through the central `~/.agents/skills/<name>`
 symlink sync, and `rea setup` stays optional.
 
-Skill assets: `SKILL.md` plus five guides under `references/`
-(native-and-artifacts, javascript-applications, runtime-observation,
-evidence-workflows, controlled-replay), copied byte-for-byte.
+Skill assets: `SKILL.md` plus the `references/` guide set, copied byte-for-byte.
+The reference set was reshuffled upstream by 2026-11-23 (new android-applications,
+connection-and-recovery, desktop-build, environments; controlled-replay retired;
+metadata block now version 63).
 
 ## What changed locally
 
@@ -35,7 +36,8 @@ the skill routes nothing and degrades to inert guidance.
 
 ## sync-status
 
-Synced verbatim at upstream commit 405732a. On refresh, re-copy the upstream
-`skills/reverse-engineer-anything/` directory and re-diff byte-for-byte; the
+Synced verbatim at upstream commit b1b0bdf (2026-11-23). On refresh, re-copy the
+upstream `.agents/skills/reverse-engineer-anything/` directory (repo moved it
+from `skills/` since the first sync) and re-diff byte-for-byte; the
 frontmatter `metadata` block (version, tool_count, catalog_digest) tracks
 upstream releases and must never be edited locally.
